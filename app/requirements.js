@@ -1,2 +1,2 @@
 goog.require('goog.dom');
-goog.require('pwk');
+goog.require('hedgehog');

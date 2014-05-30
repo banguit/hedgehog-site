@@ -10,7 +10,7 @@
     <title>The refuge of hedgehog | Dmitry Antonenko personal website</title>
 
     <!-- Core CSS -->
-    <link href="../css/hedgehog.css" rel="stylesheet">
+    <link href="lib/hedgehog-bootstrap/dist/css/hedgehog.css" rel="stylesheet">
 
     <!-- Icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../images/apple-touch-icon-144x144-precomposed.png?v=2" />
@@ -33,11 +33,11 @@
 
 <body>
 
-
 <script src="lib/closure-library/closure/goog/base.js"></script>
 <script src="app.js"></script>
 <script>
-    hedgehog.Application.initialize();
+    var app = new hedgehog.Application();
+    app.run();
 </script>
 </body>
 
