@@ -7,3 +7,6 @@ url = https://banguit@github.com/google/closure-compiler.git
 [submodule "libs/closure-library"]
 	path = libs/closure-library
 	url = https://banguit@github.com/google/closure-library.git
+[submodule "libs/PlastronJS"]
+	path = libs/PlastronJS
+	url = https://banguit@github.com/rhysbrettbowen/PlastronJS.git

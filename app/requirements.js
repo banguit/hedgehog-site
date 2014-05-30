@@ -1,2 +1,1 @@
-goog.require('goog.dom');
-goog.require('hedgehog');
+goog.require('hedgehog.Application');

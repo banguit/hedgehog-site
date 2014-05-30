@@ -1,5 +1,5 @@
 /**
- * @fileOverview Main class for application, that used as original entry point
+ * @fileoverview Main class for application, that used as original entry point
  */
 
 goog.provide('hedgehog.Application');
@@ -31,3 +31,6 @@ hedgehog.Application.prototype.run = function() {
     el.appendChild(dh.createTextNode('Hello World!'));
     body.appendChild(el);
 };
+
+goog.exportSymbol('hedgehog.Application', hedgehog.Application);
+goog.exportProperty(hedgehog.Application.prototype, 'run', hedgehog.Application.prototype.run);
