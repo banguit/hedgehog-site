@@ -1,6 +1,12 @@
-[submodule "app/lib/closure-library"]
-	path = app/lib/closure-library
+[submodule "libs/closure-library"]
+	path = libs/closure-library
 	url = https://banguit@github.com/google/closure-library.git
-[submodule "app/lib/mvc"]
-	path = app/lib/mvc
+[submodule "libs/mvc"]
+	path = libs/mvc
 	url = https://github.com/rhysbrettbowen/PlastronJS.git
+[submodule "libs/hedgehog-bootstrap"]
+	path = libs/hedgehog-bootstrap
+	url = https://banguit@github.com/banguit/hedgehog-bootstrap.git
+[submodule "tools/closure-compiler"]
+	path = tools/closure-compiler
+	url = https://banguit@github.com/google/closure-compiler.git
