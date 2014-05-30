@@ -3,4 +3,4 @@ path = tools/closure-compiler
 url = https://banguit@github.com/google/closure-compiler.git
 [submodule "tools/closure-templates"]
 path = tools/closure-templates
-url = http://closure-templates.googlecode.com/svn/trunk/
+url = https://github.com/google/closure-templates.git
