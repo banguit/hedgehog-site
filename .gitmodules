@@ -1,0 +1,6 @@
+[submodule "app/lib/closure-library"]
+	path = app/lib/closure-library
+	url = https://banguit@github.com/google/closure-library.git
+[submodule "app/lib/mvc"]
+	path = app/lib/mvc
+	url = https://github.com/rhysbrettbowen/PlastronJS.git
