@@ -1,1 +1,1 @@
-goog.require('hedgehog.Application');
+goog.require('hedgehog');

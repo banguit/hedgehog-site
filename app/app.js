@@ -1,36 +1,40 @@
-/**
- * @fileoverview Main class for application, that used as original entry point
- */
+goog.provide('hedgehog');
 
-goog.provide('hedgehog.Application');
-
-goog.require('goog.dom');
-
+goog.require('mvc.Router');
 
 /**
- * The base class for application.
- * @param {goog.dom.DomHelper=} opt_domHelper The dom helper to use for finding the window objects.
- * @constructor
+ * @fileoverview The controller/business logic for the application.
  */
-hedgehog.Application = function(opt_domHelper) {
 
-    /**
-     * The dom helper to use for finding the window objects to reference.
-     * @type {goog.dom.DomHelper}
-     * @private
-     */
-    this.domHelper_ = opt_domHelper || goog.dom.getDomHelper();
+/**
+ * Enum for the possible route values
+ * @enum {!string}
+ */
+hedgehog.Route = {
+    BLOG: '/',
+    PROJECTS: '/projects',
+    ABOUT: '/about'
 };
 
 
-hedgehog.Application.prototype.run = function() {
-    var dh = this.domHelper_
-      , el = dh.createDom('h1')
-      , body = dh.getDocument().body;
+window.onload = function() {
 
-    el.appendChild(dh.createTextNode('Hello World!'));
-    body.appendChild(el);
+    // Setup routes
+    var router = new mvc.Router();
+
+    router.route( '{/}', function() {
+        console.log('/');
+    });
+
+    router.route( '/projects', function() {
+        console.log('/projects');
+    });
+
+    router.route( '/about', function() {
+        console.log('/about');
+    });
+
+
+    // Check current route
+    router.checkRoutes();
 };
-
-goog.exportSymbol('hedgehog.Application', hedgehog.Application);
-goog.exportProperty(hedgehog.Application.prototype, 'run', hedgehog.Application.prototype.run);
