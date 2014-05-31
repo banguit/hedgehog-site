@@ -38,7 +38,7 @@ echo "${HR}\n"
 
 python ${CLOSURE_DIR}/closure/bin/calcdeps.py -i app/requirements.js \
     -i ${CLOSURE_DIR}/closure/goog/deps.js \
-    -i ${APP_DIR}/deps.js \
+    -i ${APP_DIR}deps.js \
     -p ${CLOSURE_DIR} -p ${APP_DIR} --output_file=dist/hedgehog.app.min.js -c ./tools/closure-compiler/build/compiler.jar \
     -f "--compilation_level=ADVANCED_OPTIMIZATIONS" \
     -f "--debug=false" \
@@ -54,7 +54,7 @@ python ${CLOSURE_DIR}/closure/bin/calcdeps.py -i app/requirements.js \
     -f "--jscomp_warning=invalidCasts" \
     -f "--jscomp_warning=strictModuleDepCheck" \
     -f "--jscomp_warning=visibility" \
-    -f "--externs=${APP_DIR}/externs.js" \
+    -f "--externs=${APP_DIR}externs.js" \
     -o compiled
 
 echo "\nDone [ ✔ ] (See log above)"

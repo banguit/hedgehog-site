@@ -16,6 +16,12 @@ module.exports = function(grunt) {
             // Compile scripts
             compile: {
                 command: 'sh compile.sh'
+            },
+            compile_hedgehog_bootstrap: {
+                command: [
+                    'cd libs/hedgehog-bootstrap',
+                    'grunt'
+                ].join('&&')
             }
         },
 
@@ -54,7 +60,8 @@ module.exports = function(grunt) {
     grunt.registerTask('default',
         [
             'clean:dist',
-            'shell',
+            'shell:compile',
+            'shell:compile_hedgehog_bootstrap',
             'copy:hedgehog_bootstrap_dist',
             'copy:index'
         ]
