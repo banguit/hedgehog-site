@@ -6080,6 +6080,79 @@ button.close {
   text-transform: uppercase;
   letter-spacing: 0.75px;
 }
+#home header {
+  position: relative;
+  height: 125px;
+}
+#home header .logo {
+  position: absolute;
+  top: 20px;
+}
+#home header .navbar-nav {
+  float: none;
+  height: 125px;
+  margin-left: 230px;
+}
+#home header .navbar-nav li {
+  padding: 0;
+}
+#home header .navbar-nav li a {
+  display: block;
+  height: 125px;
+  line-height: 90px;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
+  color: #8a8a8a;
+  letter-spacing: 0.75px;
+  transition: all 0.2s ease 0s;
+}
+#home header .navbar-nav li a:hover,
+#home header .navbar-nav li a:active,
+#home header .navbar-nav li a.active {
+  color: #fff;
+  opacity: 0.8;
+}
+#home header .navbar-nav li a.red:hover,
+#home header .navbar-nav li a.red:active,
+#home header .navbar-nav li a.red.active {
+  background-color: #e87352;
+}
+#home header .navbar-nav li a.green:hover,
+#home header .navbar-nav li a.green:active,
+#home header .navbar-nav li a.green.active {
+  background-color: #60cd9b;
+}
+#home header .navbar-nav li a.yellow:hover,
+#home header .navbar-nav li a.yellow:active,
+#home header .navbar-nav li a.yellow.active {
+  background-color: #ebc85e;
+}
+body {
+  background: url('../images/bg.jpg');
+}
+a.logo {
+  display: inline-block;
+  width: 200px;
+  height: 75px;
+  line-height: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: #8a8a8a;
+  text-transform: uppercase;
+  background: transparent url('../images/logo.svg') no-repeat scroll left center;
+  background-size: 75px;
+  padding-left: 85px !important;
+  padding-top: 27px !important;
+}
+a.logo:hover,
+a.logo:active,
+a.logo:focus {
+  text-decoration: none;
+  color: #8a8a8a;
+}
 a,
 input[type="text"],
 button {

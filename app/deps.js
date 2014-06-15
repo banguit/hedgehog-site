@@ -26,3 +26,4 @@ goog.addDependency("../../../../app/app.js", ['hedgehog'], ['mvc.Router']);
 goog.addDependency("../../../../app/deps.js", [], []);
 goog.addDependency("../../../../app/externs.js", [], []);
 goog.addDependency("../../../../app/requirements.js", [], ['hedgehog']);
+goog.addDependency("../../../../app/views/header.js", [], []);

@@ -19,6 +19,10 @@ hedgehog.Route = {
 
 window.onload = function() {
 
+    // Setup UI
+
+
+
     // Setup routes
     var router = new mvc.Router();
 
