@@ -6129,23 +6129,27 @@ button.close {
 #home header .navbar-nav li a.yellow.active {
   background-color: #ebc85e;
 }
+#home header a {
+  outline: none !important;
+}
 body {
   background: url('../images/bg.jpg');
 }
 a.logo {
   display: inline-block;
-  width: 200px;
+  width: 192px;
   height: 75px;
   line-height: 16px;
   font-family: 'Montserrat', sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   letter-spacing: 2px;
   color: #8a8a8a;
   text-transform: uppercase;
   background: transparent url('../images/logo.svg') no-repeat scroll left center;
   background-size: 75px;
-  padding-left: 85px !important;
-  padding-top: 27px !important;
+  padding-left: 80px !important;
+  padding-top: 23px !important;
+  text-align: center;
 }
 a.logo:hover,
 a.logo:active,

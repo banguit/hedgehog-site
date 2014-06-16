@@ -22,8 +22,9 @@ goog.addDependency("../../../PlastronJS/tests/model_test.js", [], ['goog.testing
 goog.addDependency("../../../PlastronJS/tests/router_test.js", [], ['goog.testing.ContinuationTestCase', 'goog.testing.jsunit', 'mvc.Router']);
 goog.addDependency("../../../PlastronJS/tests/store_test.js", [], ['goog.testing.jsunit', 'mvc.Collection', 'mvc.Model', 'mvc.Store']);
 goog.addDependency("../../../PlastronJS/tests/test_deps.js", [], []);
-goog.addDependency("../../../../app/app.js", ['hedgehog'], ['mvc.Router']);
+goog.addDependency("../../../../app/app.js", ['hedgehog'], ['mvc.Router', 'hedgehog.Header', 'hedgehog.Menu']);
 goog.addDependency("../../../../app/deps.js", [], []);
 goog.addDependency("../../../../app/externs.js", [], []);
 goog.addDependency("../../../../app/requirements.js", [], ['hedgehog']);
-goog.addDependency("../../../../app/views/header.js", [], []);
+goog.addDependency("../../../../app/views/header.js", ['hedgehog.Header'], ['goog.ui.Component', 'goog.dom']);
+goog.addDependency("../../../../app/views/menu.js", ['hedgehog.Menu'], ['goog.ui.Component']);
