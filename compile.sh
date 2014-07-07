@@ -3,8 +3,10 @@
 
 # Constants
 CLOSURE_DIR="libs/closure-library"
+CLOSURE_TEMPLATE_DIR="tools/closure-templates"
 PLASTRONJS_DIR="libs/PlastronJS"
 APP_DIR="app/"
+LIBS_DIR="libs/"
 VIEWS_DIR="app/views"
 HR=\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 
@@ -27,7 +29,7 @@ fi
 
 
 echo "\nCreating dependency graph...\n"
-python ${CLOSURE_DIR}/closure/bin/calcdeps.py -o deps -d ${CLOSURE_DIR} -p ${PLASTRONJS_DIR} -p ${APP_DIR} --output_file=app/deps.js
+python ${CLOSURE_DIR}/closure/bin/calcdeps.py -o deps -d ${CLOSURE_DIR} -p ${CLOSURE_TEMPLATE_DIR} -p ${PLASTRONJS_DIR} -p ${APP_DIR} --output_file=app/deps.js
 echo "Done [ ✔ ]"
 
 
@@ -38,7 +40,7 @@ echo "${HR}\n"
 python ${CLOSURE_DIR}/closure/bin/calcdeps.py -i app/requirements.js \
     -i ${CLOSURE_DIR}/closure/goog/deps.js \
     -i ${APP_DIR}deps.js \
-    -p ${CLOSURE_DIR} -p ${PLASTRONJS_DIR} -p ${APP_DIR} --output_file=dist/hedgehog.app.min.js -c ./tools/closure-compiler/build/compiler.jar \
+    -p ${CLOSURE_DIR}  -p ${CLOSURE_TEMPLATE_DIR} -p ${PLASTRONJS_DIR} -p ${APP_DIR} --output_file=dist/hedgehog.app.min.js -c ./tools/closure-compiler/build/compiler.jar \
     -f "--compilation_level=ADVANCED_OPTIMIZATIONS" \
     -f "--debug=false" \
     -f "--process_closure_primitives=true" \

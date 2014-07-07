@@ -13,3 +13,6 @@ When completed, you'll be able to run the various Grunt commands provided from t
 
 ### Grunt commands
 
+-- TODO --
+1. `grunt`
+1. `grunt watch`

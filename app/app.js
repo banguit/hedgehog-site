@@ -1,8 +1,10 @@
 goog.provide('hedgehog');
 
+goog.require('goog.dom');
 goog.require('mvc.Router');
 goog.require('hedgehog.Header');
 goog.require('hedgehog.Menu');
+goog.require('hedgehog.Loader');
 
 /**
  * @fileoverview The controller/business logic for the application.
@@ -22,11 +24,15 @@ hedgehog.Route = {
 window.onload = function() {
 
     // Setup UI
-    var header = new hedgehog.Header()
-      , menu = new hedgehog.Menu();
+    var content = goog.dom.getElement('content')
+      , header = new hedgehog.Header()
+      , menu = new hedgehog.Menu()
+      , loader = new hedgehog.Loader();
 
     header.decorate(goog.dom.getElementsByTagNameAndClass('header')[0]);
     menu.decorate(goog.dom.getElementsByTagNameAndClass('nav', 'navbar', header.getElement())[0]);
+    loader.render(content);
+    loader.show(true);
 
     // Setup routes
     var router = new mvc.Router();
@@ -42,6 +48,7 @@ window.onload = function() {
     router.route( '/about', function() {
         menu.setActive('#/about');
     });
+
 
 
     // Check current route

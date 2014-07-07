@@ -1,6 +1,7 @@
 goog.provide('hedgehog.Menu');
 
 goog.require('goog.ui.Component');
+goog.require('goog.dom.classlist');
 
 /**
  * @param {goog.dom.DomHelper=} opt_domHelper DOM helper, used for document interaction.
@@ -27,9 +28,9 @@ hedgehog.Menu.prototype.setActive = function(urlPattern) {
       , menuItem = document.querySelector('a[href="' + urlPattern + '"]');
 
     goog.array.forEach(goog.dom.getElementsByTagNameAndClass('a', null, parent), function(item, index) {
-        goog.dom.classes.remove(item, hedgehog.Menu.CSS_CLASSES.ACTIVE);
+        goog.dom.classlist.remove(item, hedgehog.Menu.CSS_CLASSES.ACTIVE);
     });
-    goog.dom.classes.add(menuItem, hedgehog.Menu.CSS_CLASSES.ACTIVE);
+    goog.dom.classlist.add(menuItem, hedgehog.Menu.CSS_CLASSES.ACTIVE);
 };
 
 
