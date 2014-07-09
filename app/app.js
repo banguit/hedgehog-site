@@ -29,27 +29,32 @@ window.onload = function() {
       , menu = new hedgehog.Menu()
       , loader = new hedgehog.Loader();
 
-    header.decorate(goog.dom.getElementsByTagNameAndClass('header')[0]);
-    menu.decorate(goog.dom.getElementsByTagNameAndClass('nav', 'navbar', header.getElement())[0]);
     loader.render(content);
     loader.show(true);
+
+    header.decorate(goog.dom.getElementsByTagNameAndClass('header')[0]);
+    menu.decorate(goog.dom.getElementsByTagNameAndClass('nav', 'navbar', header.getElement())[0]);
 
     // Setup routes
     var router = new mvc.Router();
 
     router.route( '{/}', function() {
+        loader.show(true);
         menu.setActive('#/');
+        loader.show(false);
     });
 
     router.route( '/projects', function() {
+        loader.show(true);
         menu.setActive('#/projects');
+        loader.show(false);
     });
 
     router.route( '/about', function() {
+        loader.show(true);
         menu.setActive('#/about');
+        loader.show(false);
     });
-
-
 
     // Check current route
     router.checkRoutes();
