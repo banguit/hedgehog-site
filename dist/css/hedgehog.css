@@ -6087,8 +6087,6 @@ html {
 }
 body {
   background: transparent;
-  overflow: hidden;
-  transition: all 0.4s ease 0s;
 }
 a,
 input[type="text"],
@@ -6253,32 +6251,45 @@ h6 {
     width: 100%;
   }
 }
+.wrapper #content {
+  margin-top: 20px;
+}
 @media (max-width: 767px) {
   .wrapper header a.logo {
     top: 60px;
   }
-  .wrapper.active {
-    left: -170px;
+  .wrapper header .navbar-nav {
+    position: absolute;
+    top: 0;
+    right: -170px;
+    height: 100%;
+    width: 170px;
+    background-color: #222;
+    margin: 0;
+    transition: right 0.4s ease 0s;
+  }
+  .wrapper #content {
+    margin-top: 30px;
   }
   .wrapper.active header {
     padding-top: 0px;
+  }
+  .wrapper.active header a.logo {
+    left: -170px;
   }
   .wrapper.active header .page-responsive-header {
     left: -170px;
   }
   .wrapper.active header .navbar-nav {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 170px;
-    margin: 0;
     display: block;
-    background-color: #222;
+    right: 0;
   }
   .wrapper.active header .navbar-nav li {
     float: none;
     width: 170px;
+  }
+  .wrapper.active #content {
+    margin-left: -170px;
   }
 }
 @media (max-width: 1199px) {
