@@ -5,6 +5,7 @@ goog.require('mvc.Router');
 goog.require('hedgehog.Header');
 goog.require('hedgehog.Menu');
 goog.require('hedgehog.Loader');
+goog.require('hedgehog.ResponsiveHeader');
 
 /**
  * @fileoverview The controller/business logic for the application.
@@ -27,13 +28,21 @@ window.onload = function() {
     var content = goog.dom.getElement('content')
       , header = new hedgehog.Header()
       , menu = new hedgehog.Menu()
-      , loader = new hedgehog.Loader();
+      , loader = new hedgehog.Loader()
+      , responsiveHeader = new hedgehog.ResponsiveHeader(goog.dom.getElementByClass('wrapper'));
 
     loader.render(content);
     loader.show(true);
 
     header.decorate(goog.dom.getElementsByTagNameAndClass('header')[0]);
     menu.decorate(goog.dom.getElementsByTagNameAndClass('nav', 'navbar', header.getElement())[0]);
+    responsiveHeader.decorate(goog.dom.getElementByClass('page-responsive-header'));
+
+    window.addEventListener("touchstart", function(event){
+        if(event.target.tagName == "HTML" || event.target.tagName == "BODY"){
+            event.preventDefault();
+        }
+    } ,false);
 
     // Setup routes
     var router = new mvc.Router();

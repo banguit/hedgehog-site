@@ -6084,9 +6084,13 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: url('../images/bg.jpg');
+  height: 100%;
+  width: 100%;
 }
 body {
   background: transparent;
+  height: 100%;
+  overflow-x: hidden;
 }
 a,
 input[type="text"],
@@ -6105,7 +6109,8 @@ h6 {
   text-rendering: optimizelegibility;
 }
 .wrapper {
-  transition: all 0.4s ease 0s;
+  position: relative;
+  overflow-x: hidden;
 }
 .wrapper header {
   height: 125px;
@@ -6156,7 +6161,6 @@ h6 {
 }
 .wrapper header .navbar-nav li a {
   display: block;
-  height: 125px;
   line-height: 90px;
   text-align: center;
   text-transform: uppercase;
@@ -6187,11 +6191,6 @@ h6 {
 .wrapper header .navbar-nav li a.yellow.active {
   background-color: #ebc85e;
 }
-@media (max-width: 767px) {
-  .wrapper header .navbar-nav {
-    display: none;
-  }
-}
 .wrapper header .page-responsive-header {
   display: none;
   position: fixed;
@@ -6199,7 +6198,7 @@ h6 {
   top: 0;
   left: 0;
   z-index: 100;
-  transition: all 0.4s ease 0s;
+  transition: left 0.4s ease 0s;
 }
 .wrapper header .page-responsive-header .navbar-header.navbar-inverse {
   position: relative;
@@ -6230,6 +6229,7 @@ h6 {
   border: 0;
   margin: 8px 15px;
   z-index: 10;
+  cursor: pointer;
 }
 .wrapper header .page-responsive-header .navbar-header.navbar-inverse .navbar-toggle .icon-bar {
   border-radius: 0;
@@ -6268,28 +6268,31 @@ h6 {
     margin: 0;
     transition: right 0.4s ease 0s;
   }
-  .wrapper #content {
-    margin-top: 30px;
-  }
-  .wrapper.active header {
-    padding-top: 0px;
-  }
-  .wrapper.active header a.logo {
-    left: -170px;
-  }
-  .wrapper.active header .page-responsive-header {
-    left: -170px;
-  }
-  .wrapper.active header .navbar-nav {
-    display: block;
-    right: 0;
-  }
-  .wrapper.active header .navbar-nav li {
+  .wrapper header .navbar-nav li {
     float: none;
     width: 170px;
   }
-  .wrapper.active #content {
-    margin-left: -170px;
+  .wrapper #content {
+    margin-top: 30px;
+  }
+  .wrapper.responsive-menu header {
+    padding-top: 0px;
+  }
+  .wrapper.responsive-menu header a.logo {
+    left: -170px;
+  }
+  .wrapper.responsive-menu header .page-responsive-header {
+    left: -170px;
+  }
+  .wrapper.responsive-menu header .navbar-nav {
+    position: fixed;
+    overflow: auto;
+    right: 0;
+  }
+  .wrapper.responsive-menu #content {
+    transition: all 0.4s ease 0s;
+    position: relative;
+    left: -170px;
   }
 }
 @media (max-width: 1199px) {
