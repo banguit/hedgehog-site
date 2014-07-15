@@ -6110,6 +6110,7 @@ h6 {
 }
 .wrapper {
   position: relative;
+  width: 100%;
   overflow-x: hidden;
 }
 .wrapper header {
@@ -6259,7 +6260,7 @@ h6 {
     top: 60px;
   }
   .wrapper header .navbar-nav {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: -170px;
     height: 100%;
@@ -6285,7 +6286,6 @@ h6 {
     left: -170px;
   }
   .wrapper.responsive-menu header .navbar-nav {
-    position: fixed;
     overflow: auto;
     right: 0;
   }

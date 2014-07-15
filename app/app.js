@@ -38,12 +38,6 @@ window.onload = function() {
     menu.decorate(goog.dom.getElementsByTagNameAndClass('nav', 'navbar', header.getElement())[0]);
     responsiveHeader.decorate(goog.dom.getElementByClass('page-responsive-header'));
 
-    window.addEventListener("touchstart", function(event){
-        if(event.target.tagName == "HTML" || event.target.tagName == "BODY"){
-            event.preventDefault();
-        }
-    } ,false);
-
     // Setup routes
     var router = new mvc.Router();
 
