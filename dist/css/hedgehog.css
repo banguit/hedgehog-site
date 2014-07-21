@@ -6085,12 +6085,18 @@ html {
   -moz-osx-font-smoothing: grayscale;
   background: url('../images/bg.jpg');
   height: 100%;
-  width: 100%;
 }
 body {
   background: transparent;
   height: 100%;
   overflow-x: hidden;
+}
+@media (max-width: 767px) {
+  html,
+  body,
+  .wrapper {
+    width: 100%;
+  }
 }
 a,
 input[type="text"],
@@ -6110,7 +6116,6 @@ h6 {
 }
 .wrapper {
   position: relative;
-  width: 100%;
   overflow-x: hidden;
 }
 .wrapper header {
@@ -6274,6 +6279,7 @@ h6 {
     width: 170px;
   }
   .wrapper #content {
+    transition: all 0.4s ease 0s;
     margin-top: 30px;
   }
   .wrapper.responsive-menu header {
@@ -6290,7 +6296,6 @@ h6 {
     right: 0;
   }
   .wrapper.responsive-menu #content {
-    transition: all 0.4s ease 0s;
     position: relative;
     left: -170px;
   }
