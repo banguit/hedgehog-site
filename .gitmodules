@@ -13,3 +13,6 @@ url = https://banguit@github.com/google/closure-compiler.git
 [submodule "libs/SpinJS"]
 	path = libs/SpinJS
 	url = https://banguit@github.com/fgnass/spin.js.git
+[submodule "ghost"]
+	path = ghost
+	url = https://banguit@github.com/TryGhost/Ghost.git
