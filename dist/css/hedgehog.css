@@ -6116,7 +6116,9 @@ h6 {
 }
 .wrapper {
   position: relative;
-  overflow-x: hidden;
+  top: 0;
+  left: 0;
+  transition: all 0.4s ease 0s;
 }
 .wrapper header {
   height: 125px;
@@ -6203,8 +6205,8 @@ h6 {
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 100;
-  transition: left 0.4s ease 0s;
+  z-index: 1001;
+  transition: all 0.4s ease 0s;
 }
 .wrapper header .page-responsive-header .navbar-header.navbar-inverse {
   position: relative;
@@ -6279,24 +6281,34 @@ h6 {
     width: 170px;
   }
   .wrapper #content {
-    transition: all 0.4s ease 0s;
     margin-top: 30px;
+  }
+  .wrapper.responsive-menu:after {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .wrapper.responsive-menu {
+    left: -170px;
   }
   .wrapper.responsive-menu header {
     padding-top: 0px;
   }
-  .wrapper.responsive-menu header a.logo {
-    left: -170px;
-  }
-  .wrapper.responsive-menu header .page-responsive-header {
-    left: -170px;
-  }
   .wrapper.responsive-menu header .navbar-nav {
     overflow: auto;
     right: 0;
+    z-index: 1001;
   }
-  .wrapper.responsive-menu #content {
-    position: relative;
+  .wrapper.responsive-menu .page-responsive-header {
+    display: block;
     left: -170px;
   }
 }
@@ -6313,7 +6325,7 @@ h6 {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 999;
+  z-index: 10002;
 }
 #ajax-overlay div {
   left: 50%;
