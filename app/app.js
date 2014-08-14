@@ -29,7 +29,8 @@ window.onload = function() {
       , header = new hedgehog.Header()
       , menu = new hedgehog.Menu()
       , loader = new hedgehog.Loader()
-      , responsiveHeader = new hedgehog.ResponsiveHeader(goog.dom.getElementByClass('wrapper'));
+      , wrapperElement = goog.dom.getElementByClass('wrapper')
+      , responsiveHeader = new hedgehog.ResponsiveHeader(wrapperElement);
 
     loader.render(content);
     loader.show(true);
@@ -44,19 +45,30 @@ window.onload = function() {
     router.route( '{/}', function() {
         loader.show(true);
         menu.setActive('#/');
-        loader.show(false);
+
+        setTimeout(function() {
+            loader.show(false);
+        }, 1000);
     });
 
     router.route( '/projects', function() {
         loader.show(true);
         menu.setActive('#/projects');
-        loader.show(false);
+
+
+        setTimeout(function() {
+            loader.show(false);
+        }, 1000);
     });
 
     router.route( '/about', function() {
         loader.show(true);
         menu.setActive('#/about');
-        loader.show(false);
+
+
+        setTimeout(function() {
+            loader.show(false);
+        }, 1000);
     });
 
     // Check current route
