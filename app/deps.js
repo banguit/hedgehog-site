@@ -32,4 +32,5 @@ goog.addDependency("../../../../app/components/header.js", ['hedgehog.Header'], 
 goog.addDependency("../../../../app/components/loader.js", ['hedgehog.Loader'], ['goog.ui.Component', 'goog.dom', 'goog.soy', 'goog.style', 'hedgehog.templates']);
 goog.addDependency("../../../../app/components/menu.js", ['hedgehog.Menu'], ['goog.ui.Component', 'goog.dom.classlist']);
 goog.addDependency("../../../../app/components/responsiveheader.js", ['hedgehog.ResponsiveHeader'], ['goog.ui.Component', 'goog.dom']);
+goog.addDependency("../../../../app/components/splash.js", ['hedgehog.Splash'], ['goog.ui.Component', 'goog.dom']);
 goog.addDependency("../../../../app/views/loader.soy.js", ['hedgehog.templates'], ['soy', 'soydata']);

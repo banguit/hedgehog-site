@@ -41,8 +41,20 @@ hedgehog.ResponsiveHeader.prototype.enterDocument = function() {
       , navbarToggle = goog.dom.getElementByClass('navbar-toggle', el);
 
     // Initialize events
+    goog.events.listen(this.wrapper_, goog.events.EventType.CLICK, this.handleWrapperClick_, true, this);
     goog.events.listen(navbarToggle, goog.events.EventType.CLICK, this.handleClick_, false, this);
 };
+
+/**
+ * Set title
+ * @param {string} pagetitle
+ */
+hedgehog.ResponsiveHeader.prototype.setTitle = function(pagetitle) {
+    //navbar-text
+    var title = goog.dom.getElementByClass('navbar-text', this.getElement());
+    goog.dom.setTextContent(title, pagetitle);
+};
+
 
 /**
  * Handle click event on toggle icon
@@ -50,5 +62,26 @@ hedgehog.ResponsiveHeader.prototype.enterDocument = function() {
  * @private
  */
 hedgehog.ResponsiveHeader.prototype.handleClick_ = function(e) {
-    goog.dom.classlist.toggle(this.wrapper_, 'responsive-menu');
+    goog.dom.classlist.toggle(this.wrapper_, hedgehog.ResponsiveHeader.CSS_CLASS);
 };
+
+
+/**
+ * Handle click on wrapper
+ * @private
+ */
+hedgehog.ResponsiveHeader.prototype.handleWrapperClick_ = function(e) {
+    var googDomClassList = goog.dom.classlist;
+    if(e.target == this.wrapper_ && googDomClassList.contains(this.wrapper_, hedgehog.ResponsiveHeader.CSS_CLASS)) {
+        googDomClassList.toggle(this.wrapper_, hedgehog.ResponsiveHeader.CSS_CLASS);
+    }
+};
+
+
+/**
+ * Default CSS class to be applied to the root element of components rendered
+ * by this renderer.
+ *
+ * @type {string}
+ */
+hedgehog.ResponsiveHeader.CSS_CLASS = 'responsive-menu';

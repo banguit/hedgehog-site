@@ -6084,11 +6084,9 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: url('../images/bg.jpg');
-  height: 100%;
 }
 body {
   background: transparent;
-  height: 100%;
   overflow-x: hidden;
 }
 @media (max-width: 767px) {
@@ -6119,9 +6117,11 @@ h6 {
   top: 0;
   left: 0;
   transition: all 0.4s ease 0s;
+  padding: 0;
 }
 .wrapper header {
   height: 125px;
+  padding: 0 15px;
 }
 .wrapper header a {
   outline: none !important;
@@ -6261,6 +6261,23 @@ h6 {
 }
 .wrapper #content {
   margin-top: 20px;
+  padding: 0 15px;
+  height: 100%;
+  min-height: 100%;
+}
+.wrapper footer {
+  margin-top: 25px;
+  padding: 27px 15px 30px 15px;
+  line-height: 1.6em;
+  background-color: #8a8a8a;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  opacity: 0.5;
+}
+.wrapper footer span.copy {
+  color: #fff;
+  text-transform: uppercase;
 }
 @media (max-width: 767px) {
   .wrapper header a.logo {
@@ -6282,6 +6299,10 @@ h6 {
   }
   .wrapper #content {
     margin-top: 30px;
+  }
+  .wrapper footer {
+    padding-top: 8px;
+    padding-bottom: 8px;
   }
   .wrapper.responsive-menu:after {
     content: '';

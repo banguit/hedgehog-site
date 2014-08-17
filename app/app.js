@@ -21,6 +21,8 @@ hedgehog.Route = {
     ABOUT: '/about'
 };
 
+hedgehog.TITLE_SLOGAN = 'Den of hedgehog | Dmitry Antonenko personal website';
+
 
 window.onload = function() {
 
@@ -45,8 +47,9 @@ window.onload = function() {
     router.route( '{/}', function() {
         loader.show(true);
         menu.setActive('#/');
+        hedgehog.setTitles_(responsiveHeader, 'Blog');
 
-        setTimeout(function() {
+        setTimeout(function() { // NOTE: setTimeout for test purpose only
             loader.show(false);
         }, 1000);
     });
@@ -54,9 +57,9 @@ window.onload = function() {
     router.route( '/projects', function() {
         loader.show(true);
         menu.setActive('#/projects');
+        hedgehog.setTitles_(responsiveHeader, 'Projects');
 
-
-        setTimeout(function() {
+        setTimeout(function() { // NOTE: setTimeout for test purpose only
             loader.show(false);
         }, 1000);
     });
@@ -64,13 +67,28 @@ window.onload = function() {
     router.route( '/about', function() {
         loader.show(true);
         menu.setActive('#/about');
+        hedgehog.setTitles_(responsiveHeader, 'About me');
 
-
-        setTimeout(function() {
+        setTimeout(function() { // NOTE: setTimeout for test purpose only
             loader.show(false);
         }, 1000);
     });
 
     // Check current route
     router.checkRoutes();
+};
+
+
+// -------------- //
+// Helper methods //
+// -------------- //
+
+/**
+ * @param {hedgehog.ResponsiveHeader} responsiveHeaderInstance
+ * @param {string} pagetitle
+ * @private
+ */
+hedgehog.setTitles_ = function(responsiveHeaderInstance, pagetitle) {
+    document.title = hedgehog.TITLE_SLOGAN + ' | ' + pagetitle;
+    responsiveHeaderInstance.setTitle(pagetitle);
 };
