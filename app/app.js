@@ -90,6 +90,6 @@ hedgehog.routeCallback_ = function(splashScreen, responsiveHeader, loader, menu,
         if(splashScreen.isActive()) {
             splashScreen.stop();
         }
-    }, 1000);
+    }, 2000);
 };
 

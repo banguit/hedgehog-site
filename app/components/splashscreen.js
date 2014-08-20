@@ -81,7 +81,7 @@ hedgehog.SplashScreen.prototype.play = function() {
       , splashSize = goog.style.getSize(el)
       , logoSize = goog.style.getSize(logo)
       , logoPosition = goog.style.getPosition(logo)
-      , anim = new goog.fx.dom.Slide(logo, [logoPosition.x, logoPosition.y], [logoPosition.x, (splashSize.height / 2) - logoSize.height], 1000, goog.fx.easing.easeOutLong);
+      , anim = new goog.fx.dom.SlideFrom(logo, [logoPosition.x, (splashSize.height / 2) - logoSize.height], 1000, goog.fx.easing.easeOutLong);
 
     // Preload logo image and play animation
     var backgroundImageStyle = googStyle.getComputedStyle(logo, 'background-image')
@@ -101,15 +101,16 @@ hedgehog.SplashScreen.prototype.stop = function() {
     var el = this.getElement()
       , logo = this.logo_
       , logoSize = goog.style.getSize(logo)
-      , logoPosition = goog.style.getPosition(logo)
-      , anim = new goog.fx.dom.Slide(logo, [logoPosition.x, logoPosition.y], [logoPosition.x, 0 - logoSize.height], 500, goog.fx.easing.easeIn);
+      , logoPosition = goog.style.getPosition(logo);
 
-    anim.play();
+    var queue = new goog.fx.AnimationSerialQueue();
 
-    // TODO: Use animation queue to hide splash screen and show wrapper
+    // Hide logo and splash-screen block
+    queue.add(new goog.fx.dom.SlideFrom(logo, [logoPosition.x, 0 - logoSize.height], 500, goog.fx.easing.easeIn));
+    queue.add(new goog.fx.dom.FadeInAndShow(this.wrapper_, 100));
+    queue.add(new goog.fx.dom.FadeOutAndHide(el, 1));
+    queue.play();
 
-//    goog.style.setStyle(el, 'display', 'none');
-//    goog.style.setStyle(this.wrapper_, 'display', 'inherit');
     this.active_ = false;
 };
 
