@@ -10,6 +10,7 @@ goog.require('goog.fx.dom');
 goog.require('goog.fx.AnimationQueue');
 goog.require('goog.fx.AnimationSerialQueue');
 goog.require('goog.fx.AnimationParallelQueue');
+goog.require('goog.labs.net.image');
 
 // Steps:
 // - Wrapper should be hidden
@@ -56,14 +57,15 @@ hedgehog.SplashScreen.prototype.createDom = function() {
 hedgehog.SplashScreen.prototype.enterDocument = function() {
     goog.base(this, 'enterDocument');
 
-    var el = this.getElement()
+    var googStyle = goog.style
+      , el = this.getElement()
       , logo = this.logo_
-      , splashSize = goog.style.getSize(el)
-      , logoSize = goog.style.getSize(logo);
+      , splashSize = googStyle.getSize(el)
+      , logoSize = googStyle.getSize(logo);
 
     // set positions
-    goog.style.setPosition(logo, (splashSize.width / 2) - (logoSize.width / 2), splashSize.height + logoSize.height);
-    goog.style.setStyle(logo, 'display', 'inline-block');
+    googStyle.setPosition(logo, (splashSize.width / 2) - (logoSize.width / 2), splashSize.height + logoSize.height);
+    googStyle.setStyle(logo, 'display', 'inline-block');
 };
 
 
@@ -73,14 +75,21 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
 hedgehog.SplashScreen.prototype.play = function() {
     this.active_ = true;
 
-    var el = this.getElement()
+    var googStyle = goog.style
+      , el = this.getElement()
       , logo = this.logo_
       , splashSize = goog.style.getSize(el)
       , logoSize = goog.style.getSize(logo)
       , logoPosition = goog.style.getPosition(logo)
       , anim = new goog.fx.dom.Slide(logo, [logoPosition.x, logoPosition.y], [logoPosition.x, (splashSize.height / 2) - logoSize.height], 1000, goog.fx.easing.easeOutLong);
 
-    anim.play();
+    // Preload logo image and play animation
+    var backgroundImageStyle = googStyle.getComputedStyle(logo, 'background-image')
+      , logoUrl = (backgroundImageStyle.match( /url\([^\)]+\)/gi ) || [""])[0].split(/[()'"]+/)[1];
+
+    goog.labs.net.image.load(logoUrl).then(function() {
+        anim.play();
+    });
 };
 
 
