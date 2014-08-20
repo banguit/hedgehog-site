@@ -6118,6 +6118,7 @@ h6 {
   left: 0;
   transition: all 0.4s ease 0s;
   padding: 0;
+  display: none;
 }
 .wrapper header {
   height: 125px;
@@ -6337,6 +6338,35 @@ h6 {
   .wrapper {
     width: 100%;
   }
+}
+.splash-screen {
+  position: absolute;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+.splash-screen .logo {
+  display: 'none';
+  position: absolute;
+  width: 280px;
+  height: 90px;
+  line-height: 17px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 30px;
+  letter-spacing: 0.75px;
+  font-weight: bold;
+  color: #8a8a8a;
+  text-transform: uppercase;
+  background: transparent url('../images/logo.svg') no-repeat scroll left center;
+  background-size: 90px;
+  padding-left: 95px;
+  padding-top: 26px;
+}
+.splash-screen .logo small {
+  font-size: 10px;
+  font-weight: lighter;
+  letter-spacing: 0.75px;
+  padding-left: 2px;
 }
 #ajax-overlay {
   background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
