@@ -32,5 +32,5 @@ goog.addDependency("../../../../app/components/header.js", ['hedgehog.Header'], 
 goog.addDependency("../../../../app/components/loader.js", ['hedgehog.Loader'], ['goog.ui.Component', 'goog.dom', 'goog.soy', 'goog.style', 'hedgehog.templates']);
 goog.addDependency("../../../../app/components/menu.js", ['hedgehog.Menu'], ['goog.ui.Component', 'goog.dom.classlist']);
 goog.addDependency("../../../../app/components/responsiveheader.js", ['hedgehog.ResponsiveHeader'], ['goog.ui.Component', 'goog.dom']);
-goog.addDependency("../../../../app/components/splashscreen.js", ['hedgehog.SplashScreen'], ['goog.ui.Component', 'goog.dom', 'goog.style', 'hedgehog.templates', 'goog.soy', 'goog.fx', 'goog.fx.dom', 'goog.fx.AnimationQueue', 'goog.fx.AnimationSerialQueue', 'goog.fx.AnimationParallelQueue', 'goog.labs.net.image']);
+goog.addDependency("../../../../app/components/splashscreen.js", ['hedgehog.SplashScreen'], ['goog.ui.Component', 'goog.dom', 'goog.style', 'hedgehog.templates', 'goog.soy', 'goog.fx', 'goog.fx.dom', 'goog.fx.AnimationQueue', 'goog.fx.AnimationSerialQueue', 'goog.fx.AnimationParallelQueue', 'goog.labs.net.image', 'goog.dom.animationFrame']);
 goog.addDependency("../../../../app/views/templates.soy.js", ['hedgehog.templates'], ['soy', 'soydata']);

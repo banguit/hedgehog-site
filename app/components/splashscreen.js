@@ -11,6 +11,7 @@ goog.require('goog.fx.AnimationQueue');
 goog.require('goog.fx.AnimationSerialQueue');
 goog.require('goog.fx.AnimationParallelQueue');
 goog.require('goog.labs.net.image');
+goog.require('goog.dom.animationFrame');
 
 // Steps:
 // - Wrapper should be hidden
@@ -34,7 +35,7 @@ hedgehog.SplashScreen = function(mainWrapper) {
     /**
      * @type {Element}
      */
-    this.logo_;
+    this.content_;
 
     /**
      * @type {boolean}
@@ -47,7 +48,7 @@ goog.inherits(hedgehog.SplashScreen, goog.ui.Component);
 /** @inheritDoc */
 hedgehog.SplashScreen.prototype.createDom = function() {
     var el = goog.soy.renderAsElement(hedgehog.templates.splashscreen);
-    this.logo_ = goog.dom.getElementByClass('logo', el);
+    this.content_ = goog.dom.getElementByClass('splash-screen-content', el);
 
     this.setElementInternal(/** @type {Element} */(el));
 };
@@ -59,7 +60,7 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
 
     var googStyle = goog.style
       , el = this.getElement()
-      , logo = this.logo_
+      , logo = this.content_
       , splashSize = googStyle.getSize(el)
       , logoSize = googStyle.getSize(logo);
 
@@ -77,19 +78,20 @@ hedgehog.SplashScreen.prototype.play = function() {
 
     var googStyle = goog.style
       , el = this.getElement()
-      , logo = this.logo_
+      , logo = this.content_
       , splashSize = goog.style.getSize(el)
       , logoSize = goog.style.getSize(logo)
       , logoPosition = goog.style.getPosition(logo)
       , anim = new goog.fx.dom.SlideFrom(logo, [logoPosition.x, (splashSize.height / 2) - logoSize.height], 1000, goog.fx.easing.easeOutLong);
 
     // Preload logo image and play animation
-    var backgroundImageStyle = googStyle.getComputedStyle(logo, 'background-image')
-      , logoUrl = (backgroundImageStyle.match( /url\([^\)]+\)/gi ) || [""])[0].split(/[()'"]+/)[1];
+//    var backgroundImageStyle = googStyle.getComputedStyle(logo, 'background-image')
+//      , logoUrl = (backgroundImageStyle.match( /url\([^\)]+\)/gi ) || [""])[0].split(/[()'"]+/)[1];
 
-    goog.labs.net.image.load(logoUrl).then(function() {
-        anim.play();
-    });
+//    goog.labs.net.image.load(logoUrl).then(function() {
+//        anim.play();
+//    });
+    anim.play();
 };
 
 
@@ -99,7 +101,7 @@ hedgehog.SplashScreen.prototype.play = function() {
 hedgehog.SplashScreen.prototype.stop = function() {
 
     var el = this.getElement()
-      , logo = this.logo_
+      , logo = this.content_
       , logoSize = goog.style.getSize(logo)
       , logoPosition = goog.style.getPosition(logo);
 

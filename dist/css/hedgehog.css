@@ -6349,11 +6349,68 @@ h6 {
   width: 100%;
   z-index: 100000;
 }
-.splash-screen .logo {
+.splash-screen .splash-screen-content {
+  border: 1px #f00 solid;
   display: 'none';
-  position: absolute;
+  position: relative;
   width: 280px;
   height: 90px;
+}
+.splash-screen .splash-screen-content .hedgehog {
+  position: relative;
+  height: 90px;
+  width: 90px;
+  float: left;
+  background: transparent url('../images/logo.svg') no-repeat scroll center center;
+  background-size: 100% 100%;
+}
+.splash-screen .splash-screen-content .hedgehog .hedgehog-left-eye {
+  position: absolute;
+  left: 19px;
+  top: 60px;
+  height: 11px;
+  width: 11px;
+  background: transparent url('../images/hedgehog-left-eye.svg') no-repeat scroll center center;
+  background-size: 100% 100%;
+}
+.splash-screen .splash-screen-content .hedgehog .hedgehog-right-eye {
+  position: absolute;
+  height: 25px;
+  width: 25px;
+  left: 31px;
+  top: 46px;
+  background: transparent url('../images/hedgehog-right-eye.svg') no-repeat scroll center center;
+  background-size: 100% 100%;
+}
+.splash-screen .splash-screen-content .hedgehog .hedgehog-front-left-leg {
+  outline: 1px #f00 solid;
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  left: 0px;
+  top: 0px;
+  background: transparent url('../images/hedgehog-foot.svg') no-repeat scroll center center;
+  background-size: 100% 100%;
+}
+.splash-screen .splash-screen-content .hedgehog .hedgehog-front-right-leg {
+  position: absolute;
+  height: 25px;
+  width: 25px;
+  left: 0px;
+  top: 0px;
+  background: transparent url('../images/hedgehog-foot.svg') no-repeat scroll center center;
+  background-size: 100% 100%;
+}
+.splash-screen .splash-screen-content .hedgehog .hedgehog-back-right-leg {
+  position: absolute;
+  height: 25px;
+  width: 25px;
+  left: 0px;
+  top: 0px;
+  background: transparent url('../images/hedgehog-foot.svg') no-repeat scroll center center;
+  background-size: 100% 100%;
+}
+.splash-screen .splash-screen-content .sitename {
   line-height: 17px;
   font-family: 'Montserrat', sans-serif;
   font-size: 30px;
@@ -6361,12 +6418,9 @@ h6 {
   font-weight: bold;
   color: #8a8a8a;
   text-transform: uppercase;
-  background: transparent url('../images/logo.svg') no-repeat scroll left center;
-  background-size: 90px 90px;
-  padding-left: 95px;
   padding-top: 26px;
 }
-.splash-screen .logo small {
+.splash-screen .splash-screen-content .sitename small {
   font-size: 10px;
   font-weight: lighter;
   letter-spacing: 0.75px;
