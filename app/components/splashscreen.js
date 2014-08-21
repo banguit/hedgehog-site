@@ -107,7 +107,7 @@ hedgehog.SplashScreen.prototype.stop = function() {
 
     // Hide logo and splash-screen block
     queue.add(new goog.fx.dom.SlideFrom(logo, [logoPosition.x, 0 - logoSize.height], 500, goog.fx.easing.easeIn));
-    queue.add(new goog.fx.dom.FadeInAndShow(this.wrapper_, 100));
+    queue.add(new goog.fx.dom.FadeInAndShow(this.wrapper_, 250));
     queue.add(new goog.fx.dom.FadeOutAndHide(el, 1));
     queue.play();
 
