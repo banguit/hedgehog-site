@@ -6361,13 +6361,13 @@ h6 {
   height: 90px;
   width: 90px;
   float: left;
-  background: transparent url('../images/logo.svg') no-repeat scroll center center;
+  background: transparent url('../images/hedgehog-body.svg') no-repeat scroll center center;
   background-size: 100% 100%;
 }
 .splash-screen .splash-screen-content .hedgehog .hedgehog-left-eye {
   position: absolute;
   left: 19px;
-  top: 60px;
+  top: 62px;
   height: 11px;
   width: 11px;
   background: transparent url('../images/hedgehog-left-eye.svg') no-repeat scroll center center;
@@ -6378,35 +6378,34 @@ h6 {
   height: 25px;
   width: 25px;
   left: 31px;
-  top: 46px;
+  top: 48px;
   background: transparent url('../images/hedgehog-right-eye.svg') no-repeat scroll center center;
   background-size: 100% 100%;
 }
 .splash-screen .splash-screen-content .hedgehog .hedgehog-front-left-leg {
-  outline: 1px #f00 solid;
   position: absolute;
-  height: 15px;
-  width: 15px;
-  left: 0px;
-  top: 0px;
+  height: 14px;
+  width: 14px;
+  left: 28px;
+  top: 74px;
   background: transparent url('../images/hedgehog-foot.svg') no-repeat scroll center center;
   background-size: 100% 100%;
 }
 .splash-screen .splash-screen-content .hedgehog .hedgehog-front-right-leg {
   position: absolute;
-  height: 25px;
-  width: 25px;
-  left: 0px;
-  top: 0px;
+  height: 14px;
+  width: 14px;
+  left: 43px;
+  top: 75px;
   background: transparent url('../images/hedgehog-foot.svg') no-repeat scroll center center;
   background-size: 100% 100%;
 }
 .splash-screen .splash-screen-content .hedgehog .hedgehog-back-right-leg {
   position: absolute;
-  height: 25px;
-  width: 25px;
-  left: 0px;
-  top: 0px;
+  height: 13px;
+  width: 13px;
+  left: 57px;
+  top: 73px;
   background: transparent url('../images/hedgehog-foot.svg') no-repeat scroll center center;
   background-size: 100% 100%;
 }
