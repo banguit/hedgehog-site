@@ -28,7 +28,7 @@ hedgehog.TITLE_SLOGAN = 'Den of hedgehog | Dmitry Antonenko personal website';
 window.onload = function() {
 
     // Show splash screeen
-    var wrapperElement = goog.dom.getElementByClass('wrapper')
+    var wrapperElement = goog.dom.getElementByClass(hedgehog.CSS_CLASSES.WRAPPER)
       , splashScreen = new hedgehog.SplashScreen(wrapperElement);
 
     splashScreen.render();
@@ -46,7 +46,7 @@ window.onload = function() {
 
     header.decorate(goog.dom.getElementsByTagNameAndClass('header')[0]);
     menu.decorate(goog.dom.getElementsByTagNameAndClass('nav', 'navbar', header.getElement())[0]);
-    responsiveHeader.decorate(goog.dom.getElementByClass('page-responsive-header'));
+    responsiveHeader.decorate(goog.dom.getElementByClass(hedgehog.CSS_CLASSES.RESPONSIVE_HEADER));
 
     // Setup routes
     var router = new mvc.Router();
@@ -93,3 +93,12 @@ hedgehog.routeCallback_ = function(splashScreen, responsiveHeader, loader, menu,
     }, 2000);
 };
 
+
+/**
+ * Predefined CSS classes
+ * @enum {string}
+ */
+hedgehog.CSS_CLASSES = {
+    WRAPPER : 'wrapper',
+    RESPONSIVE_HEADER : 'page-responsive-header'
+}

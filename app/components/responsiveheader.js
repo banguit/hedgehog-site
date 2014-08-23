@@ -38,7 +38,7 @@ hedgehog.ResponsiveHeader.prototype.enterDocument = function() {
     goog.base(this, 'enterDocument');
 
     var el = this.getElement()
-      , navbarToggle = goog.dom.getElementByClass('navbar-toggle', el);
+      , navbarToggle = goog.dom.getElementByClass(hedgehog.ResponsiveHeader.CSS_CLASSES.NAVBAR_TOGGLE, el);
 
     // Initialize events
     goog.events.listen(this.wrapper_, goog.events.EventType.CLICK, this.handleWrapperClick_, true, this);
@@ -51,7 +51,7 @@ hedgehog.ResponsiveHeader.prototype.enterDocument = function() {
  */
 hedgehog.ResponsiveHeader.prototype.setTitle = function(pagetitle) {
     //navbar-text
-    var title = goog.dom.getElementByClass('navbar-text', this.getElement());
+    var title = goog.dom.getElementByClass(hedgehog.ResponsiveHeader.CSS_CLASSES.NAVBAR_TEXT, this.getElement());
     goog.dom.setTextContent(title, pagetitle);
 };
 
@@ -62,7 +62,7 @@ hedgehog.ResponsiveHeader.prototype.setTitle = function(pagetitle) {
  * @private
  */
 hedgehog.ResponsiveHeader.prototype.handleClick_ = function(e) {
-    goog.dom.classlist.toggle(this.wrapper_, hedgehog.ResponsiveHeader.CSS_CLASS);
+    goog.dom.classlist.toggle(this.wrapper_, hedgehog.ResponsiveHeader.CSS_CLASSES.RESPONSIVE_MENU);
 };
 
 
@@ -72,16 +72,14 @@ hedgehog.ResponsiveHeader.prototype.handleClick_ = function(e) {
  */
 hedgehog.ResponsiveHeader.prototype.handleWrapperClick_ = function(e) {
     var googDomClassList = goog.dom.classlist;
-    if(e.target == this.wrapper_ && googDomClassList.contains(this.wrapper_, hedgehog.ResponsiveHeader.CSS_CLASS)) {
-        googDomClassList.toggle(this.wrapper_, hedgehog.ResponsiveHeader.CSS_CLASS);
+    if(e.target == this.wrapper_ && googDomClassList.contains(this.wrapper_, hedgehog.ResponsiveHeader.CSS_CLASSES.RESPONSIVE_MENU)) {
+        googDomClassList.toggle(this.wrapper_, hedgehog.ResponsiveHeader.CSS_CLASSES.RESPONSIVE_MENU);
     }
 };
 
-
-/**
- * Default CSS class to be applied to the root element of components rendered
- * by this renderer.
- *
- * @type {string}
- */
-hedgehog.ResponsiveHeader.CSS_CLASS = 'responsive-menu';
+/** @enum {string} */
+hedgehog.ResponsiveHeader.CSS_CLASSES = {
+    RESPONSIVE_MENU : 'responsive-menu',
+    NAVBAR_TEXT : 'navbar-text',
+    NAVBAR_TOGGLE : 'navbar-toggle'
+};

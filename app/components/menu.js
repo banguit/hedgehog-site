@@ -21,7 +21,7 @@ hedgehog.Menu.prototype.createDom = function() {
 
 
 /**
- *
+ * Set active menu item by route
  */
 hedgehog.Menu.prototype.setActive = function(urlPattern) {
     var parent = this.getElement()[0]

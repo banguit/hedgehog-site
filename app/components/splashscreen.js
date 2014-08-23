@@ -11,7 +11,6 @@ goog.require('goog.fx.AnimationQueue');
 goog.require('goog.fx.AnimationSerialQueue');
 goog.require('goog.fx.AnimationParallelQueue');
 goog.require('goog.labs.net.image');
-goog.require('goog.dom.animationFrame');
 
 // Steps:
 // - Wrapper should be hidden
@@ -34,21 +33,83 @@ hedgehog.SplashScreen = function(mainWrapper) {
 
     /**
      * @type {Element}
+     * @private
      */
     this.content_;
 
     /**
      * @type {boolean}
+     * @private
      */
     this.active_ = false;
+
+    /**
+     * @type {Element}
+     * @private
+     */
+    this.hedgehogBody_;
+
+    /**
+     * @type {Element}
+     * @private
+     */
+    this.hedgehogLeftEye_;
+
+    /**
+     * @type {Element}
+     * @private
+     */
+    this.hedgehogRightEye_;
+
+
+    /**
+     * @type {Element}
+     * @private
+     */
+    this.hedgehogFrontLeftLeg_;
+
+
+    /**
+     * @type {Element}
+     * @private
+     */
+    this.hedgehogFrontRightLeg_;
+
+
+    /**
+     * @type {Element}
+     * @private
+     */
+    this.hedgehogBackRightLeg_;
+
+
+    /**
+     * @type {goog.fx.dom.SlideFrom}
+     * @private
+     */
+    this.slideContentToCenterAnimation_;
+
+    /**
+     * @type {goog.fx.AnimationParallelQueue}
+     * @private
+     */
+    this.hedgehogAnimationParallelQueue_;
 };
 goog.inherits(hedgehog.SplashScreen, goog.ui.Component);
 
 
 /** @inheritDoc */
 hedgehog.SplashScreen.prototype.createDom = function() {
-    var el = goog.soy.renderAsElement(hedgehog.templates.splashscreen);
-    this.content_ = goog.dom.getElementByClass('splash-screen-content', el);
+    var el = goog.soy.renderAsElement(hedgehog.templates.splashscreen)
+      , content = this.content_ = goog.dom.getElementByClass(hedgehog.SplashScreen.CSS_CLASSES.CONTENT, el)
+      , getElementByClass = goog.dom.getElementByClass;
+
+    this.hedgehogBody_ = getElementByClass(hedgehog.SplashScreen.CSS_CLASSES.HEDGEHOG_BODY, content);
+    this.hedgehogLeftEye_ = getElementByClass(hedgehog.SplashScreen.CSS_CLASSES.HEDGEHOG_LEFT_EYE, content);
+    this.hedgehogRightEye_ = getElementByClass(hedgehog.SplashScreen.CSS_CLASSES.HEDGEHOG_RIGHT_EYE, content);
+    this.hedgehogFrontLeftLeg_ = getElementByClass(hedgehog.SplashScreen.CSS_CLASSES.HEDGEHOG_FRONT_LEFT_LEG, content);
+    this.hedgehogFrontRightLeg_ = getElementByClass(hedgehog.SplashScreen.CSS_CLASSES.HEDGEHOG_FRONT_RIGHT_LEG, content);
+    this.hedgehogBackRightLeg_ = getElementByClass(hedgehog.SplashScreen.CSS_CLASSES.HEDGEHOG_BACK_RIGHT_LEG, content);
 
     this.setElementInternal(/** @type {Element} */(el));
 };
@@ -60,13 +121,24 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
 
     var googStyle = goog.style
       , el = this.getElement()
-      , logo = this.content_
+      , content = this.content_
       , splashSize = googStyle.getSize(el)
-      , logoSize = googStyle.getSize(logo);
+      , contentSize = googStyle.getSize(content)
+      , contentPositionLeft = (splashSize.width / 2) - (contentSize.width / 2)
+      , contentPositionTop = splashSize.height + contentSize.height;
 
-    // set positions
-    googStyle.setPosition(logo, (splashSize.width / 2) - (logoSize.width / 2), splashSize.height + logoSize.height);
-    googStyle.setStyle(logo, 'display', 'inline-block');
+    // Hide hedgehog outside of screen
+    googStyle.setPosition(content, contentPositionLeft, contentPositionTop);
+    googStyle.setStyle(content, 'display', 'inline-block');
+
+    // Define animation
+    this.slideContentToCenterAnimation_ = new goog.fx.dom.SlideFrom(content, [contentPositionLeft, (splashSize.height / 2) - contentSize.height], 800, goog.fx.easing.easeOutLong);
+    this.hedgehogAnimationParallelQueue_ = new goog.fx.AnimationParallelQueue();
+
+    // Define animation events
+    goog.events.listen(this.slideContentToCenterAnimation_, goog.fx.Transition.EventType.FINISH, function(event) {
+        console.log(event);
+    });
 };
 
 
@@ -76,14 +148,6 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
 hedgehog.SplashScreen.prototype.play = function() {
     this.active_ = true;
 
-    var googStyle = goog.style
-      , el = this.getElement()
-      , logo = this.content_
-      , splashSize = goog.style.getSize(el)
-      , logoSize = goog.style.getSize(logo)
-      , logoPosition = goog.style.getPosition(logo)
-      , anim = new goog.fx.dom.SlideFrom(logo, [logoPosition.x, (splashSize.height / 2) - logoSize.height], 1000, goog.fx.easing.easeOutLong);
-
     // Preload logo image and play animation
 //    var backgroundImageStyle = googStyle.getComputedStyle(logo, 'background-image')
 //      , logoUrl = (backgroundImageStyle.match( /url\([^\)]+\)/gi ) || [""])[0].split(/[()'"]+/)[1];
@@ -91,7 +155,8 @@ hedgehog.SplashScreen.prototype.play = function() {
 //    goog.labs.net.image.load(logoUrl).then(function() {
 //        anim.play();
 //    });
-    anim.play();
+
+    this.slideContentToCenterAnimation_.play();
 };
 
 
@@ -116,6 +181,7 @@ hedgehog.SplashScreen.prototype.stop = function() {
     this.active_ = false;
 };
 
+
 /**
  * Complete splash screen animation
  * @return {boolean}
@@ -125,8 +191,14 @@ hedgehog.SplashScreen.prototype.isActive = function() {
 };
 
 
-/**
- * Component default css class
- * @type {string}
- */
-hedgehog.SplashScreen.CSS_CLASS = 'splash-screen';
+/** @enum {string} */
+hedgehog.SplashScreen.CSS_CLASSES = {
+    MAIN : 'splash-screen',
+    CONTENT : 'splash-screen-content',
+    HEDGEHOG_BODY : 'hedgehog',
+    HEDGEHOG_LEFT_EYE : 'hedgehog-left-eye',
+    HEDGEHOG_RIGHT_EYE : 'hedgehog-right-eye',
+    HEDGEHOG_FRONT_LEFT_LEG : 'hedgehog-front-left-leg',
+    HEDGEHOG_FRONT_RIGHT_LEG : 'hedgehog-front-right-leg',
+    HEDGEHOG_BACK_RIGHT_LEG : 'hedgehog-back-right-leg'
+};
