@@ -88,9 +88,9 @@ hedgehog.routeCallback_ = function(splashScreen, responsiveHeader, loader, menu,
     setTimeout(function() { // NOTE: setTimeout for test purpose only
         loader.show(false);
         if(splashScreen.isActive()) {
-            //splashScreen.stop();
+            splashScreen.stop();
         }
-    }, 2000);
+    }, 3000);
 };
 
 
