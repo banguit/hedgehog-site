@@ -156,16 +156,19 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
     this.slideContentToCenterAnimation_ = new goog.fx.dom.SlideFrom(content, [contentPositionLeft, (splashSize.height / 2) - contentSize.height], 800, goog.fx.easing.easeOutLong);
     queueForward = this.hedgehogAnimationParallelQueueForward_ = new goog.fx.AnimationParallelQueue();
 
-    queueFrontLeftLegForward = new goog.fx.AnimationSerialQueue();
-    queueFrontLeftLegForward.add(new goog.fx.dom.SlideFrom(this.hedgehogFrontLeftLeg_, [23, 75], 200, goog.fx.easing.inAndOut));
-    queueFrontLeftLegForward.add(new goog.fx.dom.SlideFrom(this.hedgehogFrontLeftLeg_, [28, 75], 200, goog.fx.easing.inAndOut));
-    queueFrontLeftLegForward.add(new goog.fx.dom.SlideFrom(this.hedgehogFrontLeftLeg_, [28, 74], 100, goog.fx.easing.inAndOut));
-    queueForward.add(queueFrontLeftLegForward);
+//    queueFrontLeftLegForward = new goog.fx.AnimationSerialQueue();
+//    queueFrontLeftLegForward.add(new goog.fx.dom.SlideFrom(this.hedgehogFrontLeftLeg_, [23, 74], 200));
+//    queueForward.add(queueFrontLeftLegForward);
+//
+//    queueBackRightLegForward = new goog.fx.AnimationSerialQueue();
+//    queueBackRightLegForward.add(new goog.fx.dom.SlideFrom(this.hedgehogBackRightLeg_, [54, 74], 200));
+//    queueForward.add(queueBackRightLegForward);
+
+    //queueFrontLeftLegInitial.add(new goog.fx.dom.SlideFrom(this.hedgehogBackRightLeg_, [57, 73], 200));
 
     queueInitial = this.hedgehogAnimationParallelQueueInitial_ = new goog.fx.AnimationParallelQueue();
     queueFrontLeftLegInitial = new goog.fx.AnimationSerialQueue();
-    queueFrontLeftLegInitial.add(new goog.fx.dom.SlideFrom(this.hedgehogFrontLeftLeg_, [28, 74], 200, goog.fx.easing.easeOut));
-    queueFrontLeftLegInitial.add(new goog.fx.dom.SlideFrom(this.hedgehogBackRightLeg_, [57, 73], 200, goog.fx.easing.easeIn));
+    queueFrontLeftLegInitial.add(new goog.fx.dom.SlideFrom(this.hedgehogFrontLeftLeg_, [28, 74], 200));
     queueInitial.add(queueFrontLeftLegInitial);
 
     // Define animation events
