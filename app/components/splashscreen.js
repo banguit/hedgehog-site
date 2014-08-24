@@ -101,14 +101,14 @@ hedgehog.SplashScreen = function(mainWrapper) {
      * @type {goog.fx.AnimationParallelQueue}
      * @private
      */
-    this.hedgehogAnimationParallelQueue1_;
+    this.hedgehogAnimationParallelQueueForward_;
 
 
     /**
      * @type {goog.fx.AnimationParallelQueue}
      * @private
      */
-    this.hedgehogAnimationParallelQueue2_;
+    this.hedgehogAnimationParallelQueueInitial_;
 };
 goog.inherits(hedgehog.SplashScreen, goog.ui.Component);
 
@@ -141,10 +141,12 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
       , contentSize = googStyle.getSize(content)
       , contentPositionLeft = (splashSize.width / 2) - (contentSize.width / 2)
       , contentPositionTop = splashSize.height + contentSize.height
-      , queueFrontLeftLeg1
-      , queueFrontLeftLeg2
-      , queue1
-      , queue2;
+      , queueFrontLeftLegForward
+      , queueFrontLeftLegInitial
+      , queueBackRightLegForward
+      , queueBackRightLegInitial
+      , queueForward
+      , queueInitial;
 
     // Hide hedgehog outside of screen
     googStyle.setPosition(content, contentPositionLeft, contentPositionTop);
@@ -152,43 +154,44 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
 
     // Define animation
     this.slideContentToCenterAnimation_ = new goog.fx.dom.SlideFrom(content, [contentPositionLeft, (splashSize.height / 2) - contentSize.height], 800, goog.fx.easing.easeOutLong);
-    queue1 = this.hedgehogAnimationParallelQueue1_ = new goog.fx.AnimationParallelQueue();
+    queueForward = this.hedgehogAnimationParallelQueueForward_ = new goog.fx.AnimationParallelQueue();
 
-//    queueFrontLeftLeg1 = new goog.fx.AnimationSerialQueue();
-//    queueFrontLeftLeg1.add(new goog.fx.dom.SlideFrom(this.hedgehogFrontLeftLeg_, [23, 75], 250, goog.fx.easing.inAndOut));
-//    queueFrontLeftLeg1.add(new goog.fx.dom.SlideFrom(this.hedgehogFrontLeftLeg_, [28, 74], 250, goog.fx.easing.inAndOut));
-//    queue1.add(queueFrontLeftLeg1);
+    queueFrontLeftLegForward = new goog.fx.AnimationSerialQueue();
+    queueFrontLeftLegForward.add(new goog.fx.dom.SlideFrom(this.hedgehogFrontLeftLeg_, [23, 75], 200, goog.fx.easing.inAndOut));
+    queueFrontLeftLegForward.add(new goog.fx.dom.SlideFrom(this.hedgehogFrontLeftLeg_, [28, 75], 200, goog.fx.easing.inAndOut));
+    queueFrontLeftLegForward.add(new goog.fx.dom.SlideFrom(this.hedgehogFrontLeftLeg_, [28, 74], 100, goog.fx.easing.inAndOut));
+    queueForward.add(queueFrontLeftLegForward);
 
-    queue2 = this.hedgehogAnimationParallelQueue2_ = new goog.fx.AnimationParallelQueue();
-//    queueFrontLeftLeg2 = new goog.fx.AnimationSerialQueue();
-//    queueFrontLeftLeg2.add(new goog.fx.dom.SlideFrom(this.hedgehogFrontLeftLeg_, [28, 74], 250, goog.fx.easing.easeOut));
-//    queueFrontLeftLeg2.add(new goog.fx.dom.SlideFrom(this.hedgehogBackRightLeg_, [57, 73], 250, goog.fx.easing.easeIn));
-//    queue2.add(queueFrontLeftLeg2);
+    queueInitial = this.hedgehogAnimationParallelQueueInitial_ = new goog.fx.AnimationParallelQueue();
+    queueFrontLeftLegInitial = new goog.fx.AnimationSerialQueue();
+    queueFrontLeftLegInitial.add(new goog.fx.dom.SlideFrom(this.hedgehogFrontLeftLeg_, [28, 74], 200, goog.fx.easing.easeOut));
+    queueFrontLeftLegInitial.add(new goog.fx.dom.SlideFrom(this.hedgehogBackRightLeg_, [57, 73], 200, goog.fx.easing.easeIn));
+    queueInitial.add(queueFrontLeftLegInitial);
 
     // Define animation events
     goog.events.listen(this.slideContentToCenterAnimation_, goog.fx.Transition.EventType.FINISH, goog.bind(this.onslideContentToCenterAnimationFinish_, this));
-    goog.events.listen(queue1, goog.fx.Transition.EventType.FINISH, goog.bind(this.onHedgehogAnimationParallelQueue1Finish_, this));
-    goog.events.listen(queue2, goog.fx.Transition.EventType.FINISH, goog.bind(this.onHedgehogAnimationParallelQueue2Finish_, this));
+    goog.events.listen(queueForward, goog.fx.Transition.EventType.FINISH, goog.bind(this.onHedgehogAnimationParallelQueue1Finish_, this));
+    goog.events.listen(queueInitial, goog.fx.Transition.EventType.FINISH, goog.bind(this.onHedgehogAnimationParallelQueue2Finish_, this));
 };
 
 
 hedgehog.SplashScreen.prototype.onslideContentToCenterAnimationFinish_ = function(event) {
-    this.hedgehogAnimationParallelQueue1_.play();
+    this.hedgehogAnimationParallelQueueForward_.play();
 };
 
 hedgehog.SplashScreen.prototype.onslideContentToCenterAnimationStop_ = function(event) {
-    this.hedgehogAnimationParallelQueue1_.stop();
-    this.hedgehogAnimationParallelQueue2_.play();
+    this.hedgehogAnimationParallelQueueForward_.stop();
+    this.hedgehogAnimationParallelQueueInitial_.play();
 };
 
 
 hedgehog.SplashScreen.prototype.onHedgehogAnimationParallelQueue1Finish_ = function(event) {
-    this.hedgehogAnimationParallelQueue2_.play();
+    this.hedgehogAnimationParallelQueueInitial_.play();
 };
 
 
 hedgehog.SplashScreen.prototype.onHedgehogAnimationParallelQueue2Finish_ = function(event) {
-    this.hedgehogAnimationParallelQueue1_.play();
+    this.hedgehogAnimationParallelQueueForward_.play();
 };
 
 /**
