@@ -104,4 +104,4 @@ hedgehog.routeCallback_ = function(splashScreen, responsiveHeader, loader, menu,
 hedgehog.CSS_CLASSES = {
     WRAPPER : 'wrapper',
     RESPONSIVE_HEADER : 'page-responsive-header'
-}
+};
