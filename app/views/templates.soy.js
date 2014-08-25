@@ -27,3 +27,14 @@ hedgehog.templates.loader = function(opt_data, opt_ignored) {
 hedgehog.templates.splashscreen = function(opt_data, opt_ignored) {
   return '<div id="splash-screen" class="splash-screen"><div class="splash-screen-content"><div class="hedgehog"><div class="hedgehog-left-eye"></div><div class="hedgehog-right-eye"></div><div class="hedgehog-front-left-leg"></div><div class="hedgehog-front-right-leg"></div><div class="hedgehog-back-right-leg"></div></div><div class="sitename"><small>Den of</small> hedgehog</div></div></div>';
 };
+
+
+/**
+ * @param {Object.<string, *>=} opt_data
+ * @param {(null|undefined)=} opt_ignored
+ * @return {string}
+ * @notypecheck
+ */
+hedgehog.templates.about = function(opt_data, opt_ignored) {
+  return '<h1>About me here!</h1>';
+};

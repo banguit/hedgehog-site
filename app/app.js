@@ -7,6 +7,9 @@ goog.require('hedgehog.Menu');
 goog.require('hedgehog.Loader');
 goog.require('hedgehog.ResponsiveHeader');
 goog.require('hedgehog.SplashScreen');
+goog.require('hedgehog.templates');
+goog.require('goog.soy');
+
 
 /**
  * @fileoverview The controller/business logic for the application.

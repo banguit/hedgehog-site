@@ -6553,11 +6553,11 @@ h6 {
   overflow: hidden;
   height: 100%;
   width: 100%;
-  z-index: 100000;
+  z-index: 10000;
 }
 .splash-screen .splash-screen-content {
-  display: 'none';
   position: relative;
+  display: none;
   width: 280px;
   height: 90px;
 }

@@ -11,6 +11,7 @@ goog.require('goog.fx.AnimationQueue');
 goog.require('goog.fx.AnimationSerialQueue');
 goog.require('goog.fx.AnimationParallelQueue');
 goog.require('goog.labs.net.image');
+goog.require('goog.labs.userAgent.device');
 
 // Steps:
 // - Wrapper should be hidden
@@ -149,7 +150,6 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
 
     // Hide hedgehog outside of screen
     googStyle.setPosition(content, contentPositionLeft, contentPositionTop);
-    googStyle.setStyle(content, 'display', 'inline-block');
 
     // Define animation
     this.slideContentToCenterAnimation_ = new googFxDom.SlideFrom(content, [contentPositionLeft, (splashSize.height / 2) - contentSize.height], 800, goog.fx.easing.easeOutLong);
@@ -174,7 +174,8 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
     goog.events.listen(queueInitial, googFx.Transition.EventType.FINISH, goog.bind(this.onHedgehogAnimationParallelQueueInitialFinish_, this));
 
     // Initialize component events
-    goog.events.listen(window, goog.events.EventType.RESIZE, this.onWindowResize_, false, this);
+    goog.events.listen(window, goog.events.EventType.RESIZE, this.onWindowResize_, true, this);
+    goog.events.listen(window, goog.events.EventType.ORIENTATIONCHANGE, this.onWindowResize_, false, this);
 };
 
 
@@ -183,14 +184,13 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
  * @private
  */
 hedgehog.SplashScreen.prototype.onWindowResize_ = function() {
-    console.log('hedgehog.SplashScreen.prototype.onWindowResize_');
     if(this.isActive()) {
         var googStyle = goog.style
-            , content = this.content_
-            , splashSize = googStyle.getSize(this.getElement())
-            , contentSize = googStyle.getSize(content)
-            , contentPositionLeft = (splashSize.width / 2) - (contentSize.width / 2)
-            , contentPositionTop = (splashSize.height / 2) - contentSize.height;
+          , content = this.content_
+          , splashSize = googStyle.getSize(this.getElement())
+          , contentSize = googStyle.getSize(content)
+          , contentPositionLeft = (splashSize.width / 2) - (contentSize.width / 2)
+          , contentPositionTop = (splashSize.height / 2) - contentSize.height;
 
         googStyle.setPosition(content, contentPositionLeft, contentPositionTop);
     }
@@ -237,11 +237,11 @@ hedgehog.SplashScreen.getElementBackgroundImageUlr_ = function(el) {
  * Run splash screen animation
  */
 hedgehog.SplashScreen.prototype.play = function() {
-    this.active_ = true;
+    goog.style.setStyle(this.content_, 'display', 'block');
 
     // Preload logo image and play animation
     var getUrl = hedgehog.SplashScreen.getElementBackgroundImageUlr_
-      , thenCallback = goog.bind(function() { count++; if(count == 6) { this.slideContentToCenterAnimation_.play(); } }, this)
+      , thenCallback = goog.bind(function() { count++; if(count == 6) { this.slideContentToCenterAnimation_.play(); this.active_ = true; } }, this)
       , logoSlices = [ this.hedgehogBody_,
                        this.hedgehogLeftEye_,
                        this.hedgehogRightEye_,
