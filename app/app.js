@@ -27,8 +27,10 @@ hedgehog.Route = {
 
 hedgehog.TITLE_SLOGAN = 'Den of hedgehog | Dmitry Antonenko personal website';
 
-
-window.onload = function() {
+/**
+ * Initializes the application
+ */
+hedgehog.start = function() {
 
     // Show splash screeen
     var wrapperElement = goog.dom.getElementByClass(hedgehog.CSS_CLASSES.WRAPPER)
@@ -55,15 +57,16 @@ window.onload = function() {
     var router = new mvc.Router();
 
     var routeCallback = goog.partial(hedgehog.routeCallback_, splashScreen, responsiveHeader, loader, menu)
-      , blogRouteCallback = goog.bind(routeCallback, this, '/', 'Blog')
-      , projectsRouteCallback = goog.bind(routeCallback, this, '/projects', 'Projects')
-      , aboutRouteCallback = goog.bind(routeCallback, this, '/about', 'About me');
+      , blogRouteCallback = goog.bind(routeCallback, hedgehog.start, '/', 'Blog')
+      , projectsRouteCallback = goog.bind(routeCallback, hedgehog.start, '/projects', 'Projects')
+      , aboutRouteCallback = goog.bind(routeCallback, hedgehog.start, '/about', 'About me');
 
     router.route( '{/}', blogRouteCallback);
     router.route( '/projects', projectsRouteCallback);
     router.route( '/about', aboutRouteCallback);
 
     // TODO: 404
+    // TODO: Invoking controller actions
 
     // Check current route
     router.checkRoutes();
@@ -105,3 +108,5 @@ hedgehog.CSS_CLASSES = {
     WRAPPER : 'wrapper',
     RESPONSIVE_HEADER : 'page-responsive-header'
 };
+
+goog.exportSymbol('app.start', hedgehog.start);
