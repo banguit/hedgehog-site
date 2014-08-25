@@ -49,6 +49,7 @@ hedgehog.start = function() {
     loader.render(content);
     loader.show(true);
 
+    // Define components
     header.decorate(goog.dom.getElementsByTagNameAndClass('header')[0]);
     menu.decorate(goog.dom.getElementsByTagNameAndClass('nav', 'navbar', header.getElement())[0]);
     responsiveHeader.decorate(goog.dom.getElementByClass(hedgehog.CSS_CLASSES.RESPONSIVE_HEADER));
