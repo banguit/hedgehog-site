@@ -194,6 +194,8 @@ hedgehog.SplashScreen.prototype.onWindowResize_ = function() {
 
         googStyle.setPosition(content, contentPositionLeft, contentPositionTop);
     }
+
+    console.log('onWindowResize_');
 };
 
 
@@ -278,6 +280,7 @@ hedgehog.SplashScreen.prototype.stop = function() {
     this.hedgehogAnimationParallelQueueInitial_.stop();
 
     this.active_ = false;
+    goog.events.listenOnce(queue, goog.fx.Transition.EventType.FINISH, function() { this.dispose(); }, false, this);
 };
 
 
@@ -287,6 +290,25 @@ hedgehog.SplashScreen.prototype.stop = function() {
  */
 hedgehog.SplashScreen.prototype.isActive = function() {
     return this.active_;
+};
+
+
+/** @inheritDoc */
+hedgehog.SplashScreen.prototype.disposeInternal = function() {
+    goog.base(this, 'disposeInternal');
+
+    goog.dispose(this.hedgehogBody_);
+    goog.dispose(this.hedgehogLeftEye_);
+    goog.dispose(this.hedgehogRightEye_);
+    goog.dispose(this.hedgehogFrontLeftLeg_);
+    goog.dispose(this.hedgehogFrontRightLeg_);
+    goog.dispose(this.hedgehogBackRightLeg_);
+
+    goog.events.unlisten(this.slideContentToCenterAnimation_, goog.fx.Transition.EventType.FINISH, goog.bind(this.onslideContentToCenterAnimationFinish_, this));
+    goog.events.unlisten(this.hedgehogAnimationParallelQueueForward_, goog.fx.Transition.EventType.FINISH, goog.bind(this.onHedgehogAnimationParallelQueueForwardFinish_, this));
+    goog.events.unlisten(this.hedgehogAnimationParallelQueueInitial_, goog.fx.Transition.EventType.FINISH, goog.bind(this.onHedgehogAnimationParallelQueueInitialFinish_, this));
+    goog.events.unlisten(window, goog.events.EventType.RESIZE, this.onWindowResize_, true, this);
+    goog.events.unlisten(window, goog.events.EventType.ORIENTATIONCHANGE, this.onWindowResize_, false, this);
 };
 
 
