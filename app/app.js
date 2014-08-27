@@ -1,3 +1,9 @@
+/**
+ * @fileoverview The controller/business logic for the application.
+ *
+ * @author banguit@gmail.com (Dmitry Antonenko)
+ */
+
 goog.provide('hedgehog');
 
 goog.require('goog.dom');
@@ -10,20 +16,13 @@ goog.require('hedgehog.SplashScreen');
 goog.require('hedgehog.templates');
 goog.require('goog.soy');
 
+// - - - -
 
-/**
- * @fileoverview The controller/business logic for the application.
- */
+goog.require('hedgehog.core.Application');
+goog.require('hedgehog.controllers.BlogController');
+goog.require('hedgehog.controllers.ProjectsController');
+goog.require('hedgehog.controllers.AboutController');
 
-/**
- * Enum for the possible route values
- * @enum {!string}
- */
-hedgehog.Route = {
-    BLOG: '/',
-    PROJECTS: '/projects',
-    ABOUT: '/about'
-};
 
 hedgehog.TITLE_SLOGAN = 'Den of hedgehog | Dmitry Antonenko personal website';
 
@@ -49,28 +48,39 @@ hedgehog.start = function() {
     loader.render(content);
     loader.show(true);
 
-    // Define components
+    // Initialize UI components
     header.decorate(goog.dom.getElementsByTagNameAndClass('header')[0]);
     menu.decorate(goog.dom.getElementsByTagNameAndClass('nav', 'navbar', header.getElement())[0]);
     responsiveHeader.decorate(goog.dom.getElementByClass(hedgehog.CSS_CLASSES.RESPONSIVE_HEADER));
 
+    // - - - - - - - - - - - - - - - - - - - -
+    var app = new hedgehog.core.Application();
+
+    // Register routes
+    app.defaultController(hedgehog.controllers.BlogController);
+    app.mapRoute('/blog[/:action][/:id]', hedgehog.controllers.BlogController);
+    app.mapRoute('/projects', hedgehog.controllers.ProjectsController);
+    app.mapRoute('/about', hedgehog.controllers.AboutController);
+
     // Setup routes
-    var router = new mvc.Router();
+//    var router = new mvc.Router();
+//
+//    var routeCallback = goog.partial(hedgehog.routeCallback_, splashScreen, responsiveHeader, loader, menu)
+//      , blogRouteCallback = goog.bind(routeCallback, hedgehog.start, '/', 'Blog')
+//      , projectsRouteCallback = goog.bind(routeCallback, hedgehog.start, '/projects', 'Projects')
+//      , aboutRouteCallback = goog.bind(routeCallback, hedgehog.start, '/about', 'About me');
+//
+//    router.route( '{/}', blogRouteCallback);
+//    router.route( '/projects', projectsRouteCallback);
+//    router.route( '/about', aboutRouteCallback);
+//
+//    // TODO: 404
+//    // TODO: Invoking controller actions
+//
+//    // Check current route
+//    router.checkRoutes();
 
-    var routeCallback = goog.partial(hedgehog.routeCallback_, splashScreen, responsiveHeader, loader, menu)
-      , blogRouteCallback = goog.bind(routeCallback, hedgehog.start, '/', 'Blog')
-      , projectsRouteCallback = goog.bind(routeCallback, hedgehog.start, '/projects', 'Projects')
-      , aboutRouteCallback = goog.bind(routeCallback, hedgehog.start, '/about', 'About me');
-
-    router.route( '{/}', blogRouteCallback);
-    router.route( '/projects', projectsRouteCallback);
-    router.route( '/about', aboutRouteCallback);
-
-    // TODO: 404
-    // TODO: Invoking controller actions
-
-    // Check current route
-    router.checkRoutes();
+    app.run();
 };
 
 
