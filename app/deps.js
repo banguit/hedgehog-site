@@ -24,7 +24,7 @@ goog.addDependency("../../../PlastronJS/tests/model_test.js", [], ['goog.testing
 goog.addDependency("../../../PlastronJS/tests/router_test.js", [], ['goog.testing.ContinuationTestCase', 'goog.testing.jsunit', 'mvc.Router']);
 goog.addDependency("../../../PlastronJS/tests/store_test.js", [], ['goog.testing.jsunit', 'mvc.Collection', 'mvc.Model', 'mvc.Store']);
 goog.addDependency("../../../PlastronJS/tests/test_deps.js", [], []);
-goog.addDependency("../../../../app/app.js", ['hedgehog'], ['goog.dom', 'mvc.Router', 'hedgehog.Header', 'hedgehog.Menu', 'hedgehog.Loader', 'hedgehog.ResponsiveHeader', 'hedgehog.SplashScreen', 'hedgehog.templates', 'goog.soy', 'hedgehog.core.Application', 'hedgehog.controllers.BlogController', 'hedgehog.controllers.ProjectsController', 'hedgehog.controllers.AboutController']);
+goog.addDependency("../../../../app/app.js", ['hedgehog'], ['goog.dom', 'mvc.Router', 'hedgehog.Header', 'hedgehog.Menu', 'hedgehog.Loader', 'hedgehog.ResponsiveHeader', 'hedgehog.SplashScreen', 'hedgehog.templates', 'goog.soy', 'hedgehog.core.Application', 'hedgehog.controllers.AboutController', 'hedgehog.controllers.BlogController', 'hedgehog.controllers.ProjectsController', 'hedgehog.filters.SplashScreenActionFilter']);
 goog.addDependency("../../../../app/deps.js", [], []);
 goog.addDependency("../../../../app/externs.js", [], []);
 goog.addDependency("../../../../app/requirements.js", [], ['hedgehog']);
@@ -33,11 +33,13 @@ goog.addDependency("../../../../app/components/loader.js", ['hedgehog.Loader'], 
 goog.addDependency("../../../../app/components/menu.js", ['hedgehog.Menu'], ['goog.ui.Component', 'goog.dom.classlist']);
 goog.addDependency("../../../../app/components/responsiveheader.js", ['hedgehog.ResponsiveHeader'], ['goog.ui.Component', 'goog.dom']);
 goog.addDependency("../../../../app/components/splashscreen.js", ['hedgehog.SplashScreen'], ['goog.ui.Component', 'goog.dom', 'goog.style', 'hedgehog.templates', 'goog.soy', 'goog.fx', 'goog.fx.dom', 'goog.fx.AnimationQueue', 'goog.fx.AnimationSerialQueue', 'goog.fx.AnimationParallelQueue', 'goog.labs.net.image', 'goog.labs.userAgent.device']);
-goog.addDependency("../../../../app/controllers/aboutcontroller.js", ['hedgehog.controllers.AboutController'], ['hedgehog.core.Controller']);
-goog.addDependency("../../../../app/controllers/blogcontroller.js", ['hedgehog.controllers.BlogController'], ['hedgehog.core.Controller']);
-goog.addDependency("../../../../app/controllers/projectscontroller.js", ['hedgehog.controllers.ProjectsController'], ['hedgehog.core.Controller']);
+goog.addDependency("../../../../app/controllers/aboutсontroller.js", ['hedgehog.controllers.AboutController'], ['hedgehog.core.Controller', 'hedgehog.']);
+goog.addDependency("../../../../app/controllers/blogсontroller.js", ['hedgehog.controllers.BlogController'], ['hedgehog.core.Controller']);
+goog.addDependency("../../../../app/controllers/projectsсontroller.js", ['hedgehog.controllers.ProjectsController'], ['hedgehog.core.Controller']);
+goog.addDependency("../../../../app/core/actionfilter.js", ['hedgehog.core.ActionFilter'], []);
 goog.addDependency("../../../../app/core/application.js", ['hedgehog.core.Application'], ['mvc.Router', 'goog.string', 'goog.events', 'hedgehog.core.Request', 'hedgehog.core.Response', 'goog.debug.Error']);
 goog.addDependency("../../../../app/core/controller.js", ['hedgehog.core.Controller'], []);
 goog.addDependency("../../../../app/core/request.js", ['hedgehog.core.Request'], ['goog.Uri']);
 goog.addDependency("../../../../app/core/response.js", ['hedgehog.core.Response'], ['goog.soy']);
+goog.addDependency("../../../../app/filters/splashscreenactionfilter.js", ['hedgehog.filters.SplashScreenActionFilter'], ['hedgehog.core.ActionFilter']);
 goog.addDependency("../../../../app/views/templates.soy.js", ['hedgehog.templates'], ['soy', 'soydata']);

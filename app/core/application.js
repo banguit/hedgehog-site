@@ -12,6 +12,7 @@ goog.require('hedgehog.core.Request');
 goog.require('hedgehog.core.Response');
 goog.require('goog.debug.Error');
 
+
 /**
  * @constructor
  * @extends {goog.events.EventTarget}
@@ -30,7 +31,6 @@ goog.inherits(hedgehog.core.Application, goog.events.EventTarget);
 /**
  * @param {string} route The path The fragment we are mapping the controller to.
  * @param {Function} controller The name or object that identifying the desired controller.
- * @param {boolean=} opt_default Use this route a default.
  */
 hedgehog.core.Application.prototype.mapRoute = function(route, controller) {
     this.router_.route(route, goog.partial(this.processRoute_, route, new controller()));
@@ -76,11 +76,22 @@ hedgehog.core.Application.prototype.processRoute_ = function(route, controller) 
 
 
 /**
+ * 
+ * @param {hedgehog.core.ActionFilter} filter
+ * @param {number=} opt_order
+ */
+hedgehog.core.Application.prototype.addActionFilter = function(filter, opt_order) {
+
+};
+
+
+/**
  * Start application execution
  */
 hedgehog.core.Application.prototype.run = function() {
     this.router_.checkRoutes();
 };
+
 
 /** @enum {string} */
 hedgehog.core.Application.EventType = {

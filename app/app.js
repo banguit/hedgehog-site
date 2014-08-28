@@ -17,9 +17,10 @@ goog.require('hedgehog.templates');
 goog.require('goog.soy');
 
 goog.require('hedgehog.core.Application');
+goog.require('hedgehog.controllers.AboutController');
 goog.require('hedgehog.controllers.BlogController');
 goog.require('hedgehog.controllers.ProjectsController');
-goog.require('hedgehog.controllers.AboutController');
+goog.require('hedgehog.filters.SplashScreenActionFilter');
 
 
 hedgehog.TITLE_SLOGAN = 'Den of hedgehog | Dmitry Antonenko personal website';
@@ -36,6 +37,10 @@ hedgehog.start = function() {
     app.mapRoute('{/blog{/}{/:action{/}}{/:id{/}}}', hedgehog.controllers.BlogController); // Default route
     app.mapRoute('/projects{/}', hedgehog.controllers.ProjectsController);
     app.mapRoute('/about{/}{/:action{/}}', hedgehog.controllers.AboutController);
+
+
+    // -- Register action filters -- //
+    app.addActionFilter(hedgehog.filters.SplashScreenActionFilter);
 
     // Show splash screeen
 //    var wrapperElement = goog.dom.getElementByClass(hedgehog.CSS_CLASSES.WRAPPER)
