@@ -33,9 +33,9 @@ goog.addDependency("../../../../app/components/loader.js", ['hedgehog.Loader'], 
 goog.addDependency("../../../../app/components/menu.js", ['hedgehog.Menu'], ['goog.ui.Component', 'goog.dom.classlist']);
 goog.addDependency("../../../../app/components/responsiveheader.js", ['hedgehog.ResponsiveHeader'], ['goog.ui.Component', 'goog.dom']);
 goog.addDependency("../../../../app/components/splashscreen.js", ['hedgehog.SplashScreen'], ['goog.ui.Component', 'goog.dom', 'goog.style', 'hedgehog.templates', 'goog.soy', 'goog.fx', 'goog.fx.dom', 'goog.fx.AnimationQueue', 'goog.fx.AnimationSerialQueue', 'goog.fx.AnimationParallelQueue', 'goog.labs.net.image', 'goog.labs.userAgent.device']);
-goog.addDependency("../../../../app/controllers/aboutController.js", ['hedgehog.controllers.AboutController'], ['hedgehog.core.Controller']);
-goog.addDependency("../../../../app/controllers/blogController.js", ['hedgehog.controllers.BlogController'], ['hedgehog.core.Controller']);
-goog.addDependency("../../../../app/controllers/projectsController.js", ['hedgehog.controllers.ProjectsController'], ['hedgehog.core.Controller']);
+goog.addDependency("../../../../app/controllers/aboutcontroller.js", ['hedgehog.controllers.AboutController'], ['hedgehog.core.Controller']);
+goog.addDependency("../../../../app/controllers/blogcontroller.js", ['hedgehog.controllers.BlogController'], ['hedgehog.core.Controller']);
+goog.addDependency("../../../../app/controllers/projectscontroller.js", ['hedgehog.controllers.ProjectsController'], ['hedgehog.core.Controller']);
 goog.addDependency("../../../../app/core/application.js", ['hedgehog.core.Application'], ['mvc.Router', 'goog.string', 'goog.events', 'hedgehog.core.Request', 'hedgehog.core.Response', 'goog.debug.Error']);
 goog.addDependency("../../../../app/core/controller.js", ['hedgehog.core.Controller'], []);
 goog.addDependency("../../../../app/core/request.js", ['hedgehog.core.Request'], ['goog.Uri']);

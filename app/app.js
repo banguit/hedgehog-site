@@ -16,8 +16,6 @@ goog.require('hedgehog.SplashScreen');
 goog.require('hedgehog.templates');
 goog.require('goog.soy');
 
-// - - - -
-
 goog.require('hedgehog.core.Application');
 goog.require('hedgehog.controllers.BlogController');
 goog.require('hedgehog.controllers.ProjectsController');
@@ -30,34 +28,36 @@ hedgehog.TITLE_SLOGAN = 'Den of hedgehog | Dmitry Antonenko personal website';
  * Initializes the application
  */
 hedgehog.start = function() {
+    // -- Application initialization -- //
     var app = new hedgehog.core.Application();
 
-    // Show splash screeen
-    var wrapperElement = goog.dom.getElementByClass(hedgehog.CSS_CLASSES.WRAPPER)
-      , splashScreen = new hedgehog.SplashScreen(wrapperElement);
-
-    splashScreen.render();
-    splashScreen.play();
-
-    // Setup UI
-    var content = goog.dom.getElement('content')
-      , header = new hedgehog.Header()
-      , menu = new hedgehog.Menu()
-      , loader = new hedgehog.Loader()
-      , responsiveHeader = new hedgehog.ResponsiveHeader(wrapperElement);
-
-    loader.render(content);
-    loader.show(true);
-
-    // Initialize UI components
-    header.decorate(goog.dom.getElementsByTagNameAndClass('header')[0]);
-    menu.decorate(goog.dom.getElementsByTagNameAndClass('nav', 'navbar', header.getElement())[0]);
-    responsiveHeader.decorate(goog.dom.getElementByClass(hedgehog.CSS_CLASSES.RESPONSIVE_HEADER));
-
-    // Register routes
+    // -- Register routes -- //
+    // Default route should be wrapped in {.. route definition ..}
     app.mapRoute('{/blog{/}{/:action{/}}{/:id{/}}}', hedgehog.controllers.BlogController); // Default route
     app.mapRoute('/projects{/}', hedgehog.controllers.ProjectsController);
     app.mapRoute('/about{/}{/:action{/}}', hedgehog.controllers.AboutController);
+
+    // Show splash screeen
+//    var wrapperElement = goog.dom.getElementByClass(hedgehog.CSS_CLASSES.WRAPPER)
+//      , splashScreen = new hedgehog.SplashScreen(wrapperElement);
+//
+//    splashScreen.render();
+//    splashScreen.play();
+//
+//    // Setup UI
+//    var content = goog.dom.getElement('content')
+//      , header = new hedgehog.Header()
+//      , menu = new hedgehog.Menu()
+//      , loader = new hedgehog.Loader()
+//      , responsiveHeader = new hedgehog.ResponsiveHeader(wrapperElement);
+//
+//    loader.render(content);
+//    loader.show(true);
+//
+//    // Initialize UI components
+//    header.decorate(goog.dom.getElementsByTagNameAndClass('header')[0]);
+//    menu.decorate(goog.dom.getElementsByTagNameAndClass('nav', 'navbar', header.getElement())[0]);
+//    responsiveHeader.decorate(goog.dom.getElementByClass(hedgehog.CSS_CLASSES.RESPONSIVE_HEADER));
 
 
     // Setup routes
