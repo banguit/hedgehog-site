@@ -36,8 +36,8 @@ goog.addDependency("../../../../app/components/splashscreen.js", ['hedgehog.Spla
 goog.addDependency("../../../../app/controllers/aboutController.js", ['hedgehog.controllers.AboutController'], ['hedgehog.core.Controller']);
 goog.addDependency("../../../../app/controllers/blogController.js", ['hedgehog.controllers.BlogController'], ['hedgehog.core.Controller']);
 goog.addDependency("../../../../app/controllers/projectsController.js", ['hedgehog.controllers.ProjectsController'], ['hedgehog.core.Controller']);
-goog.addDependency("../../../../app/core/application.js", ['hedgehog.core.Application'], ['mvc.Router', 'goog.string']);
+goog.addDependency("../../../../app/core/application.js", ['hedgehog.core.Application'], ['mvc.Router', 'goog.string', 'goog.events', 'hedgehog.core.Request', 'hedgehog.core.Response', 'goog.debug.Error']);
 goog.addDependency("../../../../app/core/controller.js", ['hedgehog.core.Controller'], []);
 goog.addDependency("../../../../app/core/request.js", ['hedgehog.core.Request'], ['goog.Uri']);
-goog.addDependency("../../../../app/core/response.js", [], []);
+goog.addDependency("../../../../app/core/response.js", ['hedgehog.core.Response'], ['goog.soy']);
 goog.addDependency("../../../../app/views/templates.soy.js", ['hedgehog.templates'], ['soy', 'soydata']);

@@ -9,6 +9,4 @@ goog.provide('hedgehog.core.Controller');
  * Defines an abstract controller for handling requests to certain fragments.
  * @constructor
  */
-hedgehog.core.Controller = function() {
-
-};
+hedgehog.core.Controller = function() {};

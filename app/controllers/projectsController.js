@@ -8,7 +8,5 @@ goog.require('hedgehog.core.Controller');
  */
 hedgehog.controllers.ProjectsController = function() {
     goog.base(this);
-
-    this.name = "ProjectsController";
 };
 goog.inherits(hedgehog.controllers.ProjectsController, hedgehog.core.Controller);

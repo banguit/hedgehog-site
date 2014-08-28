@@ -30,6 +30,7 @@ hedgehog.TITLE_SLOGAN = 'Den of hedgehog | Dmitry Antonenko personal website';
  * Initializes the application
  */
 hedgehog.start = function() {
+    var app = new hedgehog.core.Application();
 
     // Show splash screeen
     var wrapperElement = goog.dom.getElementByClass(hedgehog.CSS_CLASSES.WRAPPER)
@@ -53,14 +54,11 @@ hedgehog.start = function() {
     menu.decorate(goog.dom.getElementsByTagNameAndClass('nav', 'navbar', header.getElement())[0]);
     responsiveHeader.decorate(goog.dom.getElementByClass(hedgehog.CSS_CLASSES.RESPONSIVE_HEADER));
 
-    // - - - - - - - - - - - - - - - - - - - -
-    var app = new hedgehog.core.Application();
-
     // Register routes
-    app.defaultController(hedgehog.controllers.BlogController);
-    app.mapRoute('/blog[/:action][/:id]', hedgehog.controllers.BlogController);
-    app.mapRoute('/projects', hedgehog.controllers.ProjectsController);
-    app.mapRoute('/about', hedgehog.controllers.AboutController);
+    app.mapRoute('{/blog{/}{/:action{/}}{/:id{/}}}', hedgehog.controllers.BlogController); // Default route
+    app.mapRoute('/projects{/}', hedgehog.controllers.ProjectsController);
+    app.mapRoute('/about{/}{/:action{/}}', hedgehog.controllers.AboutController);
+
 
     // Setup routes
 //    var router = new mvc.Router();

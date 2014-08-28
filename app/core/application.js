@@ -7,9 +7,14 @@ goog.provide('hedgehog.core.Application');
 
 goog.require('mvc.Router');
 goog.require('goog.string');
+goog.require('goog.events');
+goog.require('hedgehog.core.Request');
+goog.require('hedgehog.core.Response');
+goog.require('goog.debug.Error');
 
 /**
  * @constructor
+ * @extends {goog.events.EventTarget}
  */
 hedgehog.core.Application = function() {
 
@@ -19,44 +24,66 @@ hedgehog.core.Application = function() {
      */
     this.router_ = new mvc.Router();
 };
+goog.inherits(hedgehog.core.Application, goog.events.EventTarget);
 
 
 /**
  * @param {string} route The path The fragment we are mapping the controller to.
  * @param {Function} controller The name or object that identifying the desired controller.
+ * @param {boolean=} opt_default Use this route a default.
  */
 hedgehog.core.Application.prototype.mapRoute = function(route, controller) {
-    if(!goog.string.contains(route, '/:action')) {
-        route += '[/:action]';
-    }
-
-    this.router_.route(route, goog.partial(this.processRoute_, new controller()));
+    this.router_.route(route, goog.partial(this.processRoute_, route, new controller()));
 };
 
 
 /**
- * @param controller
- * @param fragment
- * @param routeData
+ * @param {string} route The path The fragment we are mapping the controller to.
+ * @param {Function} controller The name or object that identifying the desired controller.
  * @private
  */
-hedgehog.core.Application.prototype.processRoute_ = function(controller, fragment, routeData) {
-    console.log(arguments);
+hedgehog.core.Application.prototype.processRoute_ = function(route, controller) {
+    var i = 2
+      , token = arguments[i]
+      , routeData = {
+            'controller' : /\w+/.exec(arguments[0])[0]
+        }
+      , pattern = /:\w*/g
+      , request = new hedgehog.core.Request(token)
+      , response = new hedgehog.core.Response(request)
+      , match;
+
+    while ((match = pattern.exec(route)) != null) {
+        i++;
+        routeData[goog.string.removeAll(match[0], ':')] = arguments[i];
+    }
+
+    if(!goog.isDefAndNotNull(routeData.action)) {
+        routeData.action = 'index';
+    }
+
+    /**
+     * @constructor
+     */
+    var instance = Object.create(controller);
+
+    if(goog.isFunction((instance[routeData.action]))) {
+        instance[routeData.action](request, response);
+    } else {
+        throw new Error('Action "' + routeData.action + '" does not exist!');
+    }
 };
 
 
 /**
- * Define default controller for request without routes.
- * @param {Function} controller
- */
-hedgehog.core.Application.prototype.defaultController = function(controller) {
-    this.router_.route('{/}', goog.partial(this.processRoute_, new controller()));
-};
-
-
-/**
- *
+ * Start application execution
  */
 hedgehog.core.Application.prototype.run = function() {
     this.router_.checkRoutes();
+};
+
+/** @enum {string} */
+hedgehog.core.Application.EventType = {
+    START: goog.events.getUniqueId('application_start'),
+    RUN: goog.events.getUniqueId('application_run')
 };
