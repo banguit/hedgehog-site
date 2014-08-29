@@ -40,7 +40,7 @@ hedgehog.start = function() {
 
 
     // -- Register action filters -- //
-    app.addActionFilter(hedgehog.filters.SplashScreenActionFilter);
+    app.addActionFilter(new hedgehog.filters.SplashScreenActionFilter());
 
     // Show splash screeen
 //    var wrapperElement = goog.dom.getElementByClass(hedgehog.CSS_CLASSES.WRAPPER)

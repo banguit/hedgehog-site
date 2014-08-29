@@ -7,25 +7,22 @@ goog.require('hedgehog.core.ActionFilter');
  * @constructor
  * @implements {hedgehog.core.ActionFilter}
  */
-hedgehog.filters.SplashScreenActionFilter = function() {
-    goog.base(this);
-};
-goog.inherits(hedgehog.filters.SplashScreenActionFilter, hedgehog.core.ActionFilter);
+hedgehog.filters.SplashScreenActionFilter = function() {};
 
 
-/** @inheritDoc */
+/** @override */
 hedgehog.filters.SplashScreenActionFilter.prototype.onActionExecuted = function() {
     console.info('onActionExecuted');
 };
 
 
-/** @inheritDoc */
+/** @override */
 hedgehog.filters.SplashScreenActionFilter.prototype.onActionExecuting = function() {
     console.info('onActionExecuting');
 };
 
 
-/** @inheritDoc */
+/** @override */
 hedgehog.filters.SplashScreenActionFilter.prototype.onException = function() {
     console.info('onException');
 };
