@@ -5,7 +5,7 @@ goog.require('hedgehog.core.ActionFilter');
 
 /**
  * @constructor
- * @extends {hedgehog.core.ActionFilter}
+ * @implements {hedgehog.core.ActionFilter}
  */
 hedgehog.filters.SplashScreenActionFilter = function() {
     goog.base(this);

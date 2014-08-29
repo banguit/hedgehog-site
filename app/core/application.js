@@ -24,6 +24,8 @@ hedgehog.core.Application = function() {
      * @private
      */
     this.router_ = new mvc.Router();
+
+    //this.actionFilters_ = new
 };
 goog.inherits(hedgehog.core.Application, goog.events.EventTarget);
 
@@ -76,7 +78,6 @@ hedgehog.core.Application.prototype.processRoute_ = function(route, controller) 
 
 
 /**
- * 
  * @param {hedgehog.core.ActionFilter} filter
  * @param {number=} opt_order
  */

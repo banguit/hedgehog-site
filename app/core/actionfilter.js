@@ -2,7 +2,8 @@ goog.provide('hedgehog.core.ActionFilter');
 
 
 /**
- * @constructor
+ * Action filter.
+ * @interface
  */
 hedgehog.core.ActionFilter = function() {};
 

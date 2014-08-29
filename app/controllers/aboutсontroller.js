@@ -1,7 +1,6 @@
 goog.provide('hedgehog.controllers.AboutController');
 
 goog.require('hedgehog.core.Controller');
-goog.require('hedgehog.');
 
 
 /**
