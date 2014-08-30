@@ -142,6 +142,12 @@ hedgehog.core.Application.prototype.run = function() {
     this.listen(hedgehog.core.Application.EventType.ACTIONEXECUTING, this.onActionExecuting_, false, this);
     this.listen(hedgehog.core.Application.EventType.ACTIONEXECUTED, this.onActionExecuted_, false, this);
 
+    // Sort application filters
+    goog.array.sort(this.applicationFilters_, function(a, b) {
+        return a.getOrder() - b.getOrder();
+    });
+
+    // Application start
     this.dispatchEvent(hedgehog.core.Application.EventType.APPLICATIONSTART);
 
     // Sort action filters
@@ -149,14 +155,10 @@ hedgehog.core.Application.prototype.run = function() {
         return a.getOrder() - b.getOrder();
     });
 
-    // Sort application filters
-    goog.array.sort(this.applicationFilters_, function(a, b) {
-        return a.getOrder() - b.getOrder();
-    });
-
     // Check current route
     this.router_.checkRoutes();
 
+    // Application run
     this.dispatchEvent(hedgehog.core.Application.EventType.APPLICATIONRUN);
 };
 

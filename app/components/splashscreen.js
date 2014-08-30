@@ -85,13 +85,6 @@ hedgehog.SplashScreen = function(mainWrapper) {
 
 
     /**
-     * @type {boolean}
-     * @private
-     */
-    this.isAnimated_ = false;
-
-
-    /**
      * @type {goog.fx.dom.SlideFrom}
      * @private
      */
@@ -169,7 +162,7 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
     queueInitial.add(new googFxDom.SlideFrom(this.hedgehogBody_, [1, 0], 200, goog.fx.easing.easeOutLong));
 
     // Initialize animation events
-    goog.events.listen(this.slideContentToCenterAnimation_, googFx.Transition.EventType.FINISH, goog.bind(this.onslideContentToCenterAnimationFinish_, this));
+    goog.events.listen(this.slideContentToCenterAnimation_, googFx.Transition.EventType.FINISH, goog.bind(this.onSlideContentToCenterAnimationFinish_, this));
     goog.events.listen(queueForward, googFx.Transition.EventType.FINISH, goog.bind(this.onHedgehogAnimationParallelQueueForwardFinish_, this));
     goog.events.listen(queueInitial, googFx.Transition.EventType.FINISH, goog.bind(this.onHedgehogAnimationParallelQueueInitialFinish_, this));
 
@@ -202,7 +195,8 @@ hedgehog.SplashScreen.prototype.onWindowResize_ = function() {
 /**
  * @private
  */
-hedgehog.SplashScreen.prototype.onslideContentToCenterAnimationFinish_ = function(event) {
+hedgehog.SplashScreen.prototype.onSlideContentToCenterAnimationFinish_ = function(event) {
+    this.dispatchEvent(hedgehog.SplashScreen.EventTypes.ONSLIDETOCENTERANIMATIONFINISH);
     this.hedgehogAnimationParallelQueueForward_.play();
 };
 
@@ -304,7 +298,7 @@ hedgehog.SplashScreen.prototype.disposeInternal = function() {
     goog.dispose(this.hedgehogFrontRightLeg_);
     goog.dispose(this.hedgehogBackRightLeg_);
 
-    goog.events.unlisten(this.slideContentToCenterAnimation_, goog.fx.Transition.EventType.FINISH, goog.bind(this.onslideContentToCenterAnimationFinish_, this));
+    goog.events.unlisten(this.slideContentToCenterAnimation_, goog.fx.Transition.EventType.FINISH, goog.bind(this.onSlideContentToCenterAnimationFinish_, this));
     goog.events.unlisten(this.hedgehogAnimationParallelQueueForward_, goog.fx.Transition.EventType.FINISH, goog.bind(this.onHedgehogAnimationParallelQueueForwardFinish_, this));
     goog.events.unlisten(this.hedgehogAnimationParallelQueueInitial_, goog.fx.Transition.EventType.FINISH, goog.bind(this.onHedgehogAnimationParallelQueueInitialFinish_, this));
     goog.events.unlisten(window, goog.events.EventType.RESIZE, this.onWindowResize_, true, this);
@@ -322,4 +316,9 @@ hedgehog.SplashScreen.CSS_CLASSES = {
     HEDGEHOG_FRONT_LEFT_LEG : 'hedgehog-front-left-leg',
     HEDGEHOG_FRONT_RIGHT_LEG : 'hedgehog-front-right-leg',
     HEDGEHOG_BACK_RIGHT_LEG : 'hedgehog-back-right-leg'
+};
+
+
+hedgehog.SplashScreen.EventTypes = {
+    ONSLIDETOCENTERANIMATIONFINISH: goog.events.getUniqueId('onSlideContentToCenterAnimationFinish')
 };
