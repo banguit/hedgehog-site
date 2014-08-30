@@ -1,16 +1,17 @@
 goog.provide('hedgehog.core.events.ActionExceptionEvent');
 
-goog.require('goog.events.Event');
+goog.require('hedgehog.core.events.ActionEvent');
 
 
 /**
+ * @param {hedgehog.core.types.ActionFilterContext} actionFilterContext Current filter context
  * @param {hedgehog.core.Application} app
  * @param {Error} err
- * @extends {goog.events.Event}
+ * @extends {hedgehog.core.events.ActionEvent}
  * @constructor
  */
-hedgehog.core.events.ActionExceptionEvent = function(app, err) {
-    goog.events.Event.call(this, hedgehog.core.Application.EventType.ONACTIONEXCEPTION, app);
+hedgehog.core.events.ActionExceptionEvent = function(actionFilterContext, app, err) {
+    hedgehog.core.events.ActionEvent.call(this, actionFilterContext, hedgehog.core.Application.EventType.ONACTIONEXCEPTION, app);
 
     /**
      * @type {Error}
@@ -18,7 +19,7 @@ hedgehog.core.events.ActionExceptionEvent = function(app, err) {
      */
     this.error_ = err;
 };
-goog.inherits(hedgehog.core.events.ActionExceptionEvent, goog.events.Event);
+goog.inherits(hedgehog.core.events.ActionExceptionEvent, hedgehog.core.events.ActionEvent);
 
 
 /**

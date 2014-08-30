@@ -36,14 +36,14 @@ hedgehog.start = function() {
     // Default route should be wrapped in {.. route definition ..}
     app.mapRoute('{/blog{/}{/:action{/}}{/:id{/}}}', hedgehog.controllers.BlogController); // Default route
     app.mapRoute('/projects{/}', hedgehog.controllers.ProjectsController);
-    app.mapRoute('/about{/}{/:action{/}}', hedgehog.controllers.AboutController);
+    app.mapRoute('/about{/}{/:action{/}}[?*]', hedgehog.controllers.AboutController);
 
 
     // -- Register action filters -- //
     app.addActionFilter(new hedgehog.filters.SplashScreenActionFilter(), null, 0);
-    app.addActionFilter(new hedgehog.filters.SplashScreenActionFilter(), null, 2);
+    app.addActionFilter(new hedgehog.filters.SplashScreenActionFilter(), '/blog', 2);
     app.addActionFilter(new hedgehog.filters.SplashScreenActionFilter(), null, 1);
-    app.addActionFilter(new hedgehog.filters.SplashScreenActionFilter(), null, 12);
+    app.addActionFilter(new hedgehog.filters.SplashScreenActionFilter(), '/blog', 12);
     app.addActionFilter(new hedgehog.filters.SplashScreenActionFilter(), null, 3);
 
     // Show splash screeen

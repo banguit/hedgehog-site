@@ -11,6 +11,7 @@ goog.require('goog.events.EventTarget');
 goog.require('hedgehog.core.Request');
 goog.require('hedgehog.core.Response');
 goog.require('hedgehog.core.types.ActionFilterItem');
+goog.require('hedgehog.core.events.ActionEvent');
 goog.require('hedgehog.core.events.ActionExceptionEvent');
 
 
@@ -67,14 +68,13 @@ hedgehog.core.Application.prototype.processRoute_ = function(route, controller) 
                          .replace(/\\\}/g, ')?') + '$');
 
     var i = 2
-      , token = arguments[i]
-      , routeData = {
-            'controller' : /\w+/.exec(arguments[0])[0]
-        }
+      , routeData = { 'controller' : /\w+/.exec(arguments[0])[0] }
       , pattern = /:\w*/g
-      , request = new hedgehog.core.Request(token)
-      , response = new hedgehog.core.Response(request)
-      , match;
+      , request
+      , response
+      , filterContext
+      , match
+      , queryVals = arguments[arguments.length - 1];
 
     while ((match = pattern.exec(route)) != null) {
         i++;
@@ -85,6 +85,9 @@ hedgehog.core.Application.prototype.processRoute_ = function(route, controller) 
         routeData.action = 'index';
     }
 
+    request = new hedgehog.core.Request(routeData, window.location.href, queryVals);
+    response = new hedgehog.core.Response(request);
+    filterContext = new hedgehog.core.types.ActionFilterContext(request, response);
 
     /**
      * @constructor
@@ -94,9 +97,11 @@ hedgehog.core.Application.prototype.processRoute_ = function(route, controller) 
     if(goog.isFunction((instance[routeData.action]))) {
 
         try {
+            this.dispatchEvent(new hedgehog.core.events.ActionEvent(filterContext, hedgehog.core.Application.EventType.ONACTIONEXECUTING, this));
             instance[routeData.action](request, response);
+            this.dispatchEvent(new hedgehog.core.events.ActionEvent(filterContext, hedgehog.core.Application.EventType.ONACTIONEXECUTED, this));
         } catch (err) {
-            this.dispatchEvent(new hedgehog.core.events.ActionExceptionEvent(this, err));
+            this.dispatchEvent(new hedgehog.core.events.ActionExceptionEvent(filterContext, this, err));
         }
 
     } else {
@@ -121,6 +126,8 @@ hedgehog.core.Application.prototype.addActionFilter = function(filter, opt_route
 hedgehog.core.Application.prototype.run = function() {
     // Initialize events
     this.listen(hedgehog.core.Application.EventType.ONACTIONEXCEPTION, this.onActionException_, false, this);
+    this.listen(hedgehog.core.Application.EventType.ONACTIONEXECUTING, this.onActionExecuting_, false, this);
+    this.listen(hedgehog.core.Application.EventType.ONACTIONEXECUTED, this.onActionExecuted_, false, this);
 
     // Sort action filters
     goog.array.sort(this.actionFilters_, function(a, b) {
@@ -133,17 +140,50 @@ hedgehog.core.Application.prototype.run = function() {
 
 
 /**
+ * @param {hedgehog.core.events.ActionEvent} e
+ * @private
+ */
+hedgehog.core.Application.prototype.onActionExecuting_ = function(e) {
+    this.forEachActionFilter_(function(filterItem) {
+        filterItem.getFilter().onActionExecuting(e);
+    });
+};
+
+
+/**
+ * @param {hedgehog.core.events.ActionEvent} e
+ * @private
+ */
+hedgehog.core.Application.prototype.onActionExecuted_ = function(e) {
+    this.forEachActionFilter_(function(filterItem) {
+        filterItem.getFilter().onActionExecuted(e);
+    });
+};
+
+
+/**
  * @param {hedgehog.core.events.ActionExceptionEvent} e
  * @private
  */
 hedgehog.core.Application.prototype.onActionException_ = function(e) {
+    this.forEachActionFilter_(function(filterItem) {
+        filterItem.getFilter().onException(e);
+    });
+};
+
+
+/**
+ * @param {Function} callback
+ * @private
+ */
+hedgehog.core.Application.prototype.forEachActionFilter_ = function(callback) {
     var currentRoute = this.currentRoute_;
     goog.array.forEach(this.actionFilters_, function(filterItem) {
         // Check route and run
         var route = filterItem.getRoute();
 
         if(goog.string.isEmptySafe(route) || currentRoute.exec(route)) {
-            filterItem.getFilter().onException(e);
+            callback.call(this, filterItem);
         }
     }, this);
 };
