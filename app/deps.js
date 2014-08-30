@@ -37,11 +37,11 @@ goog.addDependency("../../../../app/controllers/aboutсontroller.js", ['hedgehog
 goog.addDependency("../../../../app/controllers/blogсontroller.js", ['hedgehog.controllers.BlogController'], ['hedgehog.core.Controller']);
 goog.addDependency("../../../../app/controllers/projectsсontroller.js", ['hedgehog.controllers.ProjectsController'], ['hedgehog.core.Controller']);
 goog.addDependency("../../../../app/core/actionfilter.js", ['hedgehog.core.ActionFilter'], []);
-goog.addDependency("../../../../app/core/application.js", ['hedgehog.core.Application', 'hedgehog.core.events.ActionExceptionEvent'], ['mvc.Router', 'goog.string', 'goog.events', 'hedgehog.core.Request', 'hedgehog.core.Response', 'hedgehog.core.types.ActionFilterItem']);
+goog.addDependency("../../../../app/core/application.js", ['hedgehog.core.Application'], ['mvc.Router', 'goog.string', 'goog.events.EventTarget', 'hedgehog.core.Request', 'hedgehog.core.Response', 'hedgehog.core.types.ActionFilterItem', 'hedgehog.core.events.ActionExceptionEvent']);
 goog.addDependency("../../../../app/core/controller.js", ['hedgehog.core.Controller'], []);
 goog.addDependency("../../../../app/core/request.js", ['hedgehog.core.Request'], ['goog.Uri']);
 goog.addDependency("../../../../app/core/response.js", ['hedgehog.core.Response'], ['goog.soy']);
-goog.addDependency("../../../../app/core/events/actionexceptionevent.js", [], []);
+goog.addDependency("../../../../app/core/events/actionexceptionevent.js", ['hedgehog.core.events.ActionExceptionEvent'], ['goog.events.Event']);
 goog.addDependency("../../../../app/core/types/actionfilteritem.js", ['hedgehog.core.types.ActionFilterItem'], []);
 goog.addDependency("../../../../app/filters/splashscreenactionfilter.js", ['hedgehog.filters.SplashScreenActionFilter'], ['hedgehog.core.ActionFilter']);
 goog.addDependency("../../../../app/views/templates.soy.js", ['hedgehog.templates'], ['soy', 'soydata']);

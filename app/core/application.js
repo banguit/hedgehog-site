@@ -4,14 +4,14 @@
  */
 
 goog.provide('hedgehog.core.Application');
-goog.provide('hedgehog.core.events.ActionExceptionEvent');
 
 goog.require('mvc.Router');
 goog.require('goog.string');
-goog.require('goog.events');
+goog.require('goog.events.EventTarget');
 goog.require('hedgehog.core.Request');
 goog.require('hedgehog.core.Response');
 goog.require('hedgehog.core.types.ActionFilterItem');
+goog.require('hedgehog.core.events.ActionExceptionEvent');
 
 
 /**
@@ -19,7 +19,7 @@ goog.require('hedgehog.core.types.ActionFilterItem');
  * @extends {goog.events.EventTarget}
  */
 hedgehog.core.Application = function() {
-    goog.base(this);
+    goog.events.EventTarget.call(this);
 
     /**
      * @type {mvc.Router}
@@ -32,6 +32,13 @@ hedgehog.core.Application = function() {
      * @private
      */
     this.actionFilters_ = [];
+
+    /**
+     * The fragment we are mapping the controller to.
+     * @type {RegExp}
+     * @private
+     */
+    this.currentRoute_;
 };
 goog.inherits(hedgehog.core.Application, goog.events.EventTarget);
 
@@ -41,7 +48,7 @@ goog.inherits(hedgehog.core.Application, goog.events.EventTarget);
  * @param {Function} controller The name or object that identifying the desired controller.
  */
 hedgehog.core.Application.prototype.mapRoute = function(route, controller) {
-    this.router_.route(route, goog.partial(this.processRoute_, route, new controller()));
+    this.router_.route(route, goog.bind(goog.partial(this.processRoute_, route, new controller()), this));
 };
 
 
@@ -51,6 +58,14 @@ hedgehog.core.Application.prototype.mapRoute = function(route, controller) {
  * @private
  */
 hedgehog.core.Application.prototype.processRoute_ = function(route, controller) {
+    this.currentRoute_ = new RegExp('^' + goog.string.regExpEscape(route)
+                         .replace(/\\:\w+/g, '(\\w+)')
+                         .replace(/\\\*/g, '(.*)')
+                         .replace(/\\\[/g, '(')
+                         .replace(/\\\]/g, ')?')
+                         .replace(/\\\{/g, '(?:')
+                         .replace(/\\\}/g, ')?') + '$');
+
     var i = 2
       , token = arguments[i]
       , routeData = {
@@ -81,7 +96,6 @@ hedgehog.core.Application.prototype.processRoute_ = function(route, controller) 
         try {
             instance[routeData.action](request, response);
         } catch (err) {
-
             this.dispatchEvent(new hedgehog.core.events.ActionExceptionEvent(this, err));
         }
 
@@ -105,14 +119,33 @@ hedgehog.core.Application.prototype.addActionFilter = function(filter, opt_route
  * Start application execution
  */
 hedgehog.core.Application.prototype.run = function() {
-    this.listen(hedgehog.core.Application.EventType.ONACTIONEXCEPTION,
-        function(e) {
-            console.log('ONACTIONEXCEPTION called!');
-        }
-    );
+    // Initialize events
+    this.listen(hedgehog.core.Application.EventType.ONACTIONEXCEPTION, this.onActionException_, false, this);
 
+    // Sort action filters
+    goog.array.sort(this.actionFilters_, function(a, b) {
+        return a.getOrder() - b.getOrder();
+    });
 
+    // Check current route
     this.router_.checkRoutes();
+};
+
+
+/**
+ * @param {hedgehog.core.events.ActionExceptionEvent} e
+ * @private
+ */
+hedgehog.core.Application.prototype.onActionException_ = function(e) {
+    var currentRoute = this.currentRoute_;
+    goog.array.forEach(this.actionFilters_, function(filterItem) {
+        // Check route and run
+        var route = filterItem.getRoute();
+
+        if(goog.string.isEmptySafe(route) || currentRoute.exec(route)) {
+            filterItem.getFilter().onException(e);
+        }
+    }, this);
 };
 
 
@@ -122,22 +155,3 @@ hedgehog.core.Application.EventType = {
     ONACTIONEXECUTING: goog.events.getUniqueId('ONACTIONEXECUTING'),
     ONACTIONEXECUTED: goog.events.getUniqueId('ONACTIONEXECUTED')
 };
-
-
-
-/**
- * @param {hedgehog.core.Application} app
- * @param {Error} err
- * @extends {goog.events.Event}
- * @constructor
- */
-hedgehog.core.events.ActionExceptionEvent = function(app, err) {
-    hedgehog.core.events.ActionExceptionEvent.base(
-        this, 'constructor', hedgehog.core.Application.EventType.ONACTIONEXCEPTION);
-
-    /**
-     * @type {Error}
-     */
-    this.error = err;
-};
-goog.inherits(hedgehog.core.events.ActionExceptionEvent, goog.events.Event);

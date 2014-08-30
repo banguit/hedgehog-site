@@ -40,7 +40,11 @@ hedgehog.start = function() {
 
 
     // -- Register action filters -- //
-    app.addActionFilter(new hedgehog.filters.SplashScreenActionFilter());
+    app.addActionFilter(new hedgehog.filters.SplashScreenActionFilter(), null, 0);
+    app.addActionFilter(new hedgehog.filters.SplashScreenActionFilter(), null, 2);
+    app.addActionFilter(new hedgehog.filters.SplashScreenActionFilter(), null, 1);
+    app.addActionFilter(new hedgehog.filters.SplashScreenActionFilter(), null, 12);
+    app.addActionFilter(new hedgehog.filters.SplashScreenActionFilter(), null, 3);
 
     // Show splash screeen
 //    var wrapperElement = goog.dom.getElementByClass(hedgehog.CSS_CLASSES.WRAPPER)

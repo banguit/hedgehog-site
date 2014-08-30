@@ -10,6 +10,7 @@ hedgehog.core.ActionFilter = function() {};
 
 /**
  * Called when an unhandled exception occurs in the action.
+ * @param {goog.events.Event} e
  */
 hedgehog.core.ActionFilter.prototype.onException = goog.nullFunction;
 

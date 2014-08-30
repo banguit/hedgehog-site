@@ -23,6 +23,7 @@ hedgehog.filters.SplashScreenActionFilter.prototype.onActionExecuting = function
 
 
 /** @override */
-hedgehog.filters.SplashScreenActionFilter.prototype.onException = function() {
+hedgehog.filters.SplashScreenActionFilter.prototype.onException = function(e) {
     console.info('onException');
+    console.info(e);
 };
