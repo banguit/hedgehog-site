@@ -41,13 +41,13 @@ hedgehog.filters.ComponentsInitializationApplicationFilter = function() {
      * @type {hedgehog.Menu}
      * @private
      */
-    this.menu_ = new hedgehog.Menu();
+    this.menu_ = hedgehog.Menu.getInstance();
 
     /**
      * @type {hedgehog.ResponsiveHeader}
      * @private
      */
-    this.responsiveHeader_ = new hedgehog.ResponsiveHeader(this.wrapperElement_);
+    this.responsiveHeader_ = hedgehog.ResponsiveHeader.getInstance();
 
     /**
      * @type {boolean}

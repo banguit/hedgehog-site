@@ -30,6 +30,14 @@ goog.inherits(hedgehog.core.Request, goog.Uri);
 
 
 /**
+ * @return {Object}
+ */
+hedgehog.core.Request.prototype.getRouteData = function() {
+    return this.routeData_;
+};
+
+
+/**
  * Convert this object to a simple JSON object.
  *
  * @return {Object}

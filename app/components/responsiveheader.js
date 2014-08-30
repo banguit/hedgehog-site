@@ -4,21 +4,26 @@ goog.require('goog.ui.Component');
 goog.require('goog.dom');
 
 /**
- * @param {Element} wrapperElement DOM helper, used for document interaction.
- * @param {goog.dom.DomHelper=} opt_domHelper DOM helper, used for document interaction.
  * @constructor
  * @extends {goog.ui.Component}
  */
-hedgehog.ResponsiveHeader = function(wrapperElement, opt_domHelper) {
-    goog.ui.Component.call(this, opt_domHelper);
+hedgehog.ResponsiveHeader = function() {
+    goog.base(this);
 
     /**
      * @type {Element}
      * @private
      */
-    this.wrapper_ = wrapperElement;
+    this.wrapper_ = goog.dom.getElementByClass('wrapper');
+
+    /**
+     * @type {hedgehog.ResponsiveHeader}
+     * @private
+     */
+    hedgehog.ResponsiveHeader.instance_ = this;
 };
 goog.inherits(hedgehog.ResponsiveHeader, goog.ui.Component);
+goog.addSingletonGetter(hedgehog.ResponsiveHeader);
 
 
 /** @inheritDoc */

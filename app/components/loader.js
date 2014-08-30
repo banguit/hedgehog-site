@@ -17,6 +17,8 @@ hedgehog.Loader = function(opt_domHelper) {
 
 };
 goog.inherits(hedgehog.Loader, goog.ui.Component);
+goog.addSingletonGetter(hedgehog.Loader);
+
 
 /** @inheritDoc */
 hedgehog.Loader.prototype.createDom = function() {

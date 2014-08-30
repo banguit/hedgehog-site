@@ -34,26 +34,8 @@ hedgehog.start = function() {
     // -- Register action filters -- //
     app.addActionFilter(new hedgehog.filters.ComponentsInitializationActionFilter(), null, 0);
 
+    // Execute application
     app.run();
 };
-
-//hedgehog.TITLE_SLOGAN = 'Den of hedgehog | Dmitry Antonenko personal website';
-//
-//
-//hedgehog.routeCallback_ = function(splashScreen, responsiveHeader, loader, menu, route, pageName) {
-//    loader.show(true);
-//    menu.setActive('#' + route);
-//
-//    // Set responsive header and page titles
-//    document.title = hedgehog.TITLE_SLOGAN + ' | ' + pageName;
-//    responsiveHeader.setTitle(pageName);
-//
-//    setTimeout(function() { // NOTE: setTimeout for test purpose only
-//        loader.show(false);
-//        if(splashScreen.isActive()) {
-//            splashScreen.stop();
-//        }
-//    }, 3000);
-//};
 
 goog.exportSymbol('app.start', hedgehog.start);
