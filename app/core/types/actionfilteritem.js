@@ -1,40 +1,25 @@
 goog.provide('hedgehog.core.types.ActionFilterItem');
 
+goog.require('hedgehog.core.types.ApplicationFilterItem');
 
 /**
  * @param {!hedgehog.core.ActionFilter} filter
  * @param {string|RegExp=} route Route to watch for.
  * @param {number=} order
  * @constructor
+ * @extends {hedgehog.core.types.ApplicationFilterItem}
  */
 hedgehog.core.types.ActionFilterItem = function(filter, route, order) {
+    goog.base(this, filter, order);
 
-    /**
-     * @type {!hedgehog.core.ActionFilter}
-     * @private
-     */
-    this.filter_ = filter;
 
     /**
      * @type {string|RegExp}
      * @private
      */
     this.route_ = goog.isDefAndNotNull(route) ? route : '';
-
-    /**
-     * @type {number}
-     * @private
-     */
-    this.order_ = goog.isDefAndNotNull(order) ? order : 0;
 };
-
-
-/**
- * @return {!hedgehog.core.ActionFilter}
- */
-hedgehog.core.types.ActionFilterItem.prototype.getFilter = function() {
-    return this.filter_;
-};
+goog.inherits(hedgehog.core.types.ActionFilterItem, hedgehog.core.types.ApplicationFilterItem);
 
 
 /**
@@ -42,12 +27,4 @@ hedgehog.core.types.ActionFilterItem.prototype.getFilter = function() {
  */
 hedgehog.core.types.ActionFilterItem.prototype.getRoute = function() {
     return this.route_;
-};
-
-
-/**
- * @return {number}
- */
-hedgehog.core.types.ActionFilterItem.prototype.getOrder = function() {
-    return this.order_;
 };

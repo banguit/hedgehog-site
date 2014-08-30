@@ -11,7 +11,7 @@ goog.require('hedgehog.core.events.ActionEvent');
  * @constructor
  */
 hedgehog.core.events.ActionExceptionEvent = function(actionFilterContext, app, err) {
-    hedgehog.core.events.ActionEvent.call(this, actionFilterContext, hedgehog.core.Application.EventType.ONACTIONEXCEPTION, app);
+    hedgehog.core.events.ActionEvent.call(this, actionFilterContext, hedgehog.core.Application.EventType.ACTIONEXCEPTION, app);
 
     /**
      * @type {Error}

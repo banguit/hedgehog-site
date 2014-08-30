@@ -24,7 +24,7 @@ goog.addDependency("../../../PlastronJS/tests/model_test.js", [], ['goog.testing
 goog.addDependency("../../../PlastronJS/tests/router_test.js", [], ['goog.testing.ContinuationTestCase', 'goog.testing.jsunit', 'mvc.Router']);
 goog.addDependency("../../../PlastronJS/tests/store_test.js", [], ['goog.testing.jsunit', 'mvc.Collection', 'mvc.Model', 'mvc.Store']);
 goog.addDependency("../../../PlastronJS/tests/test_deps.js", [], []);
-goog.addDependency("../../../../app/app.js", ['hedgehog'], ['goog.dom', 'mvc.Router', 'hedgehog.Header', 'hedgehog.Menu', 'hedgehog.Loader', 'hedgehog.ResponsiveHeader', 'hedgehog.SplashScreen', 'hedgehog.templates', 'goog.soy', 'hedgehog.core.Application', 'hedgehog.controllers.AboutController', 'hedgehog.controllers.BlogController', 'hedgehog.controllers.ProjectsController', 'hedgehog.filters.SplashScreenActionFilter']);
+goog.addDependency("../../../../app/app.js", ['hedgehog'], ['goog.dom', 'mvc.Router', 'hedgehog.Header', 'hedgehog.Menu', 'hedgehog.Loader', 'hedgehog.ResponsiveHeader', 'hedgehog.SplashScreen', 'hedgehog.templates', 'goog.soy', 'hedgehog.core.Application', 'hedgehog.controllers.AboutController', 'hedgehog.controllers.BlogController', 'hedgehog.controllers.ProjectsController', 'hedgehog.filters.SplashScreenActionFilter', 'hedgehog.filters.SplashScreenApplicationFilter']);
 goog.addDependency("../../../../app/deps.js", [], []);
 goog.addDependency("../../../../app/externs.js", [], []);
 goog.addDependency("../../../../app/requirements.js", [], ['hedgehog']);
@@ -37,13 +37,16 @@ goog.addDependency("../../../../app/controllers/aboutсontroller.js", ['hedgehog
 goog.addDependency("../../../../app/controllers/blogсontroller.js", ['hedgehog.controllers.BlogController'], ['hedgehog.core.Controller']);
 goog.addDependency("../../../../app/controllers/projectsсontroller.js", ['hedgehog.controllers.ProjectsController'], ['hedgehog.core.Controller']);
 goog.addDependency("../../../../app/core/actionfilter.js", ['hedgehog.core.ActionFilter'], []);
-goog.addDependency("../../../../app/core/application.js", ['hedgehog.core.Application'], ['mvc.Router', 'goog.string', 'goog.events.EventTarget', 'hedgehog.core.Request', 'hedgehog.core.Response', 'hedgehog.core.types.ActionFilterItem', 'hedgehog.core.events.ActionExceptionEvent']);
+goog.addDependency("../../../../app/core/application.js", ['hedgehog.core.Application'], ['mvc.Router', 'goog.string', 'goog.events.EventTarget', 'hedgehog.core.Request', 'hedgehog.core.Response', 'hedgehog.core.types.ActionFilterItem', 'hedgehog.core.events.ActionEvent', 'hedgehog.core.events.ActionExceptionEvent']);
+goog.addDependency("../../../../app/core/applicationfilter.js", ['hedgehog.core.ApplicationFilter'], []);
 goog.addDependency("../../../../app/core/controller.js", ['hedgehog.core.Controller'], []);
 goog.addDependency("../../../../app/core/request.js", ['hedgehog.core.Request'], ['goog.Uri']);
 goog.addDependency("../../../../app/core/response.js", ['hedgehog.core.Response'], ['goog.soy']);
 goog.addDependency("../../../../app/core/events/actionevent.js", ['hedgehog.core.events.ActionEvent'], ['goog.events.Event', 'hedgehog.core.types.ActionFilterContext']);
 goog.addDependency("../../../../app/core/events/actionexceptionevent.js", ['hedgehog.core.events.ActionExceptionEvent'], ['hedgehog.core.events.ActionEvent']);
 goog.addDependency("../../../../app/core/types/actionfiltercontext.js", ['hedgehog.core.types.ActionFilterContext'], []);
-goog.addDependency("../../../../app/core/types/actionfilteritem.js", ['hedgehog.core.types.ActionFilterItem'], []);
+goog.addDependency("../../../../app/core/types/actionfilteritem.js", ['hedgehog.core.types.ActionFilterItem'], ['hedgehog.core.types.ApplicationFilterItem']);
+goog.addDependency("../../../../app/core/types/applicationfilteritem.js", ['hedgehog.core.types.ApplicationFilterItem'], []);
 goog.addDependency("../../../../app/filters/splashscreenactionfilter.js", ['hedgehog.filters.SplashScreenActionFilter'], ['hedgehog.core.ActionFilter']);
+goog.addDependency("../../../../app/filters/splashscreenapplicationfilter.js", ['hedgehog.filters.SplashScreenApplicationFilter'], ['hedgehog.core.ApplicationFilter']);
 goog.addDependency("../../../../app/views/templates.soy.js", ['hedgehog.templates'], ['soy', 'soydata']);

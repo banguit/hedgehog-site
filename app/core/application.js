@@ -35,6 +35,12 @@ hedgehog.core.Application = function() {
     this.actionFilters_ = [];
 
     /**
+     * @type {Array.<hedgehog.core.types.ApplicationFilterItem>}
+     * @private
+     */
+    this.applicationFilters_ = [];
+
+    /**
      * The fragment we are mapping the controller to.
      * @type {RegExp}
      * @private
@@ -59,13 +65,7 @@ hedgehog.core.Application.prototype.mapRoute = function(route, controller) {
  * @private
  */
 hedgehog.core.Application.prototype.processRoute_ = function(route, controller) {
-    this.currentRoute_ = new RegExp('^' + goog.string.regExpEscape(route)
-                         .replace(/\\:\w+/g, '(\\w+)')
-                         .replace(/\\\*/g, '(.*)')
-                         .replace(/\\\[/g, '(')
-                         .replace(/\\\]/g, ')?')
-                         .replace(/\\\{/g, '(?:')
-                         .replace(/\\\}/g, ')?') + '$');
+    this.setCurrentRoute_(route); // TODO: Move to ROUTE_EXPIRED
 
     var i = 2
       , routeData = { 'controller' : /\w+/.exec(arguments[0])[0] }
@@ -97,9 +97,9 @@ hedgehog.core.Application.prototype.processRoute_ = function(route, controller) 
     if(goog.isFunction((instance[routeData.action]))) {
 
         try {
-            this.dispatchEvent(new hedgehog.core.events.ActionEvent(filterContext, hedgehog.core.Application.EventType.ONACTIONEXECUTING, this));
+            this.dispatchEvent(new hedgehog.core.events.ActionEvent(filterContext, hedgehog.core.Application.EventType.ACTIONEXECUTING, this));
             instance[routeData.action](request, response);
-            this.dispatchEvent(new hedgehog.core.events.ActionEvent(filterContext, hedgehog.core.Application.EventType.ONACTIONEXECUTED, this));
+            this.dispatchEvent(new hedgehog.core.events.ActionEvent(filterContext, hedgehog.core.Application.EventType.ACTIONEXECUTED, this));
         } catch (err) {
             this.dispatchEvent(new hedgehog.core.events.ActionExceptionEvent(filterContext, this, err));
         }
@@ -111,6 +111,17 @@ hedgehog.core.Application.prototype.processRoute_ = function(route, controller) 
 
 
 /**
+ * Register application filter
+ * @param {!hedgehog.core.ApplicationFilter} filter
+ * @param {number=} opt_order
+ */
+hedgehog.core.Application.prototype.addApplicationFilter = function(filter, opt_order) {
+    goog.array.insert(this.applicationFilters_, new hedgehog.core.types.ApplicationFilterItem(filter, opt_order));
+};
+
+
+/**
+ * Register action filter
  * @param {!hedgehog.core.ActionFilter} filter
  * @param {string|RegExp=} opt_route Route to watch for.
  * @param {number=} opt_order
@@ -125,21 +136,33 @@ hedgehog.core.Application.prototype.addActionFilter = function(filter, opt_route
  */
 hedgehog.core.Application.prototype.run = function() {
     // Initialize events
-    this.listen(hedgehog.core.Application.EventType.ONACTIONEXCEPTION, this.onActionException_, false, this);
-    this.listen(hedgehog.core.Application.EventType.ONACTIONEXECUTING, this.onActionExecuting_, false, this);
-    this.listen(hedgehog.core.Application.EventType.ONACTIONEXECUTED, this.onActionExecuted_, false, this);
+    this.listen(hedgehog.core.Application.EventType.APPLICATIONSTART, this.onApplicationStart_, false, this);
+    this.listen(hedgehog.core.Application.EventType.APPLICATIONRUN, this.onApplicationRun_, false, this);
+    this.listen(hedgehog.core.Application.EventType.ACTIONEXCEPTION, this.onActionException_, false, this);
+    this.listen(hedgehog.core.Application.EventType.ACTIONEXECUTING, this.onActionExecuting_, false, this);
+    this.listen(hedgehog.core.Application.EventType.ACTIONEXECUTED, this.onActionExecuted_, false, this);
+
+    this.dispatchEvent(hedgehog.core.Application.EventType.APPLICATIONSTART);
 
     // Sort action filters
     goog.array.sort(this.actionFilters_, function(a, b) {
         return a.getOrder() - b.getOrder();
     });
 
+    // Sort application filters
+    goog.array.sort(this.applicationFilters_, function(a, b) {
+        return a.getOrder() - b.getOrder();
+    });
+
     // Check current route
     this.router_.checkRoutes();
+
+    this.dispatchEvent(hedgehog.core.Application.EventType.APPLICATIONRUN);
 };
 
 
 /**
+ * Called before the action method is invoked.
  * @param {hedgehog.core.events.ActionEvent} e
  * @private
  */
@@ -151,6 +174,7 @@ hedgehog.core.Application.prototype.onActionExecuting_ = function(e) {
 
 
 /**
+ * Called after the action method is invoked.
  * @param {hedgehog.core.events.ActionEvent} e
  * @private
  */
@@ -162,6 +186,7 @@ hedgehog.core.Application.prototype.onActionExecuted_ = function(e) {
 
 
 /**
+ * Called when an unhandled exception occurs in the action.
  * @param {hedgehog.core.events.ActionExceptionEvent} e
  * @private
  */
@@ -173,6 +198,43 @@ hedgehog.core.Application.prototype.onActionException_ = function(e) {
 
 
 /**
+ * Called when an application start initialization.
+ * @param {goog.events.Event} e
+ * @private
+ */
+hedgehog.core.Application.prototype.onApplicationStart_ = function(e) {
+    this.forEachApplicationFilter_(function(filterItem){
+        filterItem.getFilter().onApplicationStart(e);
+    });
+};
+
+
+/**
+ * Called when an application end initialization and launched.
+ * @param {goog.events.Event} e
+ * @private
+ */
+hedgehog.core.Application.prototype.onApplicationRun_ = function(e) {
+    this.forEachApplicationFilter_(function(filterItem){
+        filterItem.getFilter().onApplicationRun(e);
+    });
+};
+
+
+/**
+ * Calls a function for each registered application filter.
+ * @param {Function} callback
+ * @private
+ */
+hedgehog.core.Application.prototype.forEachApplicationFilter_ = function(callback) {
+    goog.array.forEach(this.applicationFilters_, function(filterItem) {
+        callback.call(this, filterItem);
+    }, this);
+};
+
+
+/**
+ * Calls a function for each registered action filter, but skip filters with route that not match current route.
  * @param {Function} callback
  * @private
  */
@@ -189,9 +251,25 @@ hedgehog.core.Application.prototype.forEachActionFilter_ = function(callback) {
 };
 
 
+/**
+ * @param {string} route
+ */
+hedgehog.core.Application.prototype.setCurrentRoute_ = function(route) {
+    this.currentRoute_ = new RegExp('^' + goog.string.regExpEscape(route)
+                        .replace(/\\:\w+/g, '(\\w+)')
+                        .replace(/\\\*/g, '(.*)')
+                        .replace(/\\\[/g, '(')
+                        .replace(/\\\]/g, ')?')
+                        .replace(/\\\{/g, '(?:')
+                        .replace(/\\\}/g, ')?') + '$');
+};
+
+
 /** @enum {string} */
 hedgehog.core.Application.EventType = {
-    ONACTIONEXCEPTION: goog.events.getUniqueId('ONACTIONEXCEPTION'),
-    ONACTIONEXECUTING: goog.events.getUniqueId('ONACTIONEXECUTING'),
-    ONACTIONEXECUTED: goog.events.getUniqueId('ONACTIONEXECUTED')
+    APPLICATIONSTART: goog.events.getUniqueId('application_start'),
+    APPLICATIONRUN: goog.events.getUniqueId('application_start'),
+    ACTIONEXCEPTION: goog.events.getUniqueId('action_exception'),
+    ACTIONEXECUTING: goog.events.getUniqueId('action_executing'),
+    ACTIONEXECUTED: goog.events.getUniqueId('action_executed')
 };
