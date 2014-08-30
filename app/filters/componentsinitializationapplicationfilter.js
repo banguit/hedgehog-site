@@ -73,20 +73,20 @@ hedgehog.filters.ComponentsInitializationApplicationFilter.prototype.onApplicati
     this.responsiveHeader_.decorate(goog.dom.getElementByClass('page-responsive-header'));
 };
 
-/**
- * @private
- */
-hedgehog.filters.ComponentsInitializationApplicationFilter.prototype.onSplashScreenInitialAnimationFinish_ = function() {
-    this.initialAnimationCompleted_ = true;
-};
-
 
 /** @override */
 hedgehog.filters.ComponentsInitializationApplicationFilter.prototype.onApplicationRun = function() {
-    console.log('onApplicationRun');
     if(this.initialAnimationCompleted_ === false) {
         setTimeout(goog.bind(this.onApplicationRun, this), 3000);
     } else {
         this.splashScreen_.stop();
     }
+};
+
+
+/**
+ * @private
+ */
+hedgehog.filters.ComponentsInitializationApplicationFilter.prototype.onSplashScreenInitialAnimationFinish_ = function() {
+    this.initialAnimationCompleted_ = true;
 };

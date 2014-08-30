@@ -187,8 +187,6 @@ hedgehog.SplashScreen.prototype.onWindowResize_ = function() {
 
         googStyle.setPosition(content, contentPositionLeft, contentPositionTop);
     }
-
-    console.log('onWindowResize_');
 };
 
 

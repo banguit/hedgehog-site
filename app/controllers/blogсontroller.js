@@ -16,5 +16,5 @@ goog.inherits(hedgehog.controllers.BlogController, hedgehog.core.Controller);
  * @param {hedgehog.core.Response} response
  */
 hedgehog.controllers.BlogController.prototype.index = function(request, response) {
-
+    response.render(hedgehog.templates.blog, {}, goog.dom.getElement('content'));
 };

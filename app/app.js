@@ -6,16 +6,11 @@
 
 goog.provide('hedgehog');
 
-goog.require('mvc.Router');
-goog.require('hedgehog.Loader');
-goog.require('hedgehog.templates');
-goog.require('goog.soy');
-
 goog.require('hedgehog.core.Application');
 goog.require('hedgehog.controllers.AboutController');
 goog.require('hedgehog.controllers.BlogController');
 goog.require('hedgehog.controllers.ProjectsController');
-goog.require('hedgehog.filters.SplashScreenActionFilter');
+goog.require('hedgehog.filters.ComponentsInitializationActionFilter');
 goog.require('hedgehog.filters.ComponentsInitializationApplicationFilter');
 
 
@@ -28,7 +23,7 @@ hedgehog.start = function() {
 
     // -- Register routes -- //
     // Default route should be wrapped in {.. route definition ..}
-    app.mapRoute('{/blog{/}{/:action{/}}{/:id{/}}}', hedgehog.controllers.BlogController); // Default route
+    app.mapRoute('{/}{/blog{/}{/:action{/}}{/:id{/}}}', hedgehog.controllers.BlogController); // Default route
     app.mapRoute('/projects{/}', hedgehog.controllers.ProjectsController);
     app.mapRoute('/about{/}{/:action{/}}[?*]', hedgehog.controllers.AboutController);
     // TODO: 404
@@ -37,7 +32,7 @@ hedgehog.start = function() {
     app.addApplicationFilter(new hedgehog.filters.ComponentsInitializationApplicationFilter());
 
     // -- Register action filters -- //
-    app.addActionFilter(new hedgehog.filters.SplashScreenActionFilter(), null, 0);
+    app.addActionFilter(new hedgehog.filters.ComponentsInitializationActionFilter(), null, 0);
 
     app.run();
 };

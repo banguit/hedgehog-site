@@ -1,4 +1,4 @@
-goog.provide('hedgehog.filters.SplashScreenActionFilter');
+goog.provide('hedgehog.filters.ComponentsInitializationActionFilter');
 
 goog.require('hedgehog.core.ActionFilter');
 
@@ -7,23 +7,23 @@ goog.require('hedgehog.core.ActionFilter');
  * @constructor
  * @implements {hedgehog.core.ActionFilter}
  */
-hedgehog.filters.SplashScreenActionFilter = function() {};
+hedgehog.filters.ComponentsInitializationActionFilter = function() {};
 
 
 /** @override */
-hedgehog.filters.SplashScreenActionFilter.prototype.onActionExecuted = function() {
+hedgehog.filters.ComponentsInitializationActionFilter.prototype.onActionExecuted = function() {
     console.info('onActionExecuted');
 };
 
 
 /** @override */
-hedgehog.filters.SplashScreenActionFilter.prototype.onActionExecuting = function() {
+hedgehog.filters.ComponentsInitializationActionFilter.prototype.onActionExecuting = function() {
     console.info('onActionExecuting');
 };
 
 
 /** @override */
-hedgehog.filters.SplashScreenActionFilter.prototype.onException = function(e) {
+hedgehog.filters.ComponentsInitializationActionFilter.prototype.onException = function(e) {
     console.info('onException');
     console.info(e);
 };
