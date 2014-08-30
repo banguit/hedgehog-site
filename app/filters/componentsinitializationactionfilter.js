@@ -49,7 +49,7 @@ hedgehog.filters.ComponentsInitializationActionFilter = function() {
 /** @override */
 hedgehog.filters.ComponentsInitializationActionFilter.prototype.onActionExecuting = function(e) {
     this.loader_.show(true);
-    this.menu_.setActive(e.getContext().getRequest().getRouteData().controller);
+    this.menu_.setActive(e.getContext().getRequest().getRouteData()['controller']);
 
     // Set responsive header and page titles
     document.title = this.initialTitleText_ + ' | ' + this.menu_.getName();
