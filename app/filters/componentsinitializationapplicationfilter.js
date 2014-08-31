@@ -77,7 +77,7 @@ hedgehog.filters.ComponentsInitializationApplicationFilter.prototype.onApplicati
 /** @override */
 hedgehog.filters.ComponentsInitializationApplicationFilter.prototype.onApplicationRun = function() {
     if(this.initialAnimationCompleted_ === false) {
-        setTimeout(goog.bind(this.onApplicationRun, this), 3000);
+        setTimeout(goog.bind(this.onApplicationRun, this), 500);
     } else {
         this.splashScreen_.stop();
     }
