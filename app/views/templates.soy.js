@@ -46,7 +46,7 @@ if (goog.DEBUG) {
  * @suppress {checkTypes|uselessCode}
  */
 hedgehog.templates.about = function(opt_data, opt_ignored) {
-  return '<div id="about"><div class="photo"><h1 class="container">Who am I?</h1></div><div class="container introduction"><p>Hey! My name is Dmitry Antonenko and </p></div><div class="container social"><i class="fa fa-twitter fa-5x"></i><i class="fa fa-facebook fa-5x"></i><i class="fa fa-linkedin fa-5x"></i></div></div>';
+  return '<div id="about"><div class="photo"><h1 class="container">Who am I?</h1></div><div class="container introduction"><p>Hey! My name is Dmitry Antonenko and </p></div><div class="container social"><a href="#" class="fa-stack fa-3x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-twitter fa-stack-1x fa-inverse"></i></a><a href="#" class="fa-stack fa-3x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-facebook fa-stack-1x fa-inverse"></i></a><a href="#" class="fa-stack fa-3x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-linkedin fa-stack-1x fa-inverse"></i></a><a href="#" class="fa-stack fa-3x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-github fa-stack-1x fa-inverse"></i></a><a href="#" class="fa-stack fa-3x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-skype fa-stack-1x fa-inverse"></i></a><a href="#" class="fa-stack fa-3x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-phone fa-stack-1x fa-inverse"></i></a></div></div>';
 };
 if (goog.DEBUG) {
   hedgehog.templates.about.soyTemplateName = 'hedgehog.templates.about';
