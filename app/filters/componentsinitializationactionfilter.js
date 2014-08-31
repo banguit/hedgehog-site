@@ -67,6 +67,5 @@ hedgehog.filters.ComponentsInitializationActionFilter.prototype.onActionExecuted
 
 /** @override */
 hedgehog.filters.ComponentsInitializationActionFilter.prototype.onException = function(e) {
-    console.log('onException');
     console.error(e);
 };
