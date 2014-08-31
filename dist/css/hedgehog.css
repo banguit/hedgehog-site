@@ -6318,7 +6318,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #242628;
+  color: #595959;
   font-weight: 300;
   line-height: 1;
   text-rendering: optimizelegibility;
@@ -6473,7 +6473,6 @@ h6 {
 }
 .wrapper #content {
   margin-top: 20px;
-  padding: 0 15px;
   height: 100%;
   min-height: 100%;
 }
@@ -6512,10 +6511,6 @@ h6 {
   }
   .wrapper #content {
     margin-top: 30px;
-  }
-  .wrapper footer {
-    padding-top: 8px;
-    padding-bottom: 8px;
   }
   .wrapper.responsive-menu:after {
     content: '';
@@ -6649,5 +6644,10 @@ h6 {
   left: 50%;
   position: absolute;
   top: 50%;
+}
+#about .me {
+  background: transparent url('../images/me.jpg') no-repeat scroll center center;
+  background-size: 100% auto;
+  height: 600px;
 }
 /*# sourceMappingURL=hedgehog.css.map */
