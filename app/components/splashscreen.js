@@ -142,7 +142,7 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
       , queue;
 
     // This hack required for android firefox, but I made it general for portable all devices
-    if (goog.labs.userAgent.device.isTablet() || goog.labs.userAgent.device.isMobile()) {
+    if ((goog.userAgent.ANDROID && goog.userAgent.GECKO) && goog.labs.userAgent.device.isTablet() || goog.labs.userAgent.device.isMobile()) {
         contentPositionLeft = (screen.width / 2) - (contentSize.width / 2)
     } else {
         contentPositionLeft = (splashSize.width / 2) - (contentSize.width / 2)

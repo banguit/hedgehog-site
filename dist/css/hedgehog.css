@@ -8009,7 +8009,7 @@ h6 {
   opacity: 0;
 }
 .wrapper header {
-  height: 125px;
+  height: 140px;
   padding: 0 15px;
 }
 .wrapper header a {
@@ -8032,7 +8032,6 @@ h6 {
   background-size: 75px 75px;
   padding-left: 82px !important;
   padding-top: 20px !important;
-  margin-left: -10px !important;
 }
 .wrapper header a.logo:hover,
 .wrapper header a.logo:active,
@@ -8059,7 +8058,7 @@ h6 {
 }
 .wrapper header .navbar-nav li a {
   display: block;
-  line-height: 90px;
+  line-height: 110px;
   text-align: center;
   text-transform: uppercase;
   font-weight: bold;
@@ -8307,6 +8306,7 @@ h6 {
   color: #8a8a8a;
   text-transform: uppercase;
   padding-top: 26px;
+  padding-left: 97px;
 }
 .splash-screen .splash-screen-content .sitename small {
   font-size: 10px;
