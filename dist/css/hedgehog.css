@@ -7975,7 +7975,7 @@ body {
   background: transparent;
   overflow-x: hidden;
 }
-@media (max-width: 767px) {
+@media (max-width: 991px) {
   html,
   body,
   .wrapper {
@@ -8235,11 +8235,12 @@ h6 {
   overflow: hidden;
   height: 100%;
   width: 100%;
-  z-index: 10000;
+  z-index: 1003;
 }
 .splash-screen .splash-screen-content {
-  position: relative;
-  display: none;
+  position: absolute;
+  display: block;
+  visibility: hidden;
   width: 280px;
   height: 90px;
 }
@@ -8320,7 +8321,7 @@ h6 {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 10002;
+  z-index: 1002;
 }
 #ajax-overlay div {
   left: 50%;
@@ -8351,7 +8352,19 @@ h6 {
 #about .contacts a:hover {
   color: #8a8a8a;
 }
-#about .contacts .row div {
+#about .contacts a:hover .fa-circle {
+  color: #717171;
+}
+#about .contacts .row > div {
   text-align: center;
+  height: 150px;
+}
+#about .contacts .row > div .fa-stack {
+  vertical-align: top;
+}
+#about .contacts .row > div span {
+  font-family: 'Montserrat', sans-serif;
+  display: block;
+  font-size: 12px;
 }
 /*# sourceMappingURL=hedgehog.css.map */
