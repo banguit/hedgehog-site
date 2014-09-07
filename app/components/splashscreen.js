@@ -240,20 +240,8 @@ hedgehog.SplashScreen.getElementBackgroundImageUlr_ = function(el) {
 hedgehog.SplashScreen.prototype.play = function() {
     goog.style.setStyle(this.content_, 'visibility', 'visible');
 
-    // Preload logo image and play animation
-    var getUrl = hedgehog.SplashScreen.getElementBackgroundImageUlr_
-      , thenCallback = goog.bind(function() { count++; if(count == 6) { this.active_ = true; this.slideContentToCenterAnimation_.play(); } }, this)
-      , logoSlices = [ this.hedgehogBody_,
-                       this.hedgehogLeftEye_,
-                       this.hedgehogRightEye_,
-                       this.hedgehogFrontLeftLeg_,
-                       this.hedgehogFrontRightLeg_,
-                       this.hedgehogBackRightLeg_ ]
-      , count = 0;
-
-    goog.array.forEach(logoSlices, function(el) {
-        goog.labs.net.image.load(getUrl(el)).then(thenCallback);
-    });
+    this.active_ = true;
+    this.slideContentToCenterAnimation_.play();
 };
 
 
