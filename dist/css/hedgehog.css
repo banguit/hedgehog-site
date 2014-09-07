@@ -8368,4 +8368,20 @@ h6 {
   display: block;
   font-size: 12px;
 }
+#projects .photo {
+  background: url('../images/projects.jpg') no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 500px;
+}
+#projects .photo h1 {
+  font-weight: bold;
+  font-size: 48px;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  color: #fff;
+  margin-bottom: 40px;
+  line-height: 80px;
+}
 /*# sourceMappingURL=hedgehog.css.map */
