@@ -10,7 +10,6 @@ goog.require('goog.fx.dom');
 goog.require('goog.fx.AnimationQueue');
 goog.require('goog.fx.AnimationSerialQueue');
 goog.require('goog.fx.AnimationParallelQueue');
-goog.require('goog.labs.net.image');
 goog.require('goog.labs.userAgent.device');
 
 // Steps:
