@@ -46,10 +46,24 @@ if (goog.DEBUG) {
  * @suppress {checkTypes|uselessCode}
  */
 hedgehog.templates.blog = function(opt_data, opt_ignored) {
-  return '<div id="blog" class="container"><h1>Blog posts will be here!</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices cursus quam, nec interdum felis viverra nec. Nunc sit amet bibendum lorem. Integer hendrerit volutpat mauris, sed venenatis lorem. Fusce a pretium ante. Aliquam vitae nulla et magna ultricies tristique vel sit amet ante. Mauris et odio ac odio pharetra posuere. Donec semper porta mauris et mollis. Curabitur quam diam, faucibus vitae elit non, gravida aliquam arcu. Vivamus at urna pellentesque, mattis justo ut, dictum nisl. Proin sagittis erat vel condimentum semper. Etiam vestibulum enim dolor, vel auctor lorem hendrerit id. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras maximus maximus justo. Phasellus pulvinar vehicula ornare. Cras eu est est. </p></div>';
+  return '<div id="blog"><div class="photo"><h1 class="container">Blog</h1></div><div class="container content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices cursus quam, nec interdum felis viverra nec. Nunc sit amet bibendum lorem. Integer hendrerit volutpat mauris, sed venenatis lorem. Fusce a pretium ante. Aliquam vitae nulla et magna ultricies tristique vel sit amet ante. Mauris et odio ac odio pharetra posuere. Donec semper porta mauris et mollis. Curabitur quam diam, faucibus vitae elit non, gravida aliquam arcu. Vivamus at urna pellentesque, mattis justo ut, dictum nisl. Proin sagittis erat vel condimentum semper. Etiam vestibulum enim dolor, vel auctor lorem hendrerit id. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras maximus maximus justo. Phasellus pulvinar vehicula ornare. Cras eu est est.</div></div>';
 };
 if (goog.DEBUG) {
   hedgehog.templates.blog.soyTemplateName = 'hedgehog.templates.blog';
+}
+
+
+/**
+ * @param {Object.<string, *>=} opt_data
+ * @param {(null|undefined)=} opt_ignored
+ * @return {string}
+ * @suppress {checkTypes|uselessCode}
+ */
+hedgehog.templates.projects = function(opt_data, opt_ignored) {
+  return '<div id="projects"><div class="photo"><h1 class="container">Projects</h1></div><div class="container content"><h2>Development tools</h2><div class="project-item fluent-filters"><h4 class="media-heading">Fluent Filters for ASP.NET MVC</h4>A small library that can be used as a facility for add support of criteria for global action filters in ASP.NET MVC.<div><i class="fa fa-external-link-square"></i> <a href="http://fluentfilters.codeplex.com/">http://fluentfilters.codeplex.com/</a></div></div><br /><h2>End user services</h2><div class="project-item pubwebkit"><h4 class="media-heading">Pubwebkit</h4>A cloud service that helps you prepare digital editions and share it with friends or publish for sell.<div><i class="fa fa-external-link-square"></i> <a href="http://fluentfilters.codeplex.com/">http://www.pubwebkit.com/</a></div></div></div></div>';
+};
+if (goog.DEBUG) {
+  hedgehog.templates.projects.soyTemplateName = 'hedgehog.templates.projects';
 }
 
 
@@ -64,18 +78,4 @@ hedgehog.templates.about = function(opt_data, opt_ignored) {
 };
 if (goog.DEBUG) {
   hedgehog.templates.about.soyTemplateName = 'hedgehog.templates.about';
-}
-
-
-/**
- * @param {Object.<string, *>=} opt_data
- * @param {(null|undefined)=} opt_ignored
- * @return {string}
- * @suppress {checkTypes|uselessCode}
- */
-hedgehog.templates.projects = function(opt_data, opt_ignored) {
-  return '<div id="projects"><div class="photo"><h1 class="container">Projects</h1></div><div class="container content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices cursus quam, nec interdum felis viverra nec. Nunc sit amet bibendum lorem. Integer hendrerit volutpat mauris, sed venenatis lorem. Fusce a pretium ante. Aliquam vitae nulla et magna ultricies tristique vel sit amet ante. Mauris et odio ac odio pharetra posuere. Donec semper porta mauris et mollis. Curabitur quam diam, faucibus vitae elit non, gravida aliquam arcu. Vivamus at urna pellentesque, mattis justo ut, dictum nisl. Proin sagittis erat vel condimentum semper. Etiam vestibulum enim dolor, vel auctor lorem hendrerit id. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras maximus maximus justo. Phasellus pulvinar vehicula ornare. Cras eu est est.</div></div>';
-};
-if (goog.DEBUG) {
-  hedgehog.templates.projects.soyTemplateName = 'hedgehog.templates.projects';
 }

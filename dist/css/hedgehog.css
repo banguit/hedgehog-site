@@ -8169,6 +8169,11 @@ h6 {
   opacity: 0.5;
   color: #fff;
 }
+@media (max-width: 1199px) {
+  .wrapper footer .container {
+    width: 100%;
+  }
+}
 .wrapper footer span.copy {
   color: #fff;
   text-transform: uppercase;
@@ -8368,6 +8373,26 @@ h6 {
   display: block;
   font-size: 12px;
 }
+#blog .photo {
+  background: url('../images/blog.jpg') no-repeat center bottom scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 500px;
+}
+#blog .photo h1 {
+  font-weight: bold;
+  font-size: 48px;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  color: #fff;
+  margin-bottom: 40px;
+  line-height: 80px;
+}
+#blog .content {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
 #projects .photo {
   background: url('../images/projects.jpg') no-repeat center center scroll;
   -webkit-background-size: cover;
@@ -8383,5 +8408,22 @@ h6 {
   color: #fff;
   margin-bottom: 40px;
   line-height: 80px;
+}
+#projects .content {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+#projects .content .project-item {
+  border-left: 10px solid;
+  padding-left: 10px;
+}
+#projects .content .fluent-filters {
+  border-left-color: #b4d076;
+}
+#projects .content .pubwebkit {
+  border-left-color: #42aad3;
+}
+#projects .fa {
+  opacity: 0.5;
 }
 /*# sourceMappingURL=hedgehog.css.map */
