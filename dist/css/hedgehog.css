@@ -8166,6 +8166,12 @@ h6 {
     display: block;
   }
 }
+@media (max-width: 767px) {
+  .wrapper header {
+    display: block;
+    height: 120px;
+  }
+}
 @media (max-width: 1199px) {
   .wrapper header {
     width: 100%;
