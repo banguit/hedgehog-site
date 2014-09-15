@@ -42,7 +42,7 @@ python ${CLOSURE_DIR}/closure/bin/calcdeps.py -i app/requirements.js \
     -i ${APP_DIR}deps.js \
     -p ${CLOSURE_DIR}  -p ${CLOSURE_TEMPLATE_DIR} -p ${PLASTRONJS_DIR} -p ${APP_DIR} --output_file=dist/hedgehog.app.min.js -c ./tools/closure-compiler/build/compiler.jar \
     -f "--compilation_level=SIMPLE_OPTIMIZATIONS" \
-    -f "--debug=false" \
+    -f "--debug=true" \
     -f "--process_closure_primitives=true" \
     -f "--manage_closure_dependencies=true" \
     -f "--warning_level=VERBOSE" \
