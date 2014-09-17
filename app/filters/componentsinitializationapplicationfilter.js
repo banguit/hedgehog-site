@@ -76,6 +76,7 @@ hedgehog.filters.ComponentsInitializationApplicationFilter.prototype.onApplicati
 
 /** @override */
 hedgehog.filters.ComponentsInitializationApplicationFilter.prototype.onApplicationRun = function() {
+    // TODO: Add CONTENT_READY event processing
     if(this.initialAnimationCompleted_ === false) {
         setTimeout(goog.bind(this.onApplicationRun, this), 3000);
     } else {
