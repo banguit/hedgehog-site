@@ -55,7 +55,7 @@ hedgehog.ghost.GhostSession = function () {
      * @type {string}
      * @private
      */
-    this.postData_ = 'grant_type=password&username=banguit@gmail.com&password=Fynjirf;;tn&client_id=ghost-admin';
+    this.postData_ = 'grant_type=password&username=banguit@gmail.com&password=QAZwsx123&client_id=ghost-admin';
 
     /**
      * @type {{access_token: string, refresh_token: string, expires_in: number, token_type: string}}
