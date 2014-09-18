@@ -28,7 +28,7 @@ goog.addDependency("../../../../app/app.js", ['hedgehog'], ['hedgehog.core.Appli
 goog.addDependency("../../../../app/deps.js", [], []);
 goog.addDependency("../../../../app/externs.js", [], []);
 goog.addDependency("../../../../app/requirements.js", [], ['hedgehog']);
-goog.addDependency("../../../../app/components/ghost.js", ['hedgehog.ghost', 'hedgehog.ghost.GhostSession'], ['goog.net.XhrIo', 'goog.Promise', 'goog.string.format']);
+goog.addDependency("../../../../app/components/ghost.js", ['hedgehog.ghost', 'hedgehog.ghost.GhostSession'], ['goog.net.XhrIo', 'goog.Promise', 'goog.string.format', 'goog.uri.utils']);
 goog.addDependency("../../../../app/components/header.js", ['hedgehog.Header'], ['goog.ui.Component', 'goog.dom']);
 goog.addDependency("../../../../app/components/loader.js", ['hedgehog.Loader'], ['goog.ui.Component', 'goog.dom', 'goog.soy', 'goog.style', 'hedgehog.templates']);
 goog.addDependency("../../../../app/components/menu.js", ['hedgehog.Menu'], ['goog.ui.Component', 'goog.dom.classlist', 'goog.dom.dataset']);

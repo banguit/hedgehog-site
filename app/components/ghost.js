@@ -26,11 +26,15 @@ hedgehog.ghost.URI_BASE = '/ghost/api/v0.1/';
  * @param {string=} opt_staticPages
  */
 hedgehog.ghost.loadPosts = function(callback, opt_page, opt_limit, opt_status, opt_staticPages) {
-    var session = hedgehog.ghost.GhostSession.getInstance();
     opt_page = goog.isDefAndNotNull(opt_page) ? opt_page : 1;
     opt_limit = goog.isDefAndNotNull(opt_limit) ? opt_limit : 10;
     opt_status = goog.isDefAndNotNull(opt_status) ? opt_status : 'published';
-
+    var session = hedgehog.ghost.GhostSession.getInstance()
+      , getData = {
+            page: opt_page,
+            limit: opt_limit,
+            status: opt_status
+        };
 
     session.getToken().then(function(token) {
         var xhrio = new goog.net.XhrIo();
@@ -43,7 +47,7 @@ hedgehog.ghost.loadPosts = function(callback, opt_page, opt_limit, opt_status, o
             goog.dispose(xhrio);
         }, this));
         xhrio.headers.set('Authorization', token.token_type + ' ' + token.access_token);
-        xhrio.send(goog.string.format(hedgehog.ghost.URI_BASE + 'posts?page=%s&limit=%s&status=%s', opt_page, opt_limit, opt_status), 'GET');
+        xhrio.send(hedgehog.ghost.URI_BASE + 'posts?' + goog.uri.utils.buildQueryDataFromMap(getData), 'GET');
     });
 };
 
@@ -92,16 +96,6 @@ goog.addSingletonGetter(hedgehog.ghost.GhostSession);
 
 
 /**
- * @param e
- * @private
- */
-hedgehog.ghost.GhostSession.prototype.authenticationCallback_ = function(e) {
-    var xhr = /** @type {goog.net.XhrIo} */ (e.target);
-    this.token_ = /** @type {{access_token: string, refresh_token: string, expires_in: number, token_type: string}} */ (xhr.getResponseJson());
-};
-
-
-/**
  * @return {!goog.Promise.<!{access_token: string, refresh_token: string, expires_in: number, token_type: string}>} A Promise that will be resolved with the given token if the authentication passed successfully.
  */
 hedgehog.ghost.GhostSession.prototype.getToken = function() {
@@ -113,6 +107,7 @@ hedgehog.ghost.GhostSession.prototype.getToken = function() {
         resolve(this.token_);
     }, this);
 };
+
 
 /**
  * @return {!goog.Promise.<!{access_token: string, refresh_token: string, expires_in: number, token_type: string}>} A Promise that will be resolved with the given token if the authentication passed successfully.

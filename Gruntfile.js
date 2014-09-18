@@ -59,7 +59,7 @@ module.exports = function(grunt) {
 
         watch: {
             scripts: {
-                files: ['app/*.js', 'app/**/*.js'],
+                files: ['app/*.js', 'app/**/*.js', 'app/views/*.soy'],
                 tasks: ['shell:compile', 'clean:ghost_theme', 'copy:theme']
             },
             less: {

@@ -8435,6 +8435,19 @@ h6 {
   padding-top: 15px;
   padding-bottom: 15px;
 }
+#blog .content .post-header {
+  height: auto;
+  padding: 0;
+}
+#blog .content .post-header:after {
+  background: none repeat scroll 0 0 #ddd;
+  border: 0 none;
+  content: "";
+  display: block;
+  height: 1px;
+  margin: 6px 0 20px;
+  overflow: auto;
+}
 #projects .photo {
   background: url('../images/projects.jpg') no-repeat center center scroll;
   -webkit-background-size: cover;

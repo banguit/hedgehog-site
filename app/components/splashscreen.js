@@ -134,7 +134,7 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
       , content = this.content_
       , splashSize = googStyle.getSize(el)
       , contentSize = googStyle.getSize(content)
-      , contentPositionTop = splashSize.height + contentSize.height
+      , contentPositionTop
       , contentPositionLeft
       , queueForward
       , queueInitial
@@ -142,9 +142,11 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
 
     // This hack required for android firefox, but I made it general for portable all devices
     if ((goog.userAgent.ANDROID && goog.userAgent.GECKO) && goog.labs.userAgent.device.isTablet() || goog.labs.userAgent.device.isMobile()) {
-        contentPositionLeft = (screen.width / 2) - (contentSize.width / 2)
+        contentPositionLeft = (screen.width / 2) - (contentSize.width / 2);
+        contentPositionTop = screen.height + contentSize.height;
     } else {
-        contentPositionLeft = (splashSize.width / 2) - (contentSize.width / 2)
+        contentPositionTop = splashSize.height + contentSize.height;
+        contentPositionLeft = (splashSize.width / 2) - (contentSize.width / 2);
     }
 
     // Hide hedgehog outside of screen

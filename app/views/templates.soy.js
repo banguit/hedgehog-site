@@ -46,7 +46,15 @@ if (goog.DEBUG) {
  * @suppress {checkTypes|uselessCode}
  */
 hedgehog.templates.blog = function(opt_data, opt_ignored) {
-  return '<div id="blog"><div class="photo"><h1 class="container">Blog</h1></div><div class="container content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices cursus quam, nec interdum felis viverra nec. Nunc sit amet bibendum lorem. Integer hendrerit volutpat mauris, sed venenatis lorem. Fusce a pretium ante. Aliquam vitae nulla et magna ultricies tristique vel sit amet ante. Mauris et odio ac odio pharetra posuere. Donec semper porta mauris et mollis. Curabitur quam diam, faucibus vitae elit non, gravida aliquam arcu. Vivamus at urna pellentesque, mattis justo ut, dictum nisl. Proin sagittis erat vel condimentum semper. Etiam vestibulum enim dolor, vel auctor lorem hendrerit id. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras maximus maximus justo. Phasellus pulvinar vehicula ornare. Cras eu est est.</div></div>';
+  var output = '<div id="blog"><div class="photo"><h1 class="container">Blog</h1></div><div class="container content">';
+  var postList8 = opt_data.posts;
+  var postListLen8 = postList8.length;
+  for (var postIndex8 = 0; postIndex8 < postListLen8; postIndex8++) {
+    var postData8 = postList8[postIndex8];
+    output += '<header class="post-header"><h2 class="post-title">' + soy.$$escapeHtml(postData8.title) + '</h2><section class="post-meta"><i class="fa fa-clock-o"></i> <time class="post-date" datetime="' + soy.$$escapeHtml(postData8.datetime) + '">' + soy.$$escapeHtml(postData8.pretty_date) + '</time></section></header><section class="post-content">' + soy.$$filterNoAutoescape(postData8.html) + '</section>';
+  }
+  output += '</div></div>';
+  return output;
 };
 if (goog.DEBUG) {
   hedgehog.templates.blog.soyTemplateName = 'hedgehog.templates.blog';

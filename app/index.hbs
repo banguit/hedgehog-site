@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {{! Document Settings }}
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="description" content="Dmitry Antonenko personal blog">
+    <meta name="description" content="{{meta_description}}" />
     <meta name="author" content="Dmitry Antonenko">
+    <meta name="HandheldFriendly" content="True" />
 
-    <title>Den of hedgehog | Dmitry Antonenko personal website</title>
+    <title>{{meta_title}}</title>
 
     <!-- Core CSS -->
     <link href="css/hedgehog.min.css" rel="stylesheet">
@@ -31,6 +33,8 @@
     <![endif]-->
     <script src="//cdn.jsdelivr.net/spinjs/2.0.1/spin.min.js"></script>
     <script src="hedgehog.app.min.js"></script>
+
+    {{ghost_head}}
 </head>
 
 <body>
