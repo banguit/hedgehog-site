@@ -9,6 +9,14 @@ goog.provide('hedgehog.ghost.GhostSession');
 goog.require('goog.net.XhrIo');
 goog.require('goog.Promise');
 goog.require('goog.string.format');
+goog.require('goog.uri.utils');
+
+
+/**
+ * @const
+ * @type {string}
+ */
+hedgehog.ghost.URI_BASE = '/ghost/api/v0.1/';
 
 /**
  * @param {Function} callback
@@ -35,7 +43,7 @@ hedgehog.ghost.loadPosts = function(callback, opt_page, opt_limit, opt_status, o
             goog.dispose(xhrio);
         }, this));
         xhrio.headers.set('Authorization', token.token_type + ' ' + token.access_token);
-        xhrio.send(goog.string.format('/ghost/api/v0.1/posts?page=%s&limit=%s&status=%s', opt_page, opt_limit, opt_status), 'GET');
+        xhrio.send(goog.string.format(hedgehog.ghost.URI_BASE + 'posts?page=%s&limit=%s&status=%s', opt_page, opt_limit, opt_status), 'GET');
     });
 };
 
@@ -49,13 +57,24 @@ hedgehog.ghost.GhostSession = function () {
      * @type {string}
      * @private
      */
-    this.authenticationUrl_ = '/ghost/api/v0.1/authentication/token';
+    this.authenticationUrl_ = hedgehog.ghost.URI_BASE + 'authentication/token';
+
+    /**
+     * @type {{grant_type: string, username: string, password: string, client_id: string}}
+     * @private
+     */
+    this.postDataObject_ = {
+        grant_type: "password",
+        username: "banguit@gmail.com",
+        password: "QAZwsx123",
+        client_id: "ghost-admin"
+    };
 
     /**
      * @type {string}
      * @private
      */
-    this.postData_ = 'grant_type=password&username=banguit@gmail.com&password=QAZwsx123&client_id=ghost-admin';
+    this.postData_ = goog.uri.utils.buildQueryDataFromMap(this.postDataObject_);
 
     /**
      * @type {{access_token: string, refresh_token: string, expires_in: number, token_type: string}}
