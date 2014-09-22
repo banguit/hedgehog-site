@@ -2,6 +2,7 @@ goog.provide('hedgehog.controllers.BlogController');
 
 goog.require('hedgehog.core.Controller');
 goog.require('hedgehog.ghost');
+goog.require('hedgehog.Showdown');
 
 /**
  * @constructor
@@ -17,13 +18,17 @@ goog.inherits(hedgehog.controllers.BlogController, hedgehog.core.Controller);
  * @param {hedgehog.core.Response} response
  */
 hedgehog.controllers.BlogController.prototype.index = function(request, response) {
+    var converter = new hedgehog.Showdown.converter();
 
     hedgehog.ghost.loadPosts(goog.bind(function(data) {
         goog.array.forEach(data['posts'], function(post) {
             post['pretty_date'] = this.prettyDate_(post['created_at']);
             post['datetime'] = new Date(post['created_at']).yyyymmdd();
+            post['html_preview'] = converter.makeHtml(post['markdown'].split(" ").splice(0, 100).join(" ") + "...");
         }, this);
+
         console.dir(data);
+
         response.render(hedgehog.templates.blog, data, goog.dom.getElement('content'));
     }, this));
 };

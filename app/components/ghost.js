@@ -19,6 +19,14 @@ goog.require('goog.uri.utils');
 hedgehog.ghost.URI_BASE = '/ghost/api/v0.1/';
 
 /**
+ * Get all posts
+ *
+ * Options:
+ *      page - pagination (default: 1)
+ *      limit - number of posts per page (default: 15)
+ *      status - status of the page (all, published, draft)
+ *      staticPages - include static pages (default: false)
+ *
  * @param {Function} callback
  * @param {number=} opt_page
  * @param {number=} opt_limit
@@ -36,19 +44,43 @@ hedgehog.ghost.loadPosts = function(callback, opt_page, opt_limit, opt_status, o
             status: opt_status
         };
 
-    session.getToken().then(function(token) {
+    session.getToken().then(hedgehog.ghost.loadTags).then(function(data) {
         var xhrio = new goog.net.XhrIo();
         goog.events.listen(xhrio, goog.net.EventType.COMPLETE, goog.bind(function(e) {
             var xhr = /** @type {goog.net.XhrIo} */ (e.target)
               , result = xhr.getResponseJson();
 
+            goog.object.extend(/** @type {Object|null} */(result), {'tags' : data['tags']});
             callback(result);
 
             goog.dispose(xhrio);
         }, this));
-        xhrio.headers.set('Authorization', token.token_type + ' ' + token.access_token);
-        xhrio.send(hedgehog.ghost.URI_BASE + 'posts?' + goog.uri.utils.buildQueryDataFromMap(getData), 'GET');
+        xhrio.headers.set('Authorization', data['token'].token_type + ' ' + data['token'].access_token);
+        xhrio.send(hedgehog.ghost.URI_BASE + 'posts/?' + goog.uri.utils.buildQueryDataFromMap(getData), 'GET');
     });
+};
+
+
+/**
+ * Get all tags
+ * @param token
+ * @return {goog.Promise}
+ */
+hedgehog.ghost.loadTags = function(token) {
+    return new goog.Promise(function(resolve, reject) {
+        var xhrio = new goog.net.XhrIo();
+
+        goog.events.listen(xhrio, goog.net.EventType.COMPLETE, goog.bind(function(e) {
+            var xhr = /** @type {goog.net.XhrIo} */ (e.target)
+              , result = xhr.getResponseJson();
+            goog.dispose(xhrio);
+            goog.object.extend(/** @type {Object|null} */(result), {'token' : token});
+            resolve(result);
+        }, this));
+
+        xhrio.headers.set('Authorization', token.token_type + ' ' + token.access_token);
+        xhrio.send(hedgehog.ghost.URI_BASE + 'tags/', 'GET');
+    }, this);
 };
 
 

@@ -42,15 +42,18 @@
     </div>
     <div class="container content">
         {foreach $post in $posts}
-            <header class="post-header">
-                <h2 class="post-title">{$post.title}</h2>
-                <section class="post-meta">
-                    <i class="fa fa-clock-o"></i> <time class="post-date" datetime="{$post.datetime}">{$post.pretty_date}</time>
+            <article class="post">
+                <header class="post-header">
+                    <h2 class="post-title">{$post.title}</h2>
+                    <section class="post-meta">
+                        <i class="fa fa-clock-o"></i> <time class="post-date" datetime="{$post.datetime}">{$post.pretty_date}</time> on
+                    </section>
+                </header>
+                <section class="post-content">
+                    {$post.html_preview|noAutoescape}
                 </section>
-            </header>
-            <section class="post-content">
-                {$post.html|noAutoescape}
-            </section>
+                <button type="button" class="btn btn-default">Read more <i class="fa fa-arrow-right"></i></button>
+            </article>
         {/foreach}
     </div>
 </div>

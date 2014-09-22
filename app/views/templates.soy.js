@@ -51,7 +51,7 @@ hedgehog.templates.blog = function(opt_data, opt_ignored) {
   var postListLen8 = postList8.length;
   for (var postIndex8 = 0; postIndex8 < postListLen8; postIndex8++) {
     var postData8 = postList8[postIndex8];
-    output += '<header class="post-header"><h2 class="post-title">' + soy.$$escapeHtml(postData8.title) + '</h2><section class="post-meta"><i class="fa fa-clock-o"></i> <time class="post-date" datetime="' + soy.$$escapeHtml(postData8.datetime) + '">' + soy.$$escapeHtml(postData8.pretty_date) + '</time></section></header><section class="post-content">' + soy.$$filterNoAutoescape(postData8.html) + '</section>';
+    output += '<article class="post"><header class="post-header"><h2 class="post-title">' + soy.$$escapeHtml(postData8.title) + '</h2><section class="post-meta"><i class="fa fa-clock-o"></i> <time class="post-date" datetime="' + soy.$$escapeHtml(postData8.datetime) + '">' + soy.$$escapeHtml(postData8.pretty_date) + '</time> on</section></header><section class="post-content">' + soy.$$filterNoAutoescape(postData8.html_preview) + '</section><button type="button" class="btn btn-default">Read more <i class="fa fa-arrow-right"></i></button></article>';
   }
   output += '</div></div>';
   return output;

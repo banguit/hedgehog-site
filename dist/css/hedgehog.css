@@ -1,5 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:700,400,300);
-@import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
+@import url(//fonts.googleapis.com/css?family=Open+Sans:700,400,300);
+@import url(//fonts.googleapis.com/css?family=Montserrat:400,700);
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -8435,11 +8435,14 @@ h6 {
   padding-top: 15px;
   padding-bottom: 15px;
 }
-#blog .content .post-header {
+#blog .content .post {
+  margin-bottom: 60px;
+}
+#blog .content .post .post-header {
   height: auto;
   padding: 0;
 }
-#blog .content .post-header:after {
+#blog .content .post .post-header:after {
   background: none repeat scroll 0 0 #ddd;
   border: 0 none;
   content: "";
@@ -8447,6 +8450,9 @@ h6 {
   height: 1px;
   margin: 6px 0 20px;
   overflow: auto;
+}
+#blog .content .post .post-content img {
+  max-width: 100%;
 }
 #projects .photo {
   background: url('../images/projects.jpg') no-repeat center center scroll;
