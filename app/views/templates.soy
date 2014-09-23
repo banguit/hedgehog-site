@@ -33,26 +33,34 @@
 
 /**
  * Blog main page template
- * @param posts
  */
 {template .blog}
+{let $data: quoteKeysIfJs(['data' : opt_data]) /}
+{let $data: $data['data'] /}
 <div id="blog">
     <div class="photo">
         <h1 class="container">Blog</h1>
     </div>
     <div class="container content">
-        {foreach $post in $posts}
+        {foreach $post in $data['posts']}
             <article class="post">
                 <header class="post-header">
-                    <h2 class="post-title">{$post.title}</h2>
+                    <h2 class="post-title">{$post['title']}</h2>
                     <section class="post-meta">
-                        <i class="fa fa-clock-o"></i> <time class="post-date" datetime="{$post.datetime}">{$post.pretty_date}</time> on
+                        <i class="fa fa-clock-o"></i>
+                        <time class="post-date" datetime="{$post['datetime']}">{$post['pretty_date']}</time>
+                        on
+                        <span class="tags">
+                            {foreach $tag in $post['tags']}
+                                {$tag['name']}{if not isLast($tag)}, {/if}
+                            {/foreach}
+                        </span>
                     </section>
                 </header>
                 <section class="post-content">
-                    {$post.html_preview|noAutoescape}
+                    {$post['html_preview']|noAutoescape}
                 </section>
-                <button type="button" class="btn btn-default">Read more <i class="fa fa-arrow-right"></i></button>
+                <button type="button" class="btn btn-default btn-sm">Read more <i class="fa fa-arrow-right"></i></button>
             </article>
         {/foreach}
     </div>

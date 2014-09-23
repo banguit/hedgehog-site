@@ -8451,6 +8451,20 @@ h6 {
   margin: 6px 0 20px;
   overflow: auto;
 }
+#blog .content .post .post-header .post-meta {
+  color: #a2a2a2;
+  font-size: 14px;
+}
+#blog .content .post .post-header .post-meta .post-date:before,
+#blog .content .post .post-header .post-meta .tags:before {
+  content: "\00a0 ";
+}
+#blog .content .post .post-header .post-meta .post-date:after {
+  content: "\00a0 ";
+}
+#blog .content .post .post-header .post-meta .tags {
+  font-family: 'Montserrat', sans-serif;
+}
 #blog .content .post .post-content img {
   max-width: 100%;
 }

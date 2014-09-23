@@ -31,7 +31,7 @@ hedgehog.ghost.URI_BASE = '/ghost/api/v0.1/';
  * @param {number=} opt_page
  * @param {number=} opt_limit
  * @param {string=} opt_status
- * @param {string=} opt_staticPages
+ * @param {boolean=} opt_staticPages !!!currently not used in request
  */
 hedgehog.ghost.loadPosts = function(callback, opt_page, opt_limit, opt_status, opt_staticPages) {
     opt_page = goog.isDefAndNotNull(opt_page) ? opt_page : 1;
@@ -39,9 +39,9 @@ hedgehog.ghost.loadPosts = function(callback, opt_page, opt_limit, opt_status, o
     opt_status = goog.isDefAndNotNull(opt_status) ? opt_status : 'published';
     var session = hedgehog.ghost.GhostSession.getInstance()
       , getData = {
-            page: opt_page,
-            limit: opt_limit,
-            status: opt_status
+            'page': opt_page,
+            'limit': opt_limit,
+            'status': opt_status
         };
 
     session.getToken().then(hedgehog.ghost.loadTags).then(function(data) {
@@ -55,7 +55,7 @@ hedgehog.ghost.loadPosts = function(callback, opt_page, opt_limit, opt_status, o
 
             goog.dispose(xhrio);
         }, this));
-        xhrio.headers.set('Authorization', data['token'].token_type + ' ' + data['token'].access_token);
+        xhrio.headers.set('Authorization', data['token']['token_type'] + ' ' + data['token']['access_token']);
         xhrio.send(hedgehog.ghost.URI_BASE + 'posts/?' + goog.uri.utils.buildQueryDataFromMap(getData), 'GET');
     });
 };
@@ -78,9 +78,9 @@ hedgehog.ghost.loadTags = function(token) {
             resolve(result);
         }, this));
 
-        xhrio.headers.set('Authorization', token.token_type + ' ' + token.access_token);
+        xhrio.headers.set('Authorization', token['token_type'] + ' ' + token['access_token']);
         xhrio.send(hedgehog.ghost.URI_BASE + 'tags/', 'GET');
-    }, this);
+    });
 };
 
 
@@ -100,10 +100,10 @@ hedgehog.ghost.GhostSession = function () {
      * @private
      */
     this.postDataObject_ = {
-        grant_type: "password",
-        username: "banguit@gmail.com",
-        password: "QAZwsx123",
-        client_id: "ghost-admin"
+        'grant_type': "password",
+        'username': "banguit@gmail.com",
+        'password': "QAZwsx123",
+        'client_id': "ghost-admin"
     };
 
     /**
@@ -152,7 +152,7 @@ hedgehog.ghost.GhostSession.prototype.requestToken_ = function() {
             this.token_ = /** @type {{access_token: string, refresh_token: string, expires_in: number, token_type: string}} */ (xhr.getResponseJson());
 
             var t = new Date();
-            t.setSeconds(t.getSeconds() + this.token_.expires_in);
+            t.setSeconds(t.getSeconds() + this.token_['expires_in']);
             this.accessTokenExpirationTime_ = t;
 
             resolve(this.token_);

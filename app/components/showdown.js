@@ -1,6 +1,6 @@
 /**
  * @fileoverview
- * @suppress {checkTypes}
+ * @suppress {checkTypes|checkRegExp}
  *
  */
 
