@@ -130,46 +130,14 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
     var googStyle = goog.style
       , googFx = goog.fx
       , googFxDom = googFx.dom
-      , splashScreenEl = this.getElement()
       , splashScreenContentEl = this.content_
-      , contentPositionTop
-      , contentPositionLeft
+      , conentPosition = googStyle.getPosition(splashScreenContentEl)
       , queueForward
       , queueInitial
       , queue;
 
-    console.info('screen.height: ' + screen.height);
-    console.info('screen.width: ' + screen.width);
-
-    console.info('splashScreenEl.clientHeight: ' + splashScreenEl.clientHeight);
-    console.info('splashScreenEl.clientWidth: ' + splashScreenEl.clientWidth);
-
-    console.info('document.documentElement.clientHeight: ' + document.documentElement.clientHeight);
-    console.info('document.documentElement.clientWidth: ' + document.documentElement.clientWidth);
-
-    if((goog.labs.userAgent.device.isTablet() || goog.labs.userAgent.device.isMobile()) &&
-       (goog.userAgent.ANDROID && goog.userAgent.GECKO) &&
-       (screen.width < screen.height)) {
-        contentPositionLeft = (screen.width / 2) - (splashScreenContentEl.clientWidth / 2);
-        contentPositionTop = screen.height + splashScreenContentEl.clientHeight;
-
-        // Hide hedgehog outside of screen
-        googStyle.setPosition(splashScreenContentEl, contentPositionLeft, contentPositionTop);
-
-        // Define animation
-        this.slideContentToCenterAnimation_ = new googFxDom.SlideFrom(splashScreenContentEl, [contentPositionLeft, (screen.height / 2) - splashScreenContentEl.clientHeight], 1000, goog.fx.easing.easeOutLong);
-    } else {
-        contentPositionLeft = (splashScreenEl.clientWidth / 2) - (splashScreenContentEl.clientWidth / 2);
-        contentPositionTop = splashScreenEl.clientHeight + splashScreenContentEl.clientHeight;
-
-        // Hide hedgehog outside of screen
-        googStyle.setPosition(splashScreenContentEl, contentPositionLeft, contentPositionTop);
-
-        // Define animation
-        this.slideContentToCenterAnimation_ = new googFxDom.SlideFrom(splashScreenContentEl, [contentPositionLeft, (splashScreenEl.clientHeight / 2) - splashScreenContentEl.clientHeight], 1000, goog.fx.easing.easeOutLong);
-    }
-
     // Define animation
+    this.slideContentToCenterAnimation_ = new googFxDom.SlideFrom(splashScreenContentEl, [conentPosition.x, (conentPosition.y / 2) - splashScreenContentEl.clientHeight], 1000, goog.fx.easing.easeOutLong);
     queueForward = this.hedgehogAnimationParallelQueueForward_ = new googFx.AnimationParallelQueue();
 
     queue = new googFx.AnimationSerialQueue();

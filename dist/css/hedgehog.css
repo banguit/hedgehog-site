@@ -8273,19 +8273,20 @@ h6 {
 }
 .splash-screen {
   position: absolute;
-  top: 0;
-  left: 0;
-  overflow: hidden;
+  left: 50%;
   height: 100%;
-  width: 100%;
+  width: 50%;
   z-index: 1003;
+  border: 1px #f00 solid;
 }
 .splash-screen .splash-screen-content {
-  position: absolute;
-  display: block;
-  visibility: hidden;
+  position: relative;
+  top: 100%;
+  left: -50%;
   width: 280px;
   height: 90px;
+  z-index: 1004;
+  border: 1px #0f0 solid;
 }
 .splash-screen .splash-screen-content .hedgehog {
   position: relative;
