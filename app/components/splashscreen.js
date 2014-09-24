@@ -137,7 +137,7 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
       , queue;
 
     // Define animation
-    this.slideContentToCenterAnimation_ = new googFxDom.SlideFrom(splashScreenContentEl, [conentPosition.x, (conentPosition.y / 2) - splashScreenContentEl.clientHeight], 1000, goog.fx.easing.easeOutLong);
+    this.slideContentToCenterAnimation_ = new googFxDom.SlideFrom(splashScreenContentEl, [conentPosition.x, (conentPosition.y / 2) - splashScreenContentEl.clientHeight], 1000, goog.fx.easing.easeOut);
     queueForward = this.hedgehogAnimationParallelQueueForward_ = new googFx.AnimationParallelQueue();
 
     queue = new googFx.AnimationSerialQueue();
@@ -157,28 +157,6 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
     goog.events.listen(this.slideContentToCenterAnimation_, googFx.Transition.EventType.FINISH, goog.bind(this.onSlideContentToCenterAnimationFinish_, this));
     goog.events.listen(queueForward, googFx.Transition.EventType.FINISH, goog.bind(this.onHedgehogAnimationParallelQueueForwardFinish_, this));
     goog.events.listen(queueInitial, googFx.Transition.EventType.FINISH, goog.bind(this.onHedgehogAnimationParallelQueueInitialFinish_, this));
-
-    // Initialize component events
-    goog.events.listen(window, goog.events.EventType.RESIZE, this.onWindowResize_, true, this);
-    goog.events.listen(window, goog.events.EventType.ORIENTATIONCHANGE, this.onWindowResize_, false, this);
-};
-
-
-/**
- * On window resize event handler
- * @private
- */
-hedgehog.SplashScreen.prototype.onWindowResize_ = function() {
-    if(this.isActive()) {
-        var googStyle = goog.style
-            , content = this.content_
-            , splashSize = googStyle.getSize(this.getElement())
-            , contentSize = googStyle.getSize(content)
-            , contentPositionLeft = (splashSize.width / 2) - (contentSize.width / 2)
-            , contentPositionTop = (splashSize.height / 2) - contentSize.height;
-
-        googStyle.setPosition(content, contentPositionLeft, contentPositionTop);
-    }
 };
 
 
@@ -279,8 +257,6 @@ hedgehog.SplashScreen.prototype.disposeInternal = function() {
     goog.events.unlisten(this.slideContentToCenterAnimation_, goog.fx.Transition.EventType.FINISH, goog.bind(this.onSlideContentToCenterAnimationFinish_, this));
     goog.events.unlisten(this.hedgehogAnimationParallelQueueForward_, goog.fx.Transition.EventType.FINISH, goog.bind(this.onHedgehogAnimationParallelQueueForwardFinish_, this));
     goog.events.unlisten(this.hedgehogAnimationParallelQueueInitial_, goog.fx.Transition.EventType.FINISH, goog.bind(this.onHedgehogAnimationParallelQueueInitialFinish_, this));
-    goog.events.unlisten(window, goog.events.EventType.RESIZE, this.onWindowResize_, true, this);
-    goog.events.unlisten(window, goog.events.EventType.ORIENTATIONCHANGE, this.onWindowResize_, false, this);
 };
 
 
