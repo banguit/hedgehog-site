@@ -94,5 +94,4 @@ hedgehog.bindReady_ = function(handler) {
     }
 };
 
-
 goog.exportSymbol('app.start', hedgehog.start);

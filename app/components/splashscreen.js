@@ -130,30 +130,28 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
     var googStyle = goog.style
       , googFx = goog.fx
       , googFxDom = googFx.dom
-      , el = this.getElement()
-      , content = this.content_
-      , splashSize = googStyle.getSize(el)
-      , contentSize = googStyle.getSize(content)
+      , splashScreenEl = this.getElement()
+      , splashScreenContentEl = this.content_
       , contentPositionTop
       , contentPositionLeft
       , queueForward
       , queueInitial
       , queue;
 
-    // This hack required for android firefox, but I made it general for portable all devices
-    if ((goog.userAgent.ANDROID && goog.userAgent.GECKO) && goog.labs.userAgent.device.isTablet() || goog.labs.userAgent.device.isMobile()) {
-        contentPositionLeft = (screen.width / 2) - (contentSize.width / 2);
-        contentPositionTop = screen.height + contentSize.height;
-    } else {
-        contentPositionTop = splashSize.height + contentSize.height;
-        contentPositionLeft = (splashSize.width / 2) - (contentSize.width / 2);
-    }
+    console.info('splashScreenEl.clientHeight: ' + splashScreenEl.clientHeight);
+    console.info('splashScreenContentEl.clientHeight: ' + splashScreenContentEl.clientHeight);
+
+    contentPositionLeft = (splashScreenEl.clientWidth / 2) - (splashScreenContentEl.clientWidth / 2);
+    contentPositionTop = splashScreenEl.clientHeight + splashScreenContentEl.clientHeight;
+
+    console.info('contentPositionLeft: ' + contentPositionLeft);
+    console.info('contentPositionTop: ' + contentPositionTop);
 
     // Hide hedgehog outside of screen
-    googStyle.setPosition(content, contentPositionLeft, contentPositionTop);
+    googStyle.setPosition(splashScreenContentEl, contentPositionLeft, contentPositionTop);
 
     // Define animation
-    this.slideContentToCenterAnimation_ = new googFxDom.SlideFrom(content, [contentPositionLeft, (splashSize.height / 2) - contentSize.height], 800, goog.fx.easing.easeOutLong);
+    this.slideContentToCenterAnimation_ = new googFxDom.SlideFrom(splashScreenContentEl, [contentPositionLeft, (splashScreenEl.clientHeight / 2) - splashScreenContentEl.clientHeight], 800, goog.fx.easing.easeOutLong);
     queueForward = this.hedgehogAnimationParallelQueueForward_ = new googFx.AnimationParallelQueue();
 
     queue = new googFx.AnimationSerialQueue();
@@ -186,14 +184,12 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
  */
 hedgehog.SplashScreen.prototype.onWindowResize_ = function() {
     if(this.isActive()) {
-        var googStyle = goog.style
-          , content = this.content_
-          , splashSize = googStyle.getSize(this.getElement())
-          , contentSize = googStyle.getSize(content)
-          , contentPositionLeft = (splashSize.width / 2) - (contentSize.width / 2)
-          , contentPositionTop = (splashSize.height / 2) - contentSize.height;
+        var splashScreenEl = this.getElement()
+          , splashScreenContentEl = this.content_
+          , contentPositionLeft = (splashScreenEl.clientWidth / 2) - (splashScreenContentEl.clientWidth / 2)
+          , contentPositionTop = splashScreenEl.clientHeight + splashScreenContentEl.clientHeight;
 
-        googStyle.setPosition(content, contentPositionLeft, contentPositionTop);
+        goog.style.setPosition(splashScreenContentEl, contentPositionLeft, contentPositionTop);
     }
 };
 
