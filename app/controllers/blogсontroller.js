@@ -16,8 +16,10 @@ goog.inherits(hedgehog.controllers.BlogController, hedgehog.core.Controller);
 /**
  * @param {hedgehog.core.Request} request
  * @param {hedgehog.core.Response} response
+ * @param {Function} resolve
+ * @param {Function} reject
  */
-hedgehog.controllers.BlogController.prototype.index = function(request, response) {
+hedgehog.controllers.BlogController.prototype.index = function(request, response, resolve, reject) {
     var converter = new hedgehog.Showdown.converter();
 
     hedgehog.ghost.loadPosts(goog.bind(function(data) {
@@ -33,9 +35,8 @@ hedgehog.controllers.BlogController.prototype.index = function(request, response
             });
         }, this);
 
-        console.dir(data);
-
         response.render(hedgehog.templates.blog, data, goog.dom.getElement('content'));
+        resolve();
     }, this));
 };
 

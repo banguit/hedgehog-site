@@ -13,6 +13,7 @@ goog.require('hedgehog.core.Response');
 goog.require('hedgehog.core.types.ActionFilterItem');
 goog.require('hedgehog.core.events.ActionEvent');
 goog.require('hedgehog.core.events.ActionExceptionEvent');
+goog.require('goog.Promise');
 
 
 /**
@@ -97,9 +98,27 @@ hedgehog.core.Application.prototype.processRoute_ = function(route, controller) 
     if(goog.isFunction((instance[routeData.action]))) {
 
         try {
-            this.dispatchEvent(new hedgehog.core.events.ActionEvent(filterContext, hedgehog.core.Application.EventType.ACTIONEXECUTING, this));
-            instance[routeData.action](request, response);
-            this.dispatchEvent(new hedgehog.core.events.ActionEvent(filterContext, hedgehog.core.Application.EventType.ACTIONEXECUTED, this));
+            new goog.Promise(function(resolve, reject) {
+                this.dispatchEvent(new hedgehog.core.events.ActionEvent(filterContext, hedgehog.core.Application.EventType.ACTIONEXECUTING, resolve, this));
+            }, this)
+            .then(function() {
+                return new goog.Promise(function(resolve, reject) {
+                    instance[routeData.action](request, response, resolve, reject);
+                });
+            }, undefined, this)
+            .then(function() {
+                return new goog.Promise(function(resolve, reject) {
+                    this.dispatchEvent(new hedgehog.core.events.ActionEvent(filterContext, hedgehog.core.Application.EventType.ACTIONEXECUTED, resolve, this));
+                }, this);
+            }, undefined, this)
+            .then(function() {
+                return new goog.Promise(function(resolve, reject) {
+                    // Application loaded
+                    this.dispatchEvent(hedgehog.core.Application.EventType.APPLICATIONLOADED);
+                    resolve();
+                }, this);
+            }, undefined, this);
+
         } catch (err) {
             this.dispatchEvent(new hedgehog.core.events.ActionExceptionEvent(filterContext, this, err));
         }
@@ -136,8 +155,9 @@ hedgehog.core.Application.prototype.addActionFilter = function(filter, opt_route
  */
 hedgehog.core.Application.prototype.run = function() {
     // Initialize events
-    this.listen(hedgehog.core.Application.EventType.APPLICATIONSTART, this.onApplicationStart_, false, this);
-    this.listen(hedgehog.core.Application.EventType.APPLICATIONRUN, this.onApplicationRun_, false, this);
+    this.listenOnce(hedgehog.core.Application.EventType.APPLICATIONSTART, this.onApplicationStart_, false, this);
+    this.listenOnce(hedgehog.core.Application.EventType.APPLICATIONRUN, this.onApplicationRun_, false, this);
+    this.listenOnce(hedgehog.core.Application.EventType.APPLICATIONLOADED, this.onApplicationLoaded_, false, this);
     this.listen(hedgehog.core.Application.EventType.ACTIONEXCEPTION, this.onActionException_, false, this);
     this.listen(hedgehog.core.Application.EventType.ACTIONEXECUTING, this.onActionExecuting_, false, this);
     this.listen(hedgehog.core.Application.EventType.ACTIONEXECUTED, this.onActionExecuted_, false, this);
@@ -172,6 +192,7 @@ hedgehog.core.Application.prototype.onActionExecuting_ = function(e) {
     this.forEachActionFilter_(function(filterItem) {
         filterItem.getFilter().onActionExecuting(e);
     });
+    e.resolvePromise();
 };
 
 
@@ -184,6 +205,7 @@ hedgehog.core.Application.prototype.onActionExecuted_ = function(e) {
     this.forEachActionFilter_(function(filterItem) {
         filterItem.getFilter().onActionExecuted(e);
     });
+    e.resolvePromise();
 };
 
 
@@ -196,6 +218,7 @@ hedgehog.core.Application.prototype.onActionException_ = function(e) {
     this.forEachActionFilter_(function(filterItem) {
         filterItem.getFilter().onException(e);
     });
+    e.resolvePromise();
 };
 
 
@@ -212,13 +235,24 @@ hedgehog.core.Application.prototype.onApplicationStart_ = function(e) {
 
 
 /**
- * Called when an application end initialization and launched.
+ * Called when an application end initialization.
  * @param {goog.events.Event} e
  * @private
  */
 hedgehog.core.Application.prototype.onApplicationRun_ = function(e) {
     this.forEachApplicationFilter_(function(filterItem){
         filterItem.getFilter().onApplicationRun(e);
+    });
+};
+
+/**
+ * Called when an application launched.
+ * @param {goog.events.Event} e
+ * @private
+ */
+hedgehog.core.Application.prototype.onApplicationLoaded_ = function(e) {
+    this.forEachApplicationFilter_(function(filterItem){
+        filterItem.getFilter().onApplicationLoaded(e);
     });
 };
 
@@ -271,6 +305,7 @@ hedgehog.core.Application.prototype.setCurrentRoute_ = function(route) {
 hedgehog.core.Application.EventType = {
     APPLICATIONSTART: goog.events.getUniqueId('application_start'),
     APPLICATIONRUN: goog.events.getUniqueId('application_start'),
+    APPLICATIONLOADED: goog.events.getUniqueId('application_loaded'),
     ACTIONEXCEPTION: goog.events.getUniqueId('action_exception'),
     ACTIONEXECUTING: goog.events.getUniqueId('action_executing'),
     ACTIONEXECUTED: goog.events.getUniqueId('action_executed')

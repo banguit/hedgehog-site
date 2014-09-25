@@ -53,19 +53,30 @@ hedgehog.filters.ComponentsInitializationApplicationFilter = function() {
      * @type {boolean}
      * @private
      */
-    this.initialAnimationCompleted_ = false;
+    this.applicationLoaded_ = false;
 };
 
 
 /** @override */
 hedgehog.filters.ComponentsInitializationApplicationFilter.prototype.onApplicationStart = function() {
-    var splashScreen = this.splashScreen_;
-
-    goog.events.listen(splashScreen, hedgehog.SplashScreen.EventTypes.ONSLIDETOCENTERANIMATIONFINISH, this.onSplashScreenInitialAnimationFinish_, false, this);
 
     // Initialize splash screen
-    splashScreen.render();
-    splashScreen.play();
+    new goog.Promise(function(resolve, reject) {
+        this.splashScreen_.render();
+        var resolverFn = goog.bind(function() {
+            if(this.splashScreen_.isInDocument()) {
+                resolve();
+            } else {
+                resolverFn();
+            }
+        }, this);
+        window.setTimeout(resolverFn, 100);
+    }, this).then(function() {
+        return new goog.Promise(function(resolve, reject) {
+            this.splashScreen_.play();
+            resolve();
+        }, this);
+    }, null, this);
 
     // Initialize UI components
     this.header_.decorate(goog.dom.getElementsByTagNameAndClass('header')[0]);
@@ -76,18 +87,16 @@ hedgehog.filters.ComponentsInitializationApplicationFilter.prototype.onApplicati
 
 /** @override */
 hedgehog.filters.ComponentsInitializationApplicationFilter.prototype.onApplicationRun = function() {
-    // TODO: Add CONTENT_READY event processing
-    if(this.initialAnimationCompleted_ === false) {
+
+    if(this.applicationLoaded_ === false) {
         setTimeout(goog.bind(this.onApplicationRun, this), 3000);
     } else {
-        this.splashScreen_.stop();
+        goog.events.dispatchEvent(this.splashScreen_, hedgehog.SplashScreen.EventTypes.LOADCOMPLETE);
     }
 };
 
 
-/**
- * @private
- */
-hedgehog.filters.ComponentsInitializationApplicationFilter.prototype.onSplashScreenInitialAnimationFinish_ = function() {
-    this.initialAnimationCompleted_ = true;
+/** @override */
+hedgehog.filters.ComponentsInitializationApplicationFilter.prototype.onApplicationLoaded = function() {
+    this.applicationLoaded_ = true;
 };

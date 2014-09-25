@@ -59,10 +59,9 @@ hedgehog.filters.ComponentsInitializationActionFilter.prototype.onActionExecutin
 
 /** @override */
 hedgehog.filters.ComponentsInitializationActionFilter.prototype.onActionExecuted = function(e) {
-    // TODO: Add CONTENT_READY event
     setTimeout(goog.bind(function() {
         this.loader_.show(false);
-    }, this), 1000);
+    }, this), 500);
 };
 
 

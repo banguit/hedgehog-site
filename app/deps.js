@@ -39,7 +39,7 @@ goog.addDependency("../../../../app/controllers/aboutсontroller.js", ['hedgehog
 goog.addDependency("../../../../app/controllers/blogсontroller.js", ['hedgehog.controllers.BlogController'], ['hedgehog.core.Controller', 'hedgehog.ghost', 'hedgehog.Showdown']);
 goog.addDependency("../../../../app/controllers/projectsсontroller.js", ['hedgehog.controllers.ProjectsController'], ['hedgehog.core.Controller']);
 goog.addDependency("../../../../app/core/actionfilter.js", ['hedgehog.core.ActionFilter'], []);
-goog.addDependency("../../../../app/core/application.js", ['hedgehog.core.Application'], ['mvc.Router', 'goog.string', 'goog.events.EventTarget', 'hedgehog.core.Request', 'hedgehog.core.Response', 'hedgehog.core.types.ActionFilterItem', 'hedgehog.core.events.ActionEvent', 'hedgehog.core.events.ActionExceptionEvent']);
+goog.addDependency("../../../../app/core/application.js", ['hedgehog.core.Application'], ['mvc.Router', 'goog.string', 'goog.events.EventTarget', 'hedgehog.core.Request', 'hedgehog.core.Response', 'hedgehog.core.types.ActionFilterItem', 'hedgehog.core.events.ActionEvent', 'hedgehog.core.events.ActionExceptionEvent', 'goog.Promise']);
 goog.addDependency("../../../../app/core/applicationfilter.js", ['hedgehog.core.ApplicationFilter'], []);
 goog.addDependency("../../../../app/core/controller.js", ['hedgehog.core.Controller'], []);
 goog.addDependency("../../../../app/core/request.js", ['hedgehog.core.Request'], ['goog.Uri']);

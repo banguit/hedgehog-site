@@ -131,13 +131,18 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
       , googFx = goog.fx
       , googFxDom = googFx.dom
       , splashScreenContentEl = this.content_
-      , conentPosition = googStyle.getPosition(splashScreenContentEl)
+      , contentPosition = googStyle.getPosition(splashScreenContentEl)
       , queueForward
       , queueInitial
       , queue;
 
     // Define animation
-    this.slideContentToCenterAnimation_ = new googFxDom.SlideFrom(splashScreenContentEl, [conentPosition.x, (conentPosition.y / 2) - splashScreenContentEl.clientHeight], 1000, goog.fx.easing.easeOut);
+    if ((goog.userAgent.ANDROID && goog.userAgent.GECKO) && goog.labs.userAgent.device.isTablet() || goog.labs.userAgent.device.isMobile()) { // Bug fix for Android Firefox Mobile
+        this.slideContentToCenterAnimation_ = new googFxDom.SlideFrom(splashScreenContentEl, [contentPosition.x, (screen.height / 2) - splashScreenContentEl.clientHeight], 1000, goog.fx.easing.easeOut);
+    } else {
+        this.slideContentToCenterAnimation_ = new googFxDom.SlideFrom(splashScreenContentEl, [contentPosition.x, (window.innerHeight / 2) - splashScreenContentEl.clientHeight], 1000, goog.fx.easing.easeOut);
+    }
+
     queueForward = this.hedgehogAnimationParallelQueueForward_ = new googFx.AnimationParallelQueue();
 
     queue = new googFx.AnimationSerialQueue();
@@ -157,6 +162,25 @@ hedgehog.SplashScreen.prototype.enterDocument = function() {
     goog.events.listen(this.slideContentToCenterAnimation_, googFx.Transition.EventType.FINISH, goog.bind(this.onSlideContentToCenterAnimationFinish_, this));
     goog.events.listen(queueForward, googFx.Transition.EventType.FINISH, goog.bind(this.onHedgehogAnimationParallelQueueForwardFinish_, this));
     goog.events.listen(queueInitial, googFx.Transition.EventType.FINISH, goog.bind(this.onHedgehogAnimationParallelQueueInitialFinish_, this));
+
+    // Initialize component events
+    goog.events.listenOnce(this, hedgehog.SplashScreen.EventTypes.LOADCOMPLETE, this.stop, false, this);
+    goog.events.listen(window, goog.events.EventType.RESIZE, this.onWindowResize_, true, this);
+    goog.events.listen(window, goog.events.EventType.ORIENTATIONCHANGE, this.onWindowResize_, false, this);
+};
+
+
+/**
+ * On window resize event handler
+ * @private
+ */
+hedgehog.SplashScreen.prototype.onWindowResize_ = function() {
+    if(this.isActive()) {
+        var content = this.content_;
+        var contentPosition = goog.style.getPosition(content);
+
+        goog.style.setPosition(content, contentPosition.x, (window.innerHeight / 2) - content.clientHeight);
+    }
 };
 
 
@@ -274,5 +298,6 @@ hedgehog.SplashScreen.CSS_CLASSES = {
 
 
 hedgehog.SplashScreen.EventTypes = {
-    ONSLIDETOCENTERANIMATIONFINISH: goog.events.getUniqueId('onSlideContentToCenterAnimationFinish')
+    ONSLIDETOCENTERANIMATIONFINISH: goog.events.getUniqueId('onSlideContentToCenterAnimationFinish'),
+    LOADCOMPLETE: goog.events.getUniqueId('onLoadComplete')
 };

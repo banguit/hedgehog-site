@@ -17,7 +17,10 @@ goog.inherits(hedgehog.controllers.AboutController, hedgehog.core.Controller);
 /**
  * @param {hedgehog.core.Request} request
  * @param {hedgehog.core.Response} response
+ * @param {Function} resolve
+ * @param {Function} reject
  */
-hedgehog.controllers.AboutController.prototype.index = function(request, response) {
+hedgehog.controllers.AboutController.prototype.index = function(request, response, resolve, reject) {
     response.render(hedgehog.templates.about, {}, goog.dom.getElement('content'));
+    resolve();
 };
