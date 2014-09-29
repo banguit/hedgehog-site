@@ -28,7 +28,6 @@ hedgehog.start = function() {
         app.mapRoute('{!}/blog/{:action}/:slug{/}', hedgehog.controllers.BlogController);
         app.mapRoute('{!}/projects{/}', hedgehog.controllers.ProjectsController);
         app.mapRoute('{!}/about{/}', hedgehog.controllers.AboutController);
-        // TODO: 404
 
         // -- Register application filters -- //
         app.addApplicationFilter(new hedgehog.filters.ComponentsInitializationApplicationFilter());

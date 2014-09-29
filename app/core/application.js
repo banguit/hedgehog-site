@@ -68,10 +68,15 @@ hedgehog.core.Application.prototype.mapRoute = function(route, controller) {
 hedgehog.core.Application.prototype.processRoute_ = function(route, controller) {
     this.setCurrentRoute_(route); // TODO: Move to ROUTE_EXPIRED
 
+    var controllerName = /[a-zA-Z0-9._-]+/.exec(route);
+
+    if(controllerName == null) {
+        window.location.replace('/404');
+    }
+
     var i = 2
-      , controllerName = /\w+/.exec(route)
-      , routeData = { 'controller' : controllerName != null ? controllerName[0] : 'notfound' }
-      , pattern = /:\w*/g
+      , routeData = { 'controller' : controllerName[0] }
+      , pattern = /:[a-zA-Z0-9._-]*/g
       , request
       , response
       , filterContext
@@ -155,6 +160,9 @@ hedgehog.core.Application.prototype.addActionFilter = function(filter, opt_route
  * Start application execution
  */
 hedgehog.core.Application.prototype.run = function() {
+    // Add additional system routes
+    this.mapRoute('*', goog.nullFunction); // To handle all unhandled routes / 404
+
     // Initialize events
     this.listenOnce(hedgehog.core.Application.EventType.APPLICATIONSTART, this.onApplicationStart_, false, this);
     this.listenOnce(hedgehog.core.Application.EventType.APPLICATIONRUN, this.onApplicationRun_, false, this);
