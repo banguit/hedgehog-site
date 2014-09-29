@@ -9,7 +9,7 @@ url = https://banguit@github.com/google/closure-compiler.git
 	url = https://banguit@github.com/google/closure-library.git
 [submodule "libs/PlastronJS"]
 	path = libs/PlastronJS
-	url = https://banguit@github.com/rhysbrettbowen/PlastronJS.git
+url=https://github.com/banguit/PlastronJS.git
 [submodule "libs/SpinJS"]
 	path = libs/SpinJS
 	url = https://banguit@github.com/fgnass/spin.js.git
