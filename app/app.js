@@ -1,6 +1,5 @@
 /**
  * @fileoverview The controller/business logic for the application.
- *
  * @author banguit@gmail.com (Dmitry Antonenko)
  */
 

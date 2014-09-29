@@ -30,9 +30,15 @@ goog.inherits(hedgehog.core.Request, goog.Uri);
 
 
 /**
- * @return {Object}
+ * Return route data by key or all values as object
+ * @param {string=} opt_key
+ * @return {Object|string}
  */
-hedgehog.core.Request.prototype.getRouteData = function() {
+hedgehog.core.Request.prototype.getRouteData = function(opt_key) {
+    if(goog.isDefAndNotNull(opt_key)) {
+        return this.routeData_[opt_key];
+    }
+
     return this.routeData_;
 };
 

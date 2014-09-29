@@ -48,8 +48,8 @@ hedgehog.controllers.BlogController.prototype.index = function(request, response
  * @param {Function} reject
  */
 hedgehog.controllers.BlogController.prototype.post = function(request, response, resolve, reject) {
-    debugger;
     console.log('post: Method is called!');
+    console.log(request.getRouteData());
 };
 
 /**

@@ -69,7 +69,8 @@ hedgehog.core.Application.prototype.processRoute_ = function(route, controller) 
     this.setCurrentRoute_(route); // TODO: Move to ROUTE_EXPIRED
 
     var i = 2
-      , routeData = { 'controller' : /\w+/.exec(arguments[0])[0] }
+      , controllerName = /\w+/.exec(route)
+      , routeData = { 'controller' : controllerName != null ? controllerName[0] : 'notfound' }
       , pattern = /:\w*/g
       , request
       , response
@@ -292,7 +293,7 @@ hedgehog.core.Application.prototype.forEachActionFilter_ = function(callback) {
  */
 hedgehog.core.Application.prototype.setCurrentRoute_ = function(route) {
     this.currentRoute_ = new RegExp('^' + goog.string.regExpEscape(route)
-                        .replace(/\\:\w+/g, '(\\w+)')
+                        .replace(/\\:\w+/g, '([a-zA-Z0-9._-]+)')
                         .replace(/\\\*/g, '(.*)')
                         .replace(/\\\[/g, '(')
                         .replace(/\\\]/g, ')?')
