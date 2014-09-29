@@ -25,9 +25,10 @@ hedgehog.start = function() {
 
         // -- Register routes -- //
         // Default route should be wrapped in {.. route definition ..}
-        app.mapRoute('{/}{/blog{/}{/:action{/}}{/:id{/}}}', hedgehog.controllers.BlogController); // Default route
-        app.mapRoute('/projects{/}', hedgehog.controllers.ProjectsController);
-        app.mapRoute('/about{/}{/:action{/}}[?*]', hedgehog.controllers.AboutController);
+        app.mapRoute('{!}{/}{/blog{/}}', hedgehog.controllers.BlogController); // Default route
+        app.mapRoute('{!}/blog/{:action}/:slug{/}', hedgehog.controllers.BlogController);
+        app.mapRoute('{!}/projects{/}', hedgehog.controllers.ProjectsController);
+        app.mapRoute('{!}/about{/}', hedgehog.controllers.AboutController);
         // TODO: 404
 
         // -- Register application filters -- //

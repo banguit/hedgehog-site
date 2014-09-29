@@ -45,7 +45,7 @@
         {foreach $post in $data['posts']}
             <article class="post">
                 <header class="post-header">
-                    <h2 class="post-title">{$post['title']}</h2>
+                    <h1 class="post-title"><a href="#!/blog/post/{$post['slug']}">{$post['title']}</a></h1>
                     <section class="post-meta">
                         <i class="fa fa-clock-o"></i>
                         <time class="post-date" datetime="{$post['datetime']}">{$post['pretty_date']}</time>
@@ -60,7 +60,7 @@
                 <section class="post-content">
                     {$post['html_preview']|noAutoescape}
                 </section>
-                <button type="button" class="btn btn-default btn-sm">Read more <i class="fa fa-arrow-right"></i></button>
+                <a type="button" href="#!/blog/post/{$post['slug']}" class="btn btn-default btn-sm">Read more <i class="fa fa-arrow-right"></i></a>
             </article>
         {/foreach}
     </div>

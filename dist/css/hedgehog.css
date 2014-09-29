@@ -8465,6 +8465,15 @@ h6 {
   margin: 6px 0 20px;
   overflow: auto;
 }
+#blog .content .post .post-header h1 a {
+  color: #8a8a8a;
+  font-size: 35px;
+}
+#blog .content .post .post-header h1 a:hover,
+#blog .content .post .post-header h1 a:focus,
+#blog .content .post .post-header h1 a:active {
+  color: #a3a3a3;
+}
 #blog .content .post .post-header .post-meta {
   color: #a2a2a2;
   font-size: 14px;

@@ -20,6 +20,7 @@ goog.inherits(hedgehog.controllers.BlogController, hedgehog.core.Controller);
  * @param {Function} reject
  */
 hedgehog.controllers.BlogController.prototype.index = function(request, response, resolve, reject) {
+    console.log('index: Method is called!');
     var converter = new hedgehog.Showdown.converter();
 
     hedgehog.ghost.loadPosts(goog.bind(function(data) {
@@ -38,6 +39,17 @@ hedgehog.controllers.BlogController.prototype.index = function(request, response
         response.render(hedgehog.templates.blog, data, goog.dom.getElement('content'));
         resolve();
     }, this));
+};
+
+/**
+ * @param {hedgehog.core.Request} request
+ * @param {hedgehog.core.Response} response
+ * @param {Function} resolve
+ * @param {Function} reject
+ */
+hedgehog.controllers.BlogController.prototype.post = function(request, response, resolve, reject) {
+    debugger;
+    console.log('post: Method is called!');
 };
 
 /**

@@ -54,14 +54,14 @@ hedgehog.templates.blog = function(opt_data, opt_ignored) {
   var postListLen10 = postList10.length;
   for (var postIndex10 = 0; postIndex10 < postListLen10; postIndex10++) {
     var postData10 = postList10[postIndex10];
-    output += '<article class="post"><header class="post-header"><h2 class="post-title">' + soy.$$escapeHtml(postData10['title']) + '</h2><section class="post-meta"><i class="fa fa-clock-o"></i><time class="post-date" datetime="' + soy.$$escapeHtml(postData10['datetime']) + '">' + soy.$$escapeHtml(postData10['pretty_date']) + '</time>on<span class="tags">';
-    var tagList18 = postData10['tags'];
-    var tagListLen18 = tagList18.length;
-    for (var tagIndex18 = 0; tagIndex18 < tagListLen18; tagIndex18++) {
-      var tagData18 = tagList18[tagIndex18];
-      output += soy.$$escapeHtml(tagData18['name']) + ((! (tagIndex18 == tagListLen18 - 1)) ? ', ' : '');
+    output += '<article class="post"><header class="post-header"><h1 class="post-title"><a href="#!/blog/post/' + soy.$$escapeHtml(postData10['slug']) + '">' + soy.$$escapeHtml(postData10['title']) + '</a></h1><section class="post-meta"><i class="fa fa-clock-o"></i><time class="post-date" datetime="' + soy.$$escapeHtml(postData10['datetime']) + '">' + soy.$$escapeHtml(postData10['pretty_date']) + '</time>on<span class="tags">';
+    var tagList20 = postData10['tags'];
+    var tagListLen20 = tagList20.length;
+    for (var tagIndex20 = 0; tagIndex20 < tagListLen20; tagIndex20++) {
+      var tagData20 = tagList20[tagIndex20];
+      output += soy.$$escapeHtml(tagData20['name']) + ((! (tagIndex20 == tagListLen20 - 1)) ? ', ' : '');
     }
-    output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(postData10['html_preview']) + '</section><button type="button" class="btn btn-default btn-sm">Read more <i class="fa fa-arrow-right"></i></button></article>';
+    output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(postData10['html_preview']) + '</section><a type="button" href="#!/blog/post/' + soy.$$escapeHtml(postData10['slug']) + '" class="btn btn-default btn-sm">Read more <i class="fa fa-arrow-right"></i></a></article>';
   }
   output += '</div></div>';
   return output;
