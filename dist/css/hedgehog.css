@@ -8531,6 +8531,9 @@ h6 {
     font-size: 10px;
   }
 }
+#post .photo {
+  background-position: center center;
+}
 #post .photo h1 {
   padding-top: 15px;
   line-height: 55px;

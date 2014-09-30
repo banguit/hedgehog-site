@@ -81,12 +81,12 @@ hedgehog.templates.post = function(opt_data, opt_ignored) {
   var output = '';
   var data__soy35 = {'data': opt_data};
   var post__soy36 = data__soy35['data'];
-  output += '<div id="post"><div class="photo"><h1 class="container">' + soy.$$escapeHtml(post__soy36['title']) + '</h1></div><div class="container content"><article class="post"><header class="post-header container"><a class="back-link pull-left fa fa-angle-left" href="javascript:history.goBack()"><span> Back</span></a><section class="post-meta pull-right"><i class="fa fa-clock-o"></i><time class="post-date" datetime="' + soy.$$escapeHtml(post__soy36['datetime']) + '">' + soy.$$escapeHtml(post__soy36['pretty_date']) + '</time>on<span class="tags">';
-  var tagList44 = post__soy36['tags'];
-  var tagListLen44 = tagList44.length;
-  for (var tagIndex44 = 0; tagIndex44 < tagListLen44; tagIndex44++) {
-    var tagData44 = tagList44[tagIndex44];
-    output += soy.$$escapeHtml(tagData44['name']) + ((! (tagIndex44 == tagListLen44 - 1)) ? ', ' : '');
+  output += '<div id="post"><div class="photo" style="' + ((post__soy36['image'] != null) ? 'background-image: url(\'' + soy.$$escapeHtml(post__soy36['image']) + '\')' : '') + '"><h1 class="container">' + soy.$$escapeHtml(post__soy36['title']) + '</h1></div><div class="container content"><article class="post"><header class="post-header container"><a class="back-link pull-left fa fa-angle-left" href="javascript:history.goBack()"><span> Back</span></a><section class="post-meta pull-right"><i class="fa fa-clock-o"></i><time class="post-date" datetime="' + soy.$$escapeHtml(post__soy36['datetime']) + '">' + soy.$$escapeHtml(post__soy36['pretty_date']) + '</time>on<span class="tags">';
+  var tagList50 = post__soy36['tags'];
+  var tagListLen50 = tagList50.length;
+  for (var tagIndex50 = 0; tagIndex50 < tagListLen50; tagIndex50++) {
+    var tagData50 = tagList50[tagIndex50];
+    output += soy.$$escapeHtml(tagData50['name']) + ((! (tagIndex50 == tagListLen50 - 1)) ? ', ' : '');
   }
   output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(post__soy36['html']) + '</section></article></div></div>';
   return output;

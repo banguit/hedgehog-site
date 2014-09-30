@@ -74,7 +74,7 @@
 {let $data: quoteKeysIfJs(['data' : opt_data]) /}
 {let $post: $data['data'] /}
 <div id="post">
-    <div class="photo">
+    <div class="photo" style="{if isNonnull($post['image'])}background-image: url('{$post['image']}'){/if}">
         <h1 class="container">{$post['title']}</h1>
     </div>
     <div class="container content">
