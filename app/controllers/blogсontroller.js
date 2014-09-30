@@ -4,6 +4,7 @@ goog.require('hedgehog.core.Controller');
 goog.require('hedgehog.ghost');
 goog.require('hedgehog.Showdown');
 
+
 /**
  * @constructor
  * @extends {hedgehog.core.Controller}
@@ -12,6 +13,7 @@ hedgehog.controllers.BlogController = function() {
     goog.base(this);
 };
 goog.inherits(hedgehog.controllers.BlogController, hedgehog.core.Controller);
+
 
 /**
  * @param {hedgehog.core.Request} request
@@ -41,6 +43,7 @@ hedgehog.controllers.BlogController.prototype.index = function(request, response
     }, this));
 };
 
+
 /**
  * @param {hedgehog.core.Request} request
  * @param {hedgehog.core.Response} response
@@ -64,6 +67,7 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
         resolve();
     }, this), request.getRouteData('slug'));
 };
+
 
 /**
  * Takes an ISO time and returns a string representing how long ago the date represents.

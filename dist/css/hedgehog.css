@@ -8505,18 +8505,26 @@ h6 {
 #post .content .post .post-content img {
   max-width: 100%;
 }
+#post .photo h1 {
+  padding-top: 15px;
+  line-height: 55px;
+}
 @media (max-width: 767px) {
   #post .photo h1 {
     font-size: 32px;
+    line-height: 40px;
   }
 }
-#post .post-header .back-link {
+#post .content .post .post-header:after {
+  margin: 25px 0 20px;
+}
+#post .content .post .post-header .back-link {
   display: table;
   color: #a2a2a2;
   font-size: 14px;
   line-height: inherit;
 }
-#post .post-header .back-link span {
+#post .content .post .post-header .back-link span {
   font-family: 'Open Sans', sans-serif;
 }
 #projects .photo {
