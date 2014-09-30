@@ -71,7 +71,7 @@ hedgehog.core.Application.prototype.processRoute_ = function(route, controller) 
     var controllerName = /[a-zA-Z0-9._-]+/.exec(route);
 
     if(controllerName == null) {
-        window.location.replace('/404');
+        window.location.replace('/notfound');
     }
 
     var i = 2

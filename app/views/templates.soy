@@ -60,9 +60,42 @@
                 <section class="post-content">
                     {$post['html_preview']|noAutoescape}
                 </section>
-                <a type="button" href="#!/blog/post/{$post['slug']}" class="btn btn-default btn-sm">Read more <i class="fa fa-arrow-right"></i></a>
+                <a type="button" href="#!/blog/post/{$post['slug']}" class="btn btn-default btn-sm">Read more <i class="fa fa-angle-double-right"></i></a>
             </article>
         {/foreach}
+    </div>
+</div>
+{/template}
+
+/**
+ * Blog post template
+ */
+{template .post}
+{let $data: quoteKeysIfJs(['data' : opt_data]) /}
+{let $post: $data['data'] /}
+<div id="post">
+    <div class="photo">
+        <h1 class="container">{$post['title']}</h1>
+    </div>
+    <div class="container content">
+        <article class="post">
+            <header class="post-header container">
+                <a class="back-link pull-left fa fa-angle-left" href="javascript:history.goBack()"> <span>Back</span></a>
+                <section class="post-meta pull-right">
+                    <i class="fa fa-clock-o"></i>
+                    <time class="post-date" datetime="{$post['datetime']}">{$post['pretty_date']}</time>
+                    on
+                    <span class="tags">
+                        {foreach $tag in $post['tags']}
+                            {$tag['name']}{if not isLast($tag)}, {/if}
+                        {/foreach}
+                    </span>
+                </section>
+            </header>
+            <section class="post-content">
+                {$post['html']|noAutoescape}
+            </section>
+        </article>
     </div>
 </div>
 {/template}

@@ -8421,7 +8421,8 @@ h6 {
   display: block;
   font-size: 12px;
 }
-#blog .photo {
+#blog .photo,
+#post .photo {
   background: url('../images/blog.jpg') no-repeat center bottom scroll;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -8430,11 +8431,13 @@ h6 {
   height: 500px;
 }
 @media (max-width: 767px) {
-  #blog .photo {
+  #blog .photo,
+  #post .photo {
     height: 300px;
   }
 }
-#blog .photo h1 {
+#blog .photo h1,
+#post .photo h1 {
   font-weight: bold;
   font-size: 48px;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
@@ -8442,18 +8445,22 @@ h6 {
   margin-bottom: 40px;
   line-height: 80px;
 }
-#blog .content {
+#blog .content,
+#post .content {
   padding-top: 15px;
   padding-bottom: 15px;
 }
-#blog .content .post {
+#blog .content .post,
+#post .content .post {
   margin-bottom: 60px;
 }
-#blog .content .post .post-header {
+#blog .content .post .post-header,
+#post .content .post .post-header {
   height: auto;
   padding: 0;
 }
-#blog .content .post .post-header:after {
+#blog .content .post .post-header:after,
+#post .content .post .post-header:after {
   background: none repeat scroll 0 0 #ddd;
   border: 0 none;
   content: "";
@@ -8462,31 +8469,55 @@ h6 {
   margin: 6px 0 20px;
   overflow: auto;
 }
-#blog .content .post .post-header h1 a {
+#blog .content .post .post-header h1 a,
+#post .content .post .post-header h1 a {
   color: #8a8a8a;
   font-size: 35px;
 }
 #blog .content .post .post-header h1 a:hover,
+#post .content .post .post-header h1 a:hover,
 #blog .content .post .post-header h1 a:focus,
-#blog .content .post .post-header h1 a:active {
+#post .content .post .post-header h1 a:focus,
+#blog .content .post .post-header h1 a:active,
+#post .content .post .post-header h1 a:active {
   color: #a3a3a3;
 }
-#blog .content .post .post-header .post-meta {
+#blog .content .post .post-header .post-meta,
+#post .content .post .post-header .post-meta {
   color: #a2a2a2;
   font-size: 14px;
 }
 #blog .content .post .post-header .post-meta .post-date:before,
-#blog .content .post .post-header .post-meta .tags:before {
+#post .content .post .post-header .post-meta .post-date:before,
+#blog .content .post .post-header .post-meta .tags:before,
+#post .content .post .post-header .post-meta .tags:before {
   content: "\00a0 ";
 }
-#blog .content .post .post-header .post-meta .post-date:after {
+#blog .content .post .post-header .post-meta .post-date:after,
+#post .content .post .post-header .post-meta .post-date:after {
   content: "\00a0 ";
 }
-#blog .content .post .post-header .post-meta .tags {
+#blog .content .post .post-header .post-meta .tags,
+#post .content .post .post-header .post-meta .tags {
   font-family: 'Montserrat', sans-serif;
 }
-#blog .content .post .post-content img {
+#blog .content .post .post-content img,
+#post .content .post .post-content img {
   max-width: 100%;
+}
+@media (max-width: 767px) {
+  #post .photo h1 {
+    font-size: 32px;
+  }
+}
+#post .post-header .back-link {
+  display: table;
+  color: #a2a2a2;
+  font-size: 14px;
+  line-height: inherit;
+}
+#post .post-header .back-link span {
+  font-family: 'Open Sans', sans-serif;
 }
 #projects .photo {
   background: url('../images/projects.jpg') no-repeat center center scroll;

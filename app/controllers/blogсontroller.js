@@ -29,7 +29,7 @@ hedgehog.controllers.BlogController.prototype.index = function(request, response
             post['datetime'] = new Date(post['created_at']).yyyymmdd();
             post['html_preview'] = converter.makeHtml(post['markdown'].split(" ").splice(0, 100).join(" ") + "...");
 
-            // Get tags
+            // Get tags information
             var tagsIds = post['tags'];
             post['tags'] = goog.array.filter(data['tags'], function(tag) {
                 return goog.array.contains(tagsIds, tag.id);
@@ -48,8 +48,21 @@ hedgehog.controllers.BlogController.prototype.index = function(request, response
  * @param {Function} reject
  */
 hedgehog.controllers.BlogController.prototype.post = function(request, response, resolve, reject) {
-    console.log('post: Method is called!');
-    console.log(request.getRouteData());
+    hedgehog.ghost.loadPostBySlug(goog.bind(function(data) {
+        var post = data['posts'][0];
+
+        post['pretty_date'] = this.prettyDate_(post['created_at']);
+        post['datetime'] = new Date(post['created_at']).yyyymmdd();
+
+        // Get tags information
+        var tagsIds = post['tags'];
+        post['tags'] = goog.array.filter(data['tags'], function(tag) {
+            return goog.array.contains(tagsIds, tag.id);
+        });
+
+        response.render(hedgehog.templates.post, post, goog.dom.getElement('content'));
+        resolve();
+    }, this), request.getRouteData('slug'));
 };
 
 /**
@@ -76,4 +89,6 @@ hedgehog.controllers.BlogController.prototype.prettyDate_ = function(time){
         day_diff == 1 && "Yesterday" ||
         day_diff < 7 && day_diff + " days ago" ||
         day_diff < 31 && Math.ceil( day_diff / 7 ) + " weeks ago";
-}
+};
+
+goog.exportProperty(hedgehog.controllers.BlogController.prototype, 'post', hedgehog.controllers.BlogController.prototype.post);

@@ -61,6 +61,38 @@ hedgehog.ghost.loadPosts = function(callback, opt_page, opt_limit, opt_status, o
 };
 
 
+hedgehog.ghost.loadPostBySlug = function(callback, postSlug) {
+    var session = hedgehog.ghost.GhostSession.getInstance();
+
+    session.getToken().then(hedgehog.ghost.loadTags).then(function(data) {
+        var xhrio = new goog.net.XhrIo();
+
+        goog.events.listen(xhrio, goog.net.EventType.COMPLETE, goog.bind(function(e) {
+            var xhr = /** @type {goog.net.XhrIo} */ (e.target)
+              , result = xhr.getResponseJson();
+
+            goog.dispose(xhrio);
+
+            if(result.hasOwnProperty('errors')) {
+                var error = result['errors']['0'];
+                switch (error['type']) {
+                    case "NotFoundError":
+                        window.location.replace('/notfound');
+                        break;
+                    default:
+                        throw new Error(error['message'], error['type']);
+                }
+            } else {
+                goog.object.extend(/** @type {Object|null} */(result), {'tags' : data['tags']});
+                callback(result);
+            }
+        }, this));
+
+        xhrio.headers.set('Authorization', data['token']['token_type'] + ' ' + data['token']['access_token']);
+        xhrio.send(hedgehog.ghost.URI_BASE + 'posts/slug/' + postSlug + '/', 'GET');
+    });
+};
+
 /**
  * Get all tags
  * @param token

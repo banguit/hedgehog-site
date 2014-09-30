@@ -61,13 +61,38 @@ hedgehog.templates.blog = function(opt_data, opt_ignored) {
       var tagData20 = tagList20[tagIndex20];
       output += soy.$$escapeHtml(tagData20['name']) + ((! (tagIndex20 == tagListLen20 - 1)) ? ', ' : '');
     }
-    output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(postData10['html_preview']) + '</section><a type="button" href="#!/blog/post/' + soy.$$escapeHtml(postData10['slug']) + '" class="btn btn-default btn-sm">Read more <i class="fa fa-arrow-right"></i></a></article>';
+    output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(postData10['html_preview']) + '</section><a type="button" href="#!/blog/post/' + soy.$$escapeHtml(postData10['slug']) + '" class="btn btn-default btn-sm">Read more <i class="fa fa-angle-double-right"></i></a></article>';
   }
   output += '</div></div>';
   return output;
 };
 if (goog.DEBUG) {
   hedgehog.templates.blog.soyTemplateName = 'hedgehog.templates.blog';
+}
+
+
+/**
+ * @param {Object.<string, *>=} opt_data
+ * @param {(null|undefined)=} opt_ignored
+ * @return {string}
+ * @suppress {checkTypes|uselessCode}
+ */
+hedgehog.templates.post = function(opt_data, opt_ignored) {
+  var output = '';
+  var data__soy35 = {'data': opt_data};
+  var post__soy36 = data__soy35['data'];
+  output += '<div id="post"><div class="photo"><h1 class="container">' + soy.$$escapeHtml(post__soy36['title']) + '</h1></div><div class="container content"><article class="post"><header class="post-header container"><a class="back-link pull-left fa fa-angle-left" href="javascript:history.goBack()"> <span>Back</span></a><section class="post-meta pull-right"><i class="fa fa-clock-o"></i><time class="post-date" datetime="' + soy.$$escapeHtml(post__soy36['datetime']) + '">' + soy.$$escapeHtml(post__soy36['pretty_date']) + '</time>on<span class="tags">';
+  var tagList44 = post__soy36['tags'];
+  var tagListLen44 = tagList44.length;
+  for (var tagIndex44 = 0; tagIndex44 < tagListLen44; tagIndex44++) {
+    var tagData44 = tagList44[tagIndex44];
+    output += soy.$$escapeHtml(tagData44['name']) + ((! (tagIndex44 == tagListLen44 - 1)) ? ', ' : '');
+  }
+  output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(post__soy36['html']) + '</section></article></div></div>';
+  return output;
+};
+if (goog.DEBUG) {
+  hedgehog.templates.post.soyTemplateName = 'hedgehog.templates.post';
 }
 
 
