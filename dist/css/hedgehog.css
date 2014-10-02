@@ -8221,6 +8221,36 @@ h6 {
     width: 100%;
   }
 }
+@media (max-width: 992px) {
+  .wrapper footer {
+    padding: 27px 15px 20px;
+  }
+  .wrapper footer .footer-links {
+    font-size: 2em;
+  }
+  .wrapper footer .footer-links a {
+    margin-left: 5px;
+  }
+}
+@media (max-width: 480px) {
+  .wrapper footer span.copy {
+    border-top: 1px solid #ababab;
+    display: inline-block;
+    line-height: 25px;
+    margin: 6px 0 0;
+    text-align: center;
+    width: 100%;
+  }
+  .wrapper footer .footer-links {
+    width: 100%;
+    text-align: center;
+  }
+  .wrapper footer .footer-links a {
+    display: inline-block;
+    width: 18%;
+    float: left;
+  }
+}
 @media (max-width: 767px) {
   .wrapper header a.logo {
     top: 60px;
