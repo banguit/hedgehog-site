@@ -88,7 +88,7 @@ hedgehog.templates.post = function(opt_data, opt_ignored) {
     var tagData50 = tagList50[tagIndex50];
     output += soy.$$escapeHtml(tagData50['name']) + ((! (tagIndex50 == tagListLen50 - 1)) ? ', ' : '');
   }
-  output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(post__soy36['html']) + '</section></article></div></div>';
+  output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(post__soy36['html']) + '</section><div id="disqus_thread"></div></article></div></div>';
   return output;
 };
 if (goog.DEBUG) {

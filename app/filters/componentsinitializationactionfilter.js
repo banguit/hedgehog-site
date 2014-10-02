@@ -5,7 +5,6 @@ goog.require('hedgehog.Menu');
 goog.require('hedgehog.Loader');
 
 
-
 /**
  * @constructor
  * @implements {hedgehog.core.ActionFilter}
@@ -52,16 +51,17 @@ hedgehog.filters.ComponentsInitializationActionFilter.prototype.onActionExecutin
     this.menu_.setActive(e.getContext().getRequest().getRouteData()['controller']);
 
     // Set responsive header and page titles
-    document.title = this.initialTitleText_ + ' | ' + this.menu_.getName();
+    document.title = this.menu_.getName() + ' | ' + this.initialTitleText_;
     this.responsiveHeader_.setTitle(this.menu_.getName());
 };
 
 
 /** @override */
 hedgehog.filters.ComponentsInitializationActionFilter.prototype.onActionExecuted = function(e) {
+    // Hide loader
     setTimeout(goog.bind(function() {
         this.loader_.show(false);
-    }, this), 500);
+    }, this), 300);
 };
 
 

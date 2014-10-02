@@ -22,10 +22,9 @@ goog.inherits(hedgehog.controllers.BlogController, hedgehog.core.Controller);
  * @param {Function} reject
  */
 hedgehog.controllers.BlogController.prototype.index = function(request, response, resolve, reject) {
-    console.log('index: Method is called!');
-    var converter = new hedgehog.Showdown.converter();
 
     hedgehog.ghost.loadPosts(goog.bind(function(data) {
+        var converter = new hedgehog.Showdown.converter();
         goog.array.forEach(data['posts'], function(post) {
             post['pretty_date'] = this.prettyDate_(post['created_at']);
             post['datetime'] = new Date(post['created_at']).yyyymmdd();
@@ -51,6 +50,9 @@ hedgehog.controllers.BlogController.prototype.index = function(request, response
  * @param {Function} reject
  */
 hedgehog.controllers.BlogController.prototype.post = function(request, response, resolve, reject) {
+    // Scroll top
+    window.scrollTo(0, 0);
+
     hedgehog.ghost.loadPostBySlug(goog.bind(function(data) {
         var post = data['posts'][0];
 
@@ -64,10 +66,52 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
         });
 
         response.render(hedgehog.templates.post, post, goog.dom.getElement('content'));
+
+        // Update title
+        document.title = post['title'] + ' | ' + document.title;
+
+        // Initialize DISQUS
+        window['disqus_shortname'] = 'hedgehogcomua';
+        window['disqus_identifier'] = '/blog/post/' + post['slug']; // a unique identifier for each page where Disqus is present
+        window['disqus_title'] = 'Blog | ' + post['title']; // a unique title for each page where Disqus is present
+        window['disqus_url'] = window.location.href; // a unique URL for each page where Disqus is present
+
+        if(!window.hasOwnProperty('DISQUS')) {
+            var url = '//' + window['disqus_shortname'] + '.disqus.com/embed.js'
+                , script = goog.dom.createDom('script', {'type': 'text/javascript', 'async' : 'true', 'src': url});
+
+            document.body.appendChild(script);
+
+            var reloadDisqus = goog.bind(function() {
+                                   if(window.hasOwnProperty('DISQUS')) {
+                                       this.reloadDisqus_();
+                                   } else {
+                                       setTimeout(reloadDisqus, 50);
+                                   }
+                               }, this);
+            setTimeout(reloadDisqus, 50);
+        } else {
+            this.reloadDisqus_();
+        }
+
         resolve();
     }, this), request.getRouteData('slug'));
 };
 
+/**
+ * Reload DISQUS comments.
+ * @private
+ */
+hedgehog.controllers.BlogController.prototype.reloadDisqus_ = function() {
+    window['DISQUS'].reset({
+        'reload': true,
+        'config': function () {
+            this['page.title'] = window['disqus_title'];
+            this['page.identifier'] = window['disqus_identifier'];
+            this['page.url'] = window['disqus_url'];
+        }
+    });
+};
 
 /**
  * Takes an ISO time and returns a string representing how long ago the date represents.
