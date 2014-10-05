@@ -49,21 +49,22 @@ hedgehog.templates.blog = function(opt_data, opt_ignored) {
   var output = '';
   var data__soy7 = {'data': opt_data};
   var data__soy8 = data__soy7['data'];
+  var pagination__soy9 = data__soy8['meta']['pagination'];
   output += '<div id="blog"><div class="photo"><h1 class="container">Blog</h1></div><div class="container content">';
-  var postList10 = data__soy8['posts'];
-  var postListLen10 = postList10.length;
-  for (var postIndex10 = 0; postIndex10 < postListLen10; postIndex10++) {
-    var postData10 = postList10[postIndex10];
-    output += '<article class="post"><header class="post-header"><h1 class="post-title"><a href="#!/blog/post/' + soy.$$escapeHtml(postData10['slug']) + '">' + soy.$$escapeHtml(postData10['title']) + '</a></h1><section class="post-meta"><i class="fa fa-clock-o"></i><time class="post-date" datetime="' + soy.$$escapeHtml(postData10['datetime']) + '">' + soy.$$escapeHtml(postData10['pretty_date']) + '</time>on<span class="tags">';
-    var tagList20 = postData10['tags'];
-    var tagListLen20 = tagList20.length;
-    for (var tagIndex20 = 0; tagIndex20 < tagListLen20; tagIndex20++) {
-      var tagData20 = tagList20[tagIndex20];
-      output += soy.$$escapeHtml(tagData20['name']) + ((! (tagIndex20 == tagListLen20 - 1)) ? ', ' : '');
+  var postList11 = data__soy8['posts'];
+  var postListLen11 = postList11.length;
+  for (var postIndex11 = 0; postIndex11 < postListLen11; postIndex11++) {
+    var postData11 = postList11[postIndex11];
+    output += '<article class="post"><header class="post-header"><h1 class="post-title"><a href="#!/blog/post/' + soy.$$escapeHtml(postData11['slug']) + '">' + soy.$$escapeHtml(postData11['title']) + '</a></h1><section class="post-meta"><i class="fa fa-clock-o"></i><time class="post-date" datetime="' + soy.$$escapeHtml(postData11['datetime']) + '">' + soy.$$escapeHtml(postData11['pretty_date']) + '</time>on<span class="tags">';
+    var tagList21 = postData11['tags'];
+    var tagListLen21 = tagList21.length;
+    for (var tagIndex21 = 0; tagIndex21 < tagListLen21; tagIndex21++) {
+      var tagData21 = tagList21[tagIndex21];
+      output += soy.$$escapeHtml(tagData21['name']) + ((! (tagIndex21 == tagListLen21 - 1)) ? ', ' : '');
     }
-    output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(postData10['html_preview']) + '</section><a type="button" href="#!/blog/post/' + soy.$$escapeHtml(postData10['slug']) + '" class="btn btn-default btn-sm">Read more <i class="fa fa-angle-double-right"></i></a></article>';
+    output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(postData11['html_preview']) + '</section><a type="button" href="#!/blog/post/' + soy.$$escapeHtml(postData11['slug']) + '" class="btn btn-default btn-sm read-more">Read more <i class="fa fa-angle-double-right"></i></a></article>';
   }
-  output += '</div></div>';
+  output += '<ul class="pager">' + ((pagination__soy9['prev'] != null) ? '<li class="previous"><a href="#!/blog/page/' + soy.$$escapeHtml(pagination__soy9['prev']) + '"><i class="fa fa-angle-double-left"></i> Older</a></li>' : '') + '<li class="summary">Page ' + soy.$$escapeHtml(pagination__soy9['page']) + ' of ' + soy.$$escapeHtml(pagination__soy9['pages']) + '</li>' + ((pagination__soy9['next'] != null) ? '<li class="next"><a href="#!/blog/page/' + soy.$$escapeHtml(pagination__soy9['next']) + '">Newer <i class="fa fa-angle-double-right"></i></a></li>' : '') + '</ul></div></div>';
   return output;
 };
 if (goog.DEBUG) {
@@ -79,16 +80,16 @@ if (goog.DEBUG) {
  */
 hedgehog.templates.post = function(opt_data, opt_ignored) {
   var output = '';
-  var data__soy35 = {'data': opt_data};
-  var post__soy36 = data__soy35['data'];
-  output += '<div id="post"><div class="photo" style="' + ((post__soy36['image'] != null) ? 'background-image: url(\'' + soy.$$escapeHtml(post__soy36['image']) + '\')' : '') + '"><h1 class="container">' + soy.$$escapeHtml(post__soy36['title']) + '</h1></div><div class="container content"><article class="post"><header class="post-header container"><a class="back-link pull-left fa fa-angle-left" href="javascript:history.goBack()"><span> Back</span></a><section class="post-meta pull-right"><i class="fa fa-clock-o"></i><time class="post-date" datetime="' + soy.$$escapeHtml(post__soy36['datetime']) + '">' + soy.$$escapeHtml(post__soy36['pretty_date']) + '</time>on<span class="tags">';
-  var tagList50 = post__soy36['tags'];
-  var tagListLen50 = tagList50.length;
-  for (var tagIndex50 = 0; tagIndex50 < tagListLen50; tagIndex50++) {
-    var tagData50 = tagList50[tagIndex50];
-    output += soy.$$escapeHtml(tagData50['name']) + ((! (tagIndex50 == tagListLen50 - 1)) ? ', ' : '');
+  var data__soy52 = {'data': opt_data};
+  var post__soy53 = data__soy52['data'];
+  output += '<div id="post"><div class="photo" style="' + ((post__soy53['image'] != null) ? 'background-image: url(\'' + soy.$$escapeHtml(post__soy53['image']) + '\')' : '') + '"><h1 class="container">' + soy.$$escapeHtml(post__soy53['title']) + '</h1></div><div class="container content"><article class="post"><header class="post-header container"><a class="back-link pull-left fa fa-angle-left" href="javascript:history.goBack()"><span> Back</span></a><section class="post-meta pull-right"><i class="fa fa-clock-o"></i><time class="post-date" datetime="' + soy.$$escapeHtml(post__soy53['datetime']) + '">' + soy.$$escapeHtml(post__soy53['pretty_date']) + '</time>on<span class="tags">';
+  var tagList67 = post__soy53['tags'];
+  var tagListLen67 = tagList67.length;
+  for (var tagIndex67 = 0; tagIndex67 < tagListLen67; tagIndex67++) {
+    var tagData67 = tagList67[tagIndex67];
+    output += soy.$$escapeHtml(tagData67['name']) + ((! (tagIndex67 == tagListLen67 - 1)) ? ', ' : '');
   }
-  output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(post__soy36['html']) + '</section><div id="disqus_thread"></div></article></div></div>';
+  output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(post__soy53['html']) + '</section><div id="disqus_thread"></div></article></div></div>';
   return output;
 };
 if (goog.DEBUG) {

@@ -37,6 +37,7 @@
 {template .blog}
 {let $data: quoteKeysIfJs(['data' : opt_data]) /}
 {let $data: $data['data'] /}
+{let $pagination: $data['meta']['pagination'] /}
 <div id="blog">
     <div class="photo">
         <h1 class="container">Blog</h1>
@@ -60,9 +61,18 @@
                 <section class="post-content">
                     {$post['html_preview']|noAutoescape}
                 </section>
-                <a type="button" href="#!/blog/post/{$post['slug']}" class="btn btn-default btn-sm">Read more <i class="fa fa-angle-double-right"></i></a>
+                <a type="button" href="#!/blog/post/{$post['slug']}" class="btn btn-default btn-sm read-more">Read more <i class="fa fa-angle-double-right"></i></a>
             </article>
         {/foreach}
+        <ul class="pager">
+          {if $pagination['prev'] != null}
+            <li class="previous"><a href="#!/blog/page/{$pagination['prev']}"><i class="fa fa-angle-double-left"></i> Older</a></li>
+          {/if}
+            <li class="summary">Page {$pagination['page']} of {$pagination['pages']}</li>
+          {if $pagination['next'] != null}
+            <li class="next"><a href="#!/blog/page/{$pagination['next']}">Newer <i class="fa fa-angle-double-right"></i></a></li>
+          {/if}
+        </ul>
     </div>
 </div>
 {/template}

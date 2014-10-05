@@ -19,7 +19,7 @@ goog.require('goog.uri.utils');
 hedgehog.ghost.URI_BASE = '/ghost/api/v0.1/';
 
 /**
- * Get all posts
+ * Get all posts.
  *
  * Options:
  *      page - pagination (default: 1)
@@ -61,6 +61,11 @@ hedgehog.ghost.loadPosts = function(callback, opt_page, opt_limit, opt_status, o
 };
 
 
+/**
+ * Load post by slug.
+ * @param {Function} callback
+ * @param {string} postSlug
+ */
 hedgehog.ghost.loadPostBySlug = function(callback, postSlug) {
     var session = hedgehog.ghost.GhostSession.getInstance();
 
@@ -94,7 +99,7 @@ hedgehog.ghost.loadPostBySlug = function(callback, postSlug) {
 };
 
 /**
- * Get all tags
+ * Get all tags.
  * @param token
  * @return {goog.Promise}
  */

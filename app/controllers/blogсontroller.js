@@ -39,7 +39,7 @@ hedgehog.controllers.BlogController.prototype.index = function(request, response
 
         response.render(hedgehog.templates.blog, data, goog.dom.getElement('content'));
         resolve();
-    }, this));
+    }, this), parseInt(request.getRouteData('page'), 10));
 };
 
 
@@ -95,7 +95,7 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
         }
 
         resolve();
-    }, this), request.getRouteData('slug'));
+    }, this), /** @type {string} */(request.getRouteData('slug')));
 };
 
 /**

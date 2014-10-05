@@ -5272,7 +5272,8 @@ a.list-group-item-danger.active:focus {
 .panel-group .panel-heading {
   border-bottom: 0;
 }
-.panel-group .panel-heading + .panel-collapse > .panel-body {
+.panel-group .panel-heading + .panel-collapse > .panel-body,
+.panel-group .panel-heading + .panel-collapse > .list-group {
   border-top: 1px solid #dddddd;
 }
 .panel-group .panel-footer {
@@ -5478,16 +5479,20 @@ button.close {
   outline: 0;
 }
 .modal.fade .modal-dialog {
-  -webkit-transform: translate3d(0, -25%, 0);
-  transform: translate3d(0, -25%, 0);
+  -webkit-transform: translate(0, -25%);
+  -ms-transform: translate(0, -25%);
+  -o-transform: translate(0, -25%);
+  transform: translate(0, -25%);
   -webkit-transition: -webkit-transform 0.3s ease-out;
   -moz-transition: -moz-transform 0.3s ease-out;
   -o-transition: -o-transform 0.3s ease-out;
   transition: transform 0.3s ease-out;
 }
 .modal.in .modal-dialog {
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
 }
 .modal-open .modal {
   overflow-x: hidden;
@@ -6041,7 +6046,9 @@ button.close {
 .panel-body:before,
 .panel-body:after,
 .modal-footer:before,
-.modal-footer:after {
+.modal-footer:after,
+.pager:before,
+.pager:after {
   content: " ";
   display: table;
 }
@@ -6059,7 +6066,8 @@ button.close {
 .navbar-collapse:after,
 .pager:after,
 .panel-body:after,
-.modal-footer:after {
+.modal-footer:after,
+.pager:after {
   clear: both;
 }
 .center-block {
@@ -6310,6 +6318,22 @@ button.close {
   font-family: 'Montserrat', sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.75px;
+}
+.pager {
+  border-top: 1px dashed #ddd;
+  padding-top: 35px;
+}
+.pager li {
+  color: #666;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+}
+.pager li > a,
+.pager li > span {
+  color: #333;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
 }
 /*!
  *  Font Awesome 4.2.0 by @davegandy - http://fontawesome.io - @fontawesome
@@ -8184,7 +8208,7 @@ h6 {
   margin-top: 20px;
   height: 100%;
   min-height: 100%;
-  padding-bottom: 90px;
+  padding-bottom: 120px;
 }
 @media (max-width: 1199px) {
   .wrapper #content .container {
@@ -8482,7 +8506,7 @@ h6 {
 }
 #blog .content .post,
 #post .content .post {
-  margin-bottom: 60px;
+  margin-bottom: 50px;
 }
 #blog .content .post .post-header,
 #post .content .post .post-header {
@@ -8534,6 +8558,11 @@ h6 {
 #blog .content .post .post-content img,
 #post .content .post .post-content img {
   max-width: 100%;
+}
+#blog .content .post .read-more,
+#post .content .post .read-more {
+  font-size: 11px;
+  padding: 3px 8px;
 }
 @media (max-width: 767px) {
   #post h1,
