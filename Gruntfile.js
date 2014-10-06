@@ -32,9 +32,9 @@ module.exports = function(grunt) {
                 src: ['**'],
                 dest: 'dist'
             },
-            index_hbs: {
-                src: 'app/index.hbs',
-                dest: 'dist/index.hbs'
+            hbs: {
+                src: 'app/*.hbs',
+                dest: 'dist/'
             },
             package_json: {
                 src: 'app/package.json',
@@ -78,7 +78,7 @@ module.exports = function(grunt) {
             'shell:compile',
             'shell:compile_hedgehog_bootstrap',
             'copy:hedgehog_bootstrap_dist',
-            'copy:index_hbs',
+            'copy:hbs',
             'copy:package_json',
             'clean:ghost_theme',
             'copy:theme'
