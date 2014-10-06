@@ -70,6 +70,10 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
         // Update title
         document.title = post['title'] + ' | ' + document.title;
 
+        // Update meta descritpion
+        var description = document.querySelector('meta[name="description"]');
+        description.content = document.title;
+
         // Initialize DISQUS
         window['disqus_shortname'] = 'hedgehogcomua';
         window['disqus_identifier'] = '/blog/post/' + post['slug']; // a unique identifier for each page where Disqus is present

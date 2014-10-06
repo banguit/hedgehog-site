@@ -53,6 +53,10 @@ hedgehog.filters.ComponentsInitializationActionFilter.prototype.onActionExecutin
     // Set responsive header and page titles
     document.title = this.menu_.getName() + ' | ' + this.initialTitleText_;
     this.responsiveHeader_.setTitle(this.menu_.getName());
+
+    // Set metadata descritpion
+    var description = document.querySelector('meta[name="description"]');
+    description.content = document.title;
 };
 
 
