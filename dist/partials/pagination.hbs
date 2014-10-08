@@ -1,0 +1,11 @@
+<ul class="pager" role="pagination">
+    {{#if prev}}
+    <li class="previous"><a href="{{pageUrl prev}}"><i class="fa fa-angle-double-left"></i> Older</a></li>
+    {{/if}}
+
+    <li class="summary">Page {{page}} of {{pages}}</li>
+
+    {{#if next}}
+    <li class="next"><a href="{{pageUrl next}}">Newer <i class="fa fa-angle-double-right"></i></a></li>
+    {{/if}}
+</ul>

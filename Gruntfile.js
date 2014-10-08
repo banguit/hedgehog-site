@@ -30,11 +30,19 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: 'libs/hedgehog-bootstrap/dist',
                 src: ['**'],
-                dest: 'dist'
+                dest: 'dist/assets'
             },
             hbs: {
-                src: 'app/*.hbs',
-                dest: 'dist/'
+                expand: true,
+                cwd: 'app',
+                src: '*.hbs',
+                dest: 'dist'
+            },
+            hbs_partials: {
+                expand: true,
+                cwd: 'app/partials',
+                src: '**',
+                dest: 'dist/partials/'
             },
             package_json: {
                 src: 'app/package.json',
@@ -75,13 +83,14 @@ module.exports = function(grunt) {
     grunt.registerTask('default',
         [
             'clean:dist',
+            'clean:ghost_theme',
             'shell:compile',
-            'shell:compile_hedgehog_bootstrap',
             'copy:hedgehog_bootstrap_dist',
             'copy:hbs',
+            'copy:hbs_partials',
             'copy:package_json',
-            'clean:ghost_theme',
-            'copy:theme'
+            'copy:theme',
+            'shell:compile_hedgehog_bootstrap'
         ]
     );
 };

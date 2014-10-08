@@ -1,0 +1,26 @@
+{{! This is the post loop - each post will be output using this markup }}
+<div id="blog">
+    <div class="photo">
+        <h1 class="container">Blog</h1>
+    </div>
+    <div class="container content">
+        {{#foreach posts}}
+        <article class="post">
+            <header class="post-header">
+                <h1 class="post-title"><a href="{{url}}">{{{title}}}</a></h1>
+                <section class="post-meta">
+                    <i class="fa fa-clock-o"></i>
+                    <time class="post-date" datetime="{{date format='YYYY-MM-DD'}}">{{date format="DD MMMM YYYY"}}</time><span class="tags">{{tags autolink="false" prefix="on "}}</span>
+                </section>
+            </header>
+            <section class="post-content">
+                {{content words="100"}}
+            </section>
+            <a type="button" href="{{url}}" class="btn btn-default btn-sm read-more">Read more <i class="fa fa-angle-double-right"></i></a>
+        </article>
+        {{/foreach}}
+
+        {{! Previous/next page links - displayed on every page }}
+        {{pagination}}
+    </div>
+</div>
