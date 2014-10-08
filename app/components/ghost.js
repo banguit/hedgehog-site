@@ -34,7 +34,7 @@ hedgehog.ghost.URI_BASE = '/ghost/api/v0.1/';
  * @param {boolean=} opt_staticPages !!!currently not used in request
  */
 hedgehog.ghost.loadPosts = function(callback, opt_page, opt_limit, opt_status, opt_staticPages) {
-    opt_page = goog.isDefAndNotNull(opt_page) ? opt_page : 1;
+    opt_page = isNaN(opt_page) ? 1 : opt_page;
     opt_limit = goog.isDefAndNotNull(opt_limit) ? opt_limit : 10;
     opt_status = goog.isDefAndNotNull(opt_status) ? opt_status : 'published';
     var session = hedgehog.ghost.GhostSession.getInstance()
