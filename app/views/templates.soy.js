@@ -50,7 +50,7 @@ hedgehog.templates.blog = function(opt_data, opt_ignored) {
   var data__soy7 = {'data': opt_data};
   var data__soy8 = data__soy7['data'];
   var pagination__soy9 = data__soy8['meta']['pagination'];
-  output += '<div id="blog"><div class="photo"><h1 class="container">Blog</h1></div><div class="container content">';
+  output += '<div id="blog"><header class="photo"><h1 class="container">Blog</h1></header><main class="container content" role="main">';
   var postList11 = data__soy8['posts'];
   var postListLen11 = postList11.length;
   for (var postIndex11 = 0; postIndex11 < postListLen11; postIndex11++) {
@@ -64,7 +64,7 @@ hedgehog.templates.blog = function(opt_data, opt_ignored) {
     }
     output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(postData11['html_preview']) + '</section><a type="button" href="#!/blog/post/' + soy.$$escapeHtml(postData11['slug']) + '" class="btn btn-default btn-sm read-more">Read more <i class="fa fa-angle-double-right"></i></a></article>';
   }
-  output += '<ul class="pager">' + ((pagination__soy9['prev'] != null) ? '<li class="previous"><a href="#!/blog/page/' + soy.$$escapeHtml(pagination__soy9['prev']) + '"><i class="fa fa-angle-double-left"></i> Older</a></li>' : '') + '<li class="summary">Page ' + soy.$$escapeHtml(pagination__soy9['page']) + ' of ' + soy.$$escapeHtml(pagination__soy9['pages']) + '</li>' + ((pagination__soy9['next'] != null) ? '<li class="next"><a href="#!/blog/page/' + soy.$$escapeHtml(pagination__soy9['next']) + '">Newer <i class="fa fa-angle-double-right"></i></a></li>' : '') + '</ul></div></div>';
+  output += '<ul class="pager">' + ((pagination__soy9['prev'] != null) ? '<li class="previous"><a href="#!/blog/page/' + soy.$$escapeHtml(pagination__soy9['prev']) + '"><i class="fa fa-angle-double-left"></i> Older</a></li>' : '') + '<li class="summary">Page ' + soy.$$escapeHtml(pagination__soy9['page']) + ' of ' + soy.$$escapeHtml(pagination__soy9['pages']) + '</li>' + ((pagination__soy9['next'] != null) ? '<li class="next"><a href="#!/blog/page/' + soy.$$escapeHtml(pagination__soy9['next']) + '">Newer <i class="fa fa-angle-double-right"></i></a></li>' : '') + '</ul></main></div>';
   return output;
 };
 if (goog.DEBUG) {
@@ -82,14 +82,14 @@ hedgehog.templates.post = function(opt_data, opt_ignored) {
   var output = '';
   var data__soy52 = {'data': opt_data};
   var post__soy53 = data__soy52['data'];
-  output += '<div id="post"><div class="photo" style="' + ((post__soy53['image'] != null) ? 'background-image: url(\'' + soy.$$escapeHtml(post__soy53['image']) + '\')' : '') + '"><h1 class="container">' + soy.$$escapeHtml(post__soy53['title']) + '</h1></div><div class="container content"><article class="post"><header class="post-header container"><a class="back-link pull-left fa fa-angle-left" href="javascript:history.goBack()"><span> Back</span></a><section class="post-meta pull-right"><i class="fa fa-clock-o"></i><time class="post-date" datetime="' + soy.$$escapeHtml(post__soy53['datetime']) + '">' + soy.$$escapeHtml(post__soy53['pretty_date']) + '</time>on<span class="tags">';
+  output += '<article id="post"><header class="photo" style="' + ((post__soy53['image'] != null) ? 'background-image: url(\'' + soy.$$escapeHtml(post__soy53['image']) + '\')' : '') + '"><h1 class="container">' + soy.$$escapeHtml(post__soy53['title']) + '</h1></header><main class="container content" role="main"><article class="post"><header class="post-header container"><a class="back-link pull-left fa fa-angle-left" href="javascript:history.goBack()"><span> Back</span></a><section class="post-meta pull-right"><i class="fa fa-clock-o"></i><time class="post-date" datetime="' + soy.$$escapeHtml(post__soy53['datetime']) + '">' + soy.$$escapeHtml(post__soy53['pretty_date']) + '</time>on<span class="tags">';
   var tagList67 = post__soy53['tags'];
   var tagListLen67 = tagList67.length;
   for (var tagIndex67 = 0; tagIndex67 < tagListLen67; tagIndex67++) {
     var tagData67 = tagList67[tagIndex67];
     output += soy.$$escapeHtml(tagData67['name']) + ((! (tagIndex67 == tagListLen67 - 1)) ? ', ' : '');
   }
-  output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(post__soy53['html']) + '</section><div id="disqus_thread"></div></article></div></div>';
+  output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(post__soy53['html']) + '</section><div id="disqus_thread"></div></article></main></article>';
   return output;
 };
 if (goog.DEBUG) {

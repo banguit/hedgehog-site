@@ -68,11 +68,12 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
         response.render(hedgehog.templates.post, post, goog.dom.getElement('content'));
 
         // Update title
-        document.title = post['title'] + ' | ' + document.title;
+        var meta_title = post['meta_title'];
+        document.title = (goog.isDefAndNotNull(meta_title) ? meta_title : post['title']) + ' | ' + document.title;
 
         // Update meta descritpion
         var description = document.querySelector('meta[name="description"]');
-        description.content = document.title;
+        description.content = post['meta_description'];
 
         // Initialize DISQUS
         window['disqus_shortname'] = 'hedgehogcomua';

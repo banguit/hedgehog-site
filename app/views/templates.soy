@@ -39,10 +39,10 @@
 {let $data: $data['data'] /}
 {let $pagination: $data['meta']['pagination'] /}
 <div id="blog">
-    <div class="photo">
+    <header class="photo">
         <h1 class="container">Blog</h1>
-    </div>
-    <div class="container content">
+    </header>
+    <main class="container content" role="main">
         {foreach $post in $data['posts']}
             <article class="post">
                 <header class="post-header">
@@ -73,7 +73,7 @@
             <li class="next"><a href="#!/blog/page/{$pagination['next']}">Newer <i class="fa fa-angle-double-right"></i></a></li>
           {/if}
         </ul>
-    </div>
+    </main>
 </div>
 {/template}
 
@@ -83,11 +83,11 @@
 {template .post}
 {let $data: quoteKeysIfJs(['data' : opt_data]) /}
 {let $post: $data['data'] /}
-<div id="post">
-    <div class="photo" style="{if isNonnull($post['image'])}background-image: url('{$post['image']}'){/if}">
+<article id="post">
+    <header class="photo" style="{if isNonnull($post['image'])}background-image: url('{$post['image']}'){/if}">
         <h1 class="container">{$post['title']}</h1>
-    </div>
-    <div class="container content">
+    </header>
+    <main class="container content" role="main">
         <article class="post">
             <header class="post-header container">
                 <a class="back-link pull-left fa fa-angle-left" href="javascript:history.goBack()"><span> Back</span></a>
@@ -107,8 +107,8 @@
             </section>
             <div id="disqus_thread"></div>
         </article>
-    </div>
-</div>
+    </main>
+</article>
 {/template}
 
 /**

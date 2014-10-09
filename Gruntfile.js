@@ -69,6 +69,10 @@ module.exports = function(grunt) {
             less: {
                 files: ['libs/hedgehog-bootstrap/less/*.less'],
                 tasks: ['shell:compile_hedgehog_bootstrap', 'copy:hedgehog_bootstrap_dist', 'clean:ghost_theme', 'copy:theme']
+            },
+            hbs: {
+                files: ['app/*.hbs', 'app/**/*.hbs'],
+                tasks: ['copy:hbs', 'copy:hbs_partials', 'copy:theme']
             }
         }
     });
