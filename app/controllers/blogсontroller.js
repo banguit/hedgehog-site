@@ -23,23 +23,28 @@ goog.inherits(hedgehog.controllers.BlogController, hedgehog.core.Controller);
  */
 hedgehog.controllers.BlogController.prototype.index = function(request, response, resolve, reject) {
 
-    hedgehog.ghost.loadPosts(goog.bind(function(data) {
-        var converter = new hedgehog.Showdown.converter();
-        goog.array.forEach(data['posts'], function(post) {
-            post['pretty_date'] = this.prettyDate_(post['created_at']);
-            post['datetime'] = new Date(post['created_at']).yyyymmdd();
-            post['html_preview'] = converter.makeHtml(post['markdown'].split(" ").splice(0, 100).join(" ") + "...");
+    hedgehog.ghost.loadSettings(goog.bind(function(data) {
+        var postsPerPage = goog.array.find(data['settings'], function(el) { return el.key == 'postsPerPage' });
 
-            // Get tags information
-            var tagsIds = post['tags'];
-            post['tags'] = goog.array.filter(data['tags'], function(tag) {
-                return goog.array.contains(tagsIds, tag.id);
-            });
-        }, this);
+        hedgehog.ghost.loadPosts(goog.bind(function(data) {
 
-        response.render(hedgehog.templates.blog, data, goog.dom.getElement('content'));
-        resolve();
-    }, this), parseInt(request.getRouteData('page'), 10));
+            var converter = new hedgehog.Showdown.converter();
+            goog.array.forEach(data['posts'], function(post) {
+                post['pretty_date'] = this.prettyDate_(post['created_at']);
+                post['datetime'] = new Date(post['created_at']).yyyymmdd();
+                post['html_preview'] = converter.makeHtml(post['markdown'].split(" ").splice(0, 100).join(" ") + "...");
+
+                // Get tags information
+                var tagsIds = post['tags'];
+                post['tags'] = goog.array.filter(data['tags'], function(tag) {
+                    return goog.array.contains(tagsIds, tag.id);
+                });
+            }, this);
+
+            response.render(hedgehog.templates.blog, data, goog.dom.getElement('content'));
+            resolve();
+        }, this), parseInt(request.getRouteData('page'), 10), postsPerPage['value']);
+    }, this));
 };
 
 

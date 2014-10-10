@@ -99,11 +99,36 @@ hedgehog.ghost.loadPostBySlug = function(callback, postSlug) {
 };
 
 /**
+ * Get settings.
+ * @param callback
+ */
+hedgehog.ghost.loadSettings = function(callback) {
+    var session = hedgehog.ghost.GhostSession.getInstance();
+
+    session.getToken().then(function(data) {
+        var xhrio = new goog.net.XhrIo();
+
+        goog.events.listen(xhrio, goog.net.EventType.COMPLETE, goog.bind(function(e) {
+            var xhr = /** @type {goog.net.XhrIo} */ (e.target)
+              , result = xhr.getResponseJson();
+
+            goog.dispose(xhrio);
+
+            callback(result);
+        }, this));
+
+        xhrio.headers.set('Authorization', data['token']['token_type'] + ' ' + data['token']['access_token']);
+        xhrio.send(hedgehog.ghost.URI_BASE + 'settings/', 'GET');
+    });
+};
+
+
+/**
  * Get all tags.
- * @param token
+ * @param {Object} data
  * @return {goog.Promise}
  */
-hedgehog.ghost.loadTags = function(token) {
+hedgehog.ghost.loadTags = function(data) {
     return new goog.Promise(function(resolve, reject) {
         var xhrio = new goog.net.XhrIo();
 
@@ -111,11 +136,11 @@ hedgehog.ghost.loadTags = function(token) {
             var xhr = /** @type {goog.net.XhrIo} */ (e.target)
               , result = xhr.getResponseJson();
             goog.dispose(xhrio);
-            goog.object.extend(/** @type {Object|null} */(result), {'token' : token});
+            goog.object.extend(/** @type {Object|null} */(result), data);
             resolve(result);
         }, this));
 
-        xhrio.headers.set('Authorization', token['token_type'] + ' ' + token['access_token']);
+        xhrio.headers.set('Authorization', data['token']['token_type'] + ' ' + data['token']['access_token']);
         xhrio.send(hedgehog.ghost.URI_BASE + 'tags/', 'GET');
     });
 };
@@ -173,7 +198,7 @@ hedgehog.ghost.GhostSession.prototype.getToken = function() {
     }
 
     return new goog.Promise(function(resolve, reject) {
-        resolve(this.token_);
+        resolve({'token' : this.token_});
     }, this);
 };
 
@@ -192,7 +217,7 @@ hedgehog.ghost.GhostSession.prototype.requestToken_ = function() {
             t.setSeconds(t.getSeconds() + this.token_['expires_in']);
             this.accessTokenExpirationTime_ = t;
 
-            resolve(this.token_);
+            resolve({'token' : this.token_});
             goog.dispose(xhrio);
         }, this));
         xhrio.send(this.authenticationUrl_, 'POST', this.postData_);

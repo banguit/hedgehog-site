@@ -39,7 +39,7 @@ hedgehog.filters.ComponentsInitializationActionFilter = function() {
      * @type {string}
      * @private
      */
-    this.initialTitleText_ = document.title;
+    this.initialTitleText_ = document.querySelector('meta[name="title"]').content;
 
     // Initialize components
     this.loader_.render(this.wrapperElement_);

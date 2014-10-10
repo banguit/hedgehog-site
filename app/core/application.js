@@ -70,6 +70,7 @@ hedgehog.core.Application.prototype.processRoute_ = function(route, controller) 
 
     var controllerName = /[a-zA-Z0-9._-]+/.exec(route);
 
+    // 404
     if(controllerName == null) {
         window.location.replace('/notfound');
     }
@@ -183,6 +184,13 @@ hedgehog.core.Application.prototype.run = function() {
     goog.array.sort(this.actionFilters_, function(a, b) {
         return a.getOrder() - b.getOrder();
     });
+
+    // Correct url in case if it's not at the root location
+    if(window.location.pathname != '/') {
+        var pageHash = '/#!' + window.location.pathname;
+        window.history.pushState(null, '', '/#!/'); // It's required to proper work of back link
+        window.history.pushState(null, '', pageHash);
+    }
 
     // Check current route
     this.router_.checkRoutes();
