@@ -5,7 +5,7 @@
 
 goog.provide('hedgehog.core.Application');
 
-goog.require('mvc.Router');
+goog.require('hedgehog.core.Router');
 goog.require('goog.string');
 goog.require('goog.events.EventTarget');
 goog.require('hedgehog.core.Request');
@@ -24,10 +24,10 @@ hedgehog.core.Application = function() {
     goog.events.EventTarget.call(this);
 
     /**
-     * @type {mvc.Router}
+     * @type {hedgehog.core.Router}
      * @private
      */
-    this.router_ = new mvc.Router();
+    this.router_ = new hedgehog.core.Router();
 
     /**
      * @type {Array.<hedgehog.core.types.ActionFilterItem>}
@@ -47,6 +47,11 @@ hedgehog.core.Application = function() {
      * @private
      */
     this.currentRoute_;
+
+    /**
+     * @type {boolean}
+     */
+    this.isFirstLoad_ = true;
 };
 goog.inherits(hedgehog.core.Application, goog.events.EventTarget);
 
@@ -89,9 +94,11 @@ hedgehog.core.Application.prototype.processRoute_ = function(route, controller) 
         routeData[goog.string.removeAll(match[0], ':')] = arguments[i];
     }
 
-    if(!goog.isDefAndNotNull(routeData.action)) {
-        routeData.action = 'index';
+    if(!goog.isDefAndNotNull(routeData['action'])) {
+        routeData['action'] = 'index';
     }
+
+    routeData['isFirstLoad'] = this.isFirstLoad_;
 
     request = new hedgehog.core.Request(routeData, window.location.href, queryVals);
     response = new hedgehog.core.Response(request);
@@ -102,7 +109,7 @@ hedgehog.core.Application.prototype.processRoute_ = function(route, controller) 
      */
     var instance = Object.create(controller);
 
-    if(goog.isFunction((instance[routeData.action]))) {
+    if(goog.isFunction((instance[routeData['action']]))) {
 
         try {
             new goog.Promise(function(resolve, reject) {
@@ -110,7 +117,7 @@ hedgehog.core.Application.prototype.processRoute_ = function(route, controller) 
             }, this)
             .then(function() {
                 return new goog.Promise(function(resolve, reject) {
-                    instance[routeData.action](request, response, resolve, reject);
+                    instance[routeData['action']](request, response, resolve, reject);
                 });
             }, undefined, this)
             .then(function() {
@@ -131,7 +138,7 @@ hedgehog.core.Application.prototype.processRoute_ = function(route, controller) 
         }
 
     } else {
-        throw new Error('Action "' + routeData.action + '" does not exist!');
+        throw new Error('Action "' + routeData['action'] + '" does not exist!');
     }
 };
 
@@ -184,13 +191,6 @@ hedgehog.core.Application.prototype.run = function() {
     goog.array.sort(this.actionFilters_, function(a, b) {
         return a.getOrder() - b.getOrder();
     });
-
-    // Correct url in case if it's not at the root location
-    if(window.location.pathname != '/') {
-        var pageHash = '/#!' + window.location.pathname;
-        window.history.pushState(null, '', '/#!/'); // It's required to proper work of back link
-        window.history.pushState(null, '', pageHash);
-    }
 
     // Check current route
     this.router_.checkRoutes();
@@ -271,6 +271,7 @@ hedgehog.core.Application.prototype.onApplicationLoaded_ = function(e) {
     this.forEachApplicationFilter_(function(filterItem){
         filterItem.getFilter().onApplicationLoaded(e);
     });
+    this.isFirstLoad_ = false;
 };
 
 

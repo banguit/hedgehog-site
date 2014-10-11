@@ -4,7 +4,6 @@
  */
 
 goog.provide('hedgehog.ghost');
-goog.provide('hedgehog.ghost.GhostSession');
 
 goog.require('goog.net.XhrIo');
 goog.require('goog.Promise');
@@ -16,7 +15,8 @@ goog.require('goog.uri.utils');
  * @const
  * @type {string}
  */
-hedgehog.ghost.URI_BASE = '/ghost/api/v0.1/';
+hedgehog.ghost.API_URI_BASE = '/api/public/';
+
 
 /**
  * Get all posts.
@@ -37,15 +37,16 @@ hedgehog.ghost.loadPosts = function(callback, opt_page, opt_limit, opt_status, o
     opt_page = isNaN(opt_page) ? 1 : opt_page;
     opt_limit = goog.isDefAndNotNull(opt_limit) ? opt_limit : 10;
     opt_status = goog.isDefAndNotNull(opt_status) ? opt_status : 'published';
-    var session = hedgehog.ghost.GhostSession.getInstance()
-      , getData = {
-            'page': opt_page,
-            'limit': opt_limit,
-            'status': opt_status
-        };
 
-    session.getToken().then(hedgehog.ghost.loadTags).then(function(data) {
+    var getData = {
+        'page': opt_page,
+        'limit': opt_limit,
+        'status': opt_status
+    };
+
+    hedgehog.ghost.loadTags().then(function(data) {
         var xhrio = new goog.net.XhrIo();
+
         goog.events.listen(xhrio, goog.net.EventType.COMPLETE, goog.bind(function(e) {
             var xhr = /** @type {goog.net.XhrIo} */ (e.target)
               , result = xhr.getResponseJson();
@@ -55,8 +56,8 @@ hedgehog.ghost.loadPosts = function(callback, opt_page, opt_limit, opt_status, o
 
             goog.dispose(xhrio);
         }, this));
-        xhrio.headers.set('Authorization', data['token']['token_type'] + ' ' + data['token']['access_token']);
-        xhrio.send(hedgehog.ghost.URI_BASE + 'posts/?' + goog.uri.utils.buildQueryDataFromMap(getData), 'GET');
+
+        xhrio.send(hedgehog.ghost.API_URI_BASE + 'posts/?' + goog.uri.utils.buildQueryDataFromMap(getData), 'GET');
     });
 };
 
@@ -67,9 +68,8 @@ hedgehog.ghost.loadPosts = function(callback, opt_page, opt_limit, opt_status, o
  * @param {string} postSlug
  */
 hedgehog.ghost.loadPostBySlug = function(callback, postSlug) {
-    var session = hedgehog.ghost.GhostSession.getInstance();
 
-    session.getToken().then(hedgehog.ghost.loadTags).then(function(data) {
+    hedgehog.ghost.loadTags().then(function(data) {
         var xhrio = new goog.net.XhrIo();
 
         goog.events.listen(xhrio, goog.net.EventType.COMPLETE, goog.bind(function(e) {
@@ -93,8 +93,7 @@ hedgehog.ghost.loadPostBySlug = function(callback, postSlug) {
             }
         }, this));
 
-        xhrio.headers.set('Authorization', data['token']['token_type'] + ' ' + data['token']['access_token']);
-        xhrio.send(hedgehog.ghost.URI_BASE + 'posts/slug/' + postSlug + '/', 'GET');
+        xhrio.send(hedgehog.ghost.API_URI_BASE + 'posts/' + postSlug + '/', 'GET');
     });
 };
 
@@ -103,32 +102,26 @@ hedgehog.ghost.loadPostBySlug = function(callback, postSlug) {
  * @param callback
  */
 hedgehog.ghost.loadSettings = function(callback) {
-    var session = hedgehog.ghost.GhostSession.getInstance();
+    var xhrio = new goog.net.XhrIo();
 
-    session.getToken().then(function(data) {
-        var xhrio = new goog.net.XhrIo();
+    goog.events.listen(xhrio, goog.net.EventType.COMPLETE, goog.bind(function(e) {
+        var xhr = /** @type {goog.net.XhrIo} */ (e.target)
+          , result = xhr.getResponseJson();
 
-        goog.events.listen(xhrio, goog.net.EventType.COMPLETE, goog.bind(function(e) {
-            var xhr = /** @type {goog.net.XhrIo} */ (e.target)
-              , result = xhr.getResponseJson();
+        goog.dispose(xhrio);
 
-            goog.dispose(xhrio);
+        callback({'settings' : result});
+    }, this));
 
-            callback(result);
-        }, this));
-
-        xhrio.headers.set('Authorization', data['token']['token_type'] + ' ' + data['token']['access_token']);
-        xhrio.send(hedgehog.ghost.URI_BASE + 'settings/', 'GET');
-    });
+    xhrio.send(hedgehog.ghost.API_URI_BASE + 'settings/', 'GET');
 };
 
 
 /**
  * Get all tags.
- * @param {Object} data
  * @return {goog.Promise}
  */
-hedgehog.ghost.loadTags = function(data) {
+hedgehog.ghost.loadTags = function() {
     return new goog.Promise(function(resolve, reject) {
         var xhrio = new goog.net.XhrIo();
 
@@ -136,90 +129,11 @@ hedgehog.ghost.loadTags = function(data) {
             var xhr = /** @type {goog.net.XhrIo} */ (e.target)
               , result = xhr.getResponseJson();
             goog.dispose(xhrio);
-            goog.object.extend(/** @type {Object|null} */(result), data);
             resolve(result);
         }, this));
 
-        xhrio.headers.set('Authorization', data['token']['token_type'] + ' ' + data['token']['access_token']);
-        xhrio.send(hedgehog.ghost.URI_BASE + 'tags/', 'GET');
+        xhrio.send(hedgehog.ghost.API_URI_BASE + 'tags/', 'GET');
     });
 };
 
 
-/**
- * @constructor
- */
-hedgehog.ghost.GhostSession = function () {
-
-    /**
-     * @type {string}
-     * @private
-     */
-    this.authenticationUrl_ = hedgehog.ghost.URI_BASE + 'authentication/token';
-
-    /**
-     * @type {{grant_type: string, username: string, password: string, client_id: string}}
-     * @private
-     */
-    this.postDataObject_ = {
-        'grant_type': "password",
-        'username': "banguit@gmail.com",
-        'password': "QAZwsx123",
-        'client_id': "ghost-admin"
-    };
-
-    /**
-     * @type {string}
-     * @private
-     */
-    this.postData_ = goog.uri.utils.buildQueryDataFromMap(this.postDataObject_);
-
-    /**
-     * @type {{access_token: string, refresh_token: string, expires_in: number, token_type: string}}
-     * @private
-     */
-    this.token_;
-
-    /**
-     * @type {Date}
-     * @private
-     */
-    this.accessTokenExpirationTime_;
-};
-goog.addSingletonGetter(hedgehog.ghost.GhostSession);
-
-
-/**
- * @return {!goog.Promise.<!{access_token: string, refresh_token: string, expires_in: number, token_type: string}>} A Promise that will be resolved with the given token if the authentication passed successfully.
- */
-hedgehog.ghost.GhostSession.prototype.getToken = function() {
-    if(!goog.isDefAndNotNull(this.token_) || this.accessTokenExpirationTime_ < new Date()) {
-        return this.requestToken_();
-    }
-
-    return new goog.Promise(function(resolve, reject) {
-        resolve({'token' : this.token_});
-    }, this);
-};
-
-
-/**
- * @return {!goog.Promise.<!{access_token: string, refresh_token: string, expires_in: number, token_type: string}>} A Promise that will be resolved with the given token if the authentication passed successfully.
- */
-hedgehog.ghost.GhostSession.prototype.requestToken_ = function() {
-    return new goog.Promise(function(resolve, reject) {
-        var xhrio = new goog.net.XhrIo();
-        goog.events.listen(xhrio, goog.net.EventType.COMPLETE, goog.bind(function(e) {
-            var xhr = /** @type {goog.net.XhrIo} */ (e.target);
-            this.token_ = /** @type {{access_token: string, refresh_token: string, expires_in: number, token_type: string}} */ (xhr.getResponseJson());
-
-            var t = new Date();
-            t.setSeconds(t.getSeconds() + this.token_['expires_in']);
-            this.accessTokenExpirationTime_ = t;
-
-            resolve({'token' : this.token_});
-            goog.dispose(xhrio);
-        }, this));
-        xhrio.send(this.authenticationUrl_, 'POST', this.postData_);
-    }, this);
-};
