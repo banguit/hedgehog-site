@@ -1,19 +1,35 @@
 goog.provide('hedgehog.core.Response');
 
 goog.require('goog.soy');
+goog.require('hedgehog.core.Router');
 
 /**
  * Create a response based on the provided request.
  *
  * @param {hedgehog.core.Request} request
+ * @param {hedgehog.core.Router} router
  * @constructor
  */
-hedgehog.core.Response = function(request) {
+hedgehog.core.Response = function(request, router) {
     /**
      * @type {hedgehog.core.Request}
      * @private
      */
     this.request_ = request;
+
+    /**
+     * @type {hedgehog.core.Router}
+     * @private
+     */
+    this.router_ = router;
+};
+
+
+/**
+ * @return {hedgehog.core.Router}
+ */
+hedgehog.core.Response.prototype.getRouter = function() {
+    return this.router_;
 };
 
 

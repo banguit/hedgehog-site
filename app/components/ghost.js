@@ -104,14 +104,14 @@ hedgehog.ghost.loadPostBySlug = function(callback, postSlug) {
 hedgehog.ghost.loadSettings = function(callback) {
     var xhrio = new goog.net.XhrIo();
 
-    goog.events.listen(xhrio, goog.net.EventType.COMPLETE, goog.bind(function(e) {
+    goog.events.listen(xhrio, goog.net.EventType.COMPLETE, function(e) {
         var xhr = /** @type {goog.net.XhrIo} */ (e.target)
           , result = xhr.getResponseJson();
 
         goog.dispose(xhrio);
 
         callback({'settings' : result});
-    }, this));
+    });
 
     xhrio.send(hedgehog.ghost.API_URI_BASE + 'settings/', 'GET');
 };

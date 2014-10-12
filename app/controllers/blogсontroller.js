@@ -23,28 +23,42 @@ goog.inherits(hedgehog.controllers.BlogController, hedgehog.core.Controller);
  */
 hedgehog.controllers.BlogController.prototype.index = function(request, response, resolve, reject) {
 
-    hedgehog.ghost.loadSettings(goog.bind(function(data) {
-        var postsPerPage = goog.array.find(data['settings'], function(el) { return el.key == 'postsPerPage' });
+    var isFirstLoad = request.getRouteData('isFirstLoad');
 
-        hedgehog.ghost.loadPosts(goog.bind(function(data) {
+    if(!isFirstLoad) {
+        hedgehog.ghost.loadSettings(goog.bind(function(data) {
+            var postsPerPage = goog.array.find(data['settings'], function(el) { return el.key == 'postsPerPage' });
 
-            var converter = new hedgehog.Showdown.converter();
-            goog.array.forEach(data['posts'], function(post) {
-                post['pretty_date'] = this.prettyDate_(post['created_at']);
-                post['datetime'] = new Date(post['created_at']).yyyymmdd();
-                post['html_preview'] = converter.makeHtml(post['markdown'].split(" ").splice(0, 100).join(" ") + "...");
+            hedgehog.ghost.loadPosts(goog.bind(function(data) {
 
-                // Get tags information
-                var tagsIds = post['tags'];
-                post['tags'] = goog.array.filter(data['tags'], function(tag) {
-                    return goog.array.contains(tagsIds, tag.id);
-                });
-            }, this);
+                var converter = new hedgehog.Showdown.converter();
+                goog.array.forEach(data['posts'], function(post) {
+                    post['pretty_date'] = this.prettyDate_(post['created_at']);
+                    post['datetime'] = new Date(post['created_at']).yyyymmdd();
+                    post['html_preview'] = converter.makeHtml(post['markdown'].split(" ").splice(0, 100).join(" ") + "...");
 
-            response.render(hedgehog.templates.blog, data, goog.dom.getElement('content'));
-            resolve();
-        }, this), parseInt(request.getRouteData('page'), 10), postsPerPage['value']);
-    }, this));
+                    // Get tags information
+                    var tagsIds = post['tags'];
+                    post['tags'] = goog.array.filter(data['tags'], function(tag) {
+                        return goog.array.contains(tagsIds, tag.id);
+                    });
+                }, this);
+
+                response.render(hedgehog.templates.blog, data, goog.dom.getElement('content'));
+
+                // In case we are navigated back to the page without hash
+                if(window.location.pathname.length > 1) {
+                    this.pushStateForLinks_(response);
+                }
+
+                resolve();
+            }, this), parseInt(request.getRouteData('page'), 10), postsPerPage['value']);
+        }, this));
+    } else {
+
+        this.pushStateForLinks_(response);
+        resolve();
+    }
 };
 
 
@@ -58,55 +72,142 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
     // Scroll top
     window.scrollTo(0, 0);
 
-    hedgehog.ghost.loadPostBySlug(goog.bind(function(data) {
-        var post = data['posts'][0];
+    var isFirstLoad = request.getRouteData('isFirstLoad')
+      , fragment = request.getFragment();
 
-        post['pretty_date'] = this.prettyDate_(post['created_at']);
-        post['datetime'] = new Date(post['created_at']).yyyymmdd();
+    if(!goog.string.isEmpty(fragment) || (goog.string.isEmpty(fragment) && !isFirstLoad)) {
+        hedgehog.ghost.loadPostBySlug(goog.bind(function(data) {
+            var post = data['posts'][0];
 
-        // Get tags information
-        var tagsIds = post['tags'];
-        post['tags'] = goog.array.filter(data['tags'], function(tag) {
-            return goog.array.contains(tagsIds, tag.id);
-        });
+            post['pretty_date'] = this.prettyDate_(post['created_at']);
+            post['datetime'] = new Date(post['created_at']).yyyymmdd();
 
-        response.render(hedgehog.templates.post, post, goog.dom.getElement('content'));
+            // Get tags information
+            var tagsIds = post['tags'];
+            post['tags'] = goog.array.filter(data['tags'], function(tag) {
+                return goog.array.contains(tagsIds, tag.id);
+            });
 
-        // Update title
-        var meta_title = post['meta_title'];
-        document.title = (goog.isDefAndNotNull(meta_title) ? meta_title : post['title']) + ' | ' + document.title;
+            response.render(hedgehog.templates.post, post, goog.dom.getElement('content'));
 
-        // Update meta descritpion
-        var description = document.querySelector('meta[name="description"]');
-        description.content = post['meta_description'];
+            // Update title
+            var meta_title = post['meta_title'];
+            document.title = (goog.isDefAndNotNull(meta_title) ? meta_title : post['title']) + ' | ' + document.title;
+
+            // Update meta title
+            var title = document.querySelector('meta[name="title"]');
+            title.content = document.title;
+
+            // Update meta descritpion
+            var description = document.querySelector('meta[name="description"]');
+            description.content = post['meta_description'];
+
+            // Initialize DISQUS
+            this.initializeDisqusForPost_(post['slug'], post['title']);
+
+            // In case we are navigated back to the page without hash
+            if(window.location.pathname.length > 1) {
+                this.pushStateForLinks_(response);
+            }
+
+            // Add back link handler.
+            this.addPostBackLinkHandler_(response);
+
+            resolve();
+        }, this), /** @type {string} */(request.getRouteData('slug')));
+
+    } else {
+        var pathName = window.location.pathname
+          , path = pathName.substr(0, pathName.length - 1)
+          , slug = path.substr(path.lastIndexOf('/') + 1);
+
+        this.pushStateForLinks_(response);
+
+        // Add back link handler.
+        this.addPostBackLinkHandler_(response);
 
         // Initialize DISQUS
-        window['disqus_shortname'] = 'hedgehogcomua';
-        window['disqus_identifier'] = '/blog/post/' + post['slug']; // a unique identifier for each page where Disqus is present
-        window['disqus_title'] = 'Blog | ' + post['title']; // a unique title for each page where Disqus is present
-        window['disqus_url'] = window.location.href; // a unique URL for each page where Disqus is present
+        this.initializeDisqusForPost_(slug, document.title);
+        resolve();
+    }
+};
 
-        if(!window.hasOwnProperty('DISQUS')) {
-            var url = '//' + window['disqus_shortname'] + '.disqus.com/embed.js'
-                , script = goog.dom.createDom('script', {'type': 'text/javascript', 'async' : 'true', 'src': url});
+/**
+ * Add back link handler
+ * @param {hedgehog.core.Response} response
+ * @private
+ */
+hedgehog.controllers.BlogController.prototype.addPostBackLinkHandler_ = function(response) {
+    var backLink = document.querySelector('.post-header .back-link');
+    goog.events.listen(backLink, goog.events.EventType.CLICK, goog.partial(this.goBackLinkHandler_, response));
+};
 
-            document.body.appendChild(script);
+/**
+ * Initialize DISQUS for post.
+ * @param {string} slug
+ * @param {string} post_title
+ * @private
+ */
+hedgehog.controllers.BlogController.prototype.initializeDisqusForPost_ = function(slug, post_title) {
+    // Initialize DISQUS
+    window['disqus_shortname'] = 'hedgehogcomua';
+    window['disqus_identifier'] = '/blog/post/' + slug; // a unique identifier for each page where Disqus is present
+    window['disqus_title'] = 'Blog | ' + post_title; // a unique title for each page where Disqus is present
+    window['disqus_url'] = window.location.href; // a unique URL for each page where Disqus is present
 
-            var reloadDisqus = goog.bind(function() {
-                                   if(window.hasOwnProperty('DISQUS')) {
-                                       this.reloadDisqus_();
-                                   } else {
-                                       setTimeout(reloadDisqus, 50);
-                                   }
-                               }, this);
-            setTimeout(reloadDisqus, 50);
-        } else {
-            this.reloadDisqus_();
+    if(!window.hasOwnProperty('DISQUS')) {
+        var url = '//' + window['disqus_shortname'] + '.disqus.com/embed.js'
+          , script = goog.dom.createDom('script', {'type': 'text/javascript', 'async' : 'true', 'src': url});
+
+        document.body.appendChild(script);
+
+        var reloadDisqus = goog.bind(function() {
+            if(window.hasOwnProperty('DISQUS')) {
+                this.reloadDisqus_();
+            } else {
+                setTimeout(reloadDisqus, 50);
+            }
+        }, this);
+        setTimeout(reloadDisqus, 50);
+    } else {
+        this.reloadDisqus_();
+    }
+};
+
+
+/**
+ * Correct link navigation in case if we are located not on the root of site
+ * @param {hedgehog.core.Response} response
+ * @private
+ */
+hedgehog.controllers.BlogController.prototype.pushStateForLinks_ = function(response) {
+    var titles = document.querySelectorAll('.post-title a, a.read-more, .pager a')
+        , headerLinks = document.querySelectorAll('.wrapper > header ul.nav a')
+        , listenersKeys = [];
+
+    goog.array.forEach(titles, function(anchor) {
+        var href = anchor.getAttribute("href");
+        if(!goog.string.contains(href, '#!')) {
+            anchor.setAttribute("href", '/#!' + anchor.getAttribute("href"));
         }
 
-        resolve();
-    }, this), /** @type {string} */(request.getRouteData('slug')));
+        if(href.indexOf('/') != 0) {
+            anchor.setAttribute("href", '/' + anchor.getAttribute("href"));
+        }
+
+        listenersKeys.push(
+            goog.events.listenOnce(anchor, goog.events.EventType.CLICK, goog.partial(this.pushStateLinkHandler_, anchor, response, listenersKeys))
+        );
+    }, this);
+
+    // Correct links for SPA navigation
+    goog.array.forEach(headerLinks, function(anchor) {
+        listenersKeys.push(
+            goog.events.listenOnce(anchor, goog.events.EventType.CLICK, goog.partial(this.pushStateLinkHandler_, anchor, response, listenersKeys))
+        );
+    }, this);
 };
+
 
 /**
  * Reload DISQUS comments.
@@ -122,6 +223,60 @@ hedgehog.controllers.BlogController.prototype.reloadDisqus_ = function() {
         }
     });
 };
+
+
+/**
+ * @param anchor
+ * @param response
+ * @param listenersKeys
+ * @param e
+ * @private
+ */
+hedgehog.controllers.BlogController.prototype.pushStateLinkHandler_ = function(anchor, response, listenersKeys, e) {
+    if (window.history && window.history.pushState) {
+        window.history.pushState(null, document.title, anchor.href);
+        response.getRouter().checkRoutes();
+    }
+
+    goog.array.forEach(listenersKeys, function(key) {
+        goog.events.unlistenByKey(key);
+    });
+};
+
+
+/**
+ * @param {hedgehog.core.Response} response
+ * @param e
+ * @private
+ */
+hedgehog.controllers.BlogController.prototype.goBackLinkHandler_ = function (response, e) {
+    var defaultLocation = "/#!/";
+
+    if (window.history && window.history.pushState) {
+        window.history.pushState(null, document.title, defaultLocation);
+        response.getRouter().checkRoutes();
+    } else {
+        var oldHash = window.location.hash
+          , newHash;
+
+        window.history.back(); // Try to go back
+
+        newHash = window.location.hash;
+
+        if(newHash === oldHash && (typeof(document.referrer) !== "string" || document.referrer  === "")) {
+            window.setTimeout(function() {
+                // redirect to default location
+                window.location.href = defaultLocation;
+            }, 500); // set timeout in ms
+        }
+    }
+
+    if(e) {
+        if(e.preventDefault) { e.preventDefault() }
+        if(e.preventPropagation) { e.preventPropagation() }
+    }
+};
+
 
 /**
  * Takes an ISO time and returns a string representing how long ago the date represents.

@@ -82,7 +82,7 @@ hedgehog.templates.post = function(opt_data, opt_ignored) {
   var output = '';
   var data__soy52 = {'data': opt_data};
   var post__soy53 = data__soy52['data'];
-  output += '<article id="post"><header class="photo" style="' + ((post__soy53['image'] != null) ? 'background-image: url(\'' + soy.$$escapeHtml(post__soy53['image']) + '\')' : '') + '"><h1 class="container">' + soy.$$escapeHtml(post__soy53['title']) + '</h1></header><main class="container content" role="main"><article class="post"><header class="post-header container"><a class="back-link pull-left fa fa-angle-left" href="javascript:history.goBack()"><span> Back</span></a><section class="post-meta pull-right"><i class="fa fa-clock-o"></i><time class="post-date" datetime="' + soy.$$escapeHtml(post__soy53['datetime']) + '">' + soy.$$escapeHtml(post__soy53['pretty_date']) + '</time>on<span class="tags">';
+  output += '<article id="post"><header class="photo" style="' + ((post__soy53['image'] != null) ? 'background-image: url(\'' + soy.$$escapeHtml(post__soy53['image']) + '\')' : '') + '"><h1 class="container">' + soy.$$escapeHtml(post__soy53['title']) + '</h1></header><main class="container content" role="main"><article class="post"><header class="post-header container"><a class="back-link pull-left fa fa-angle-left" href="javascript:void(0)"><span> Back</span></a><section class="post-meta pull-right"><i class="fa fa-clock-o"></i><time class="post-date" datetime="' + soy.$$escapeHtml(post__soy53['datetime']) + '">' + soy.$$escapeHtml(post__soy53['pretty_date']) + '</time>on<span class="tags">';
   var tagList67 = post__soy53['tags'];
   var tagListLen67 = tagList67.length;
   for (var tagIndex67 = 0; tagIndex67 < tagListLen67; tagIndex67++) {

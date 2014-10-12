@@ -101,7 +101,7 @@ hedgehog.core.Application.prototype.processRoute_ = function(route, controller) 
     routeData['isFirstLoad'] = this.isFirstLoad_;
 
     request = new hedgehog.core.Request(routeData, window.location.href, queryVals);
-    response = new hedgehog.core.Response(request);
+    response = new hedgehog.core.Response(request, this.router_);
     filterContext = new hedgehog.core.types.ActionFilterContext(request, response);
 
     /**

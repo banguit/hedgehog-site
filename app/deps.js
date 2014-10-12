@@ -29,7 +29,6 @@ goog.addDependency("../../../../app/deps.js", [], []);
 goog.addDependency("../../../../app/externs.js", [], []);
 goog.addDependency("../../../../app/requirements.js", [], ['hedgehog']);
 goog.addDependency("../../../../app/components/ghost.js", ['hedgehog.ghost'], ['goog.net.XhrIo', 'goog.Promise', 'goog.string.format', 'goog.uri.utils']);
-goog.addDependency("../../../../app/components/ghostsession.js", ['hedgehog.ghost.GhostSession'], ['hedgehog.ghost']);
 goog.addDependency("../../../../app/components/header.js", ['hedgehog.Header'], ['goog.ui.Component', 'goog.dom']);
 goog.addDependency("../../../../app/components/loader.js", ['hedgehog.Loader'], ['goog.ui.Component', 'goog.dom', 'goog.soy', 'goog.style', 'hedgehog.templates']);
 goog.addDependency("../../../../app/components/menu.js", ['hedgehog.Menu'], ['goog.ui.Component', 'goog.dom.classlist', 'goog.dom.dataset']);
@@ -44,8 +43,8 @@ goog.addDependency("../../../../app/core/application.js", ['hedgehog.core.Applic
 goog.addDependency("../../../../app/core/applicationfilter.js", ['hedgehog.core.ApplicationFilter'], []);
 goog.addDependency("../../../../app/core/controller.js", ['hedgehog.core.Controller'], []);
 goog.addDependency("../../../../app/core/request.js", ['hedgehog.core.Request'], ['goog.Uri']);
-goog.addDependency("../../../../app/core/response.js", ['hedgehog.core.Response'], ['goog.soy']);
-goog.addDependency("../../../../app/core/router.js", ['hedgehog.core.Router'], ['mvc.Router']);
+goog.addDependency("../../../../app/core/response.js", ['hedgehog.core.Response'], ['goog.soy', 'hedgehog.core.Router']);
+goog.addDependency("../../../../app/core/router.js", ['hedgehog.core.Router'], ['goog.History', 'goog.array', 'goog.events', 'goog.history.Html5History']);
 goog.addDependency("../../../../app/core/events/actionevent.js", ['hedgehog.core.events.ActionEvent'], ['goog.events.Event', 'hedgehog.core.types.ActionFilterContext']);
 goog.addDependency("../../../../app/core/events/actionexceptionevent.js", ['hedgehog.core.events.ActionExceptionEvent'], ['hedgehog.core.events.ActionEvent']);
 goog.addDependency("../../../../app/core/types/actionfiltercontext.js", ['hedgehog.core.types.ActionFilterContext'], []);
