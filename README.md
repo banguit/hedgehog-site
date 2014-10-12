@@ -24,6 +24,7 @@ When completed, you'll be able to run the various Grunt commands provided from t
 2. `grunt watch` - monitor changes for *.js, *.hbs, *.less files and then run the proper command to make changes to the theme.
 
 ### Additional changes in Ghost engine that is required to do (actual for Ghost version 0.5.2):
+It will add public API functionality to the Ghost engine, so we can getting settings, posts and tags without authentication.
 ![core/server/api/settings.js](docs/assets/ghost-changes/core-server-api-settings.png)
 ![core/server/api-tags.js](docs/assets/ghost-changes/core-server-api-tags.png)
 ![core/server/config-url.js](docs/assets/ghost-changes/core-server-config-url.png)
