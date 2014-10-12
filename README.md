@@ -1,4 +1,4 @@
-# //hedgehog.com.ua
+# //hedgehog.com.ua - Dmitry's Antonenko personal website
 
 ## About projects
 This is SPA application of my personal web site at hedgehog.com.ua, that is built by Google Closure Tools (Closure Library, Closure Compiler, Closure Templates).
@@ -16,4 +16,8 @@ When completed, you'll be able to run the various Grunt commands provided from t
 2. `grunt watch` - monitor changes for *.js, *.hbs, *.less files and then run the proper command to make changes to the theme.
 
 ### Additional changes in Ghost engine that is required to do (actual for Ghost version 0.5.2):
-![Ghost changes](ghost-changes.png)
+![core/server/api/settings.js](docs/assets/ghost-changes/core-server-api-settings.png)
+![core/server/api-tags.js](docs/assets/ghost-changes/core-server-api-tags.png)
+![core/server/config-url.js](docs/assets/ghost-changes/core-server-config-url.png)
+![core/server/controllers-frontend.js](docs/assets/ghost-changes/core-server-controllers-frontend.png)
+![core/server/routes-frontend.js](docs/assets/ghost-changes/core-server-routes-frontend.png)

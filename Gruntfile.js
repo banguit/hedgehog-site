@@ -89,12 +89,12 @@ module.exports = function(grunt) {
             'clean:dist',
             'clean:ghost_theme',
             'shell:compile',
+            'shell:compile_hedgehog_bootstrap',
             'copy:hedgehog_bootstrap_dist',
             'copy:hbs',
             'copy:hbs_partials',
             'copy:package_json',
-            'copy:theme',
-            'shell:compile_hedgehog_bootstrap'
+            'copy:theme'
         ]
     );
 };
