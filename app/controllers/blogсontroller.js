@@ -26,34 +26,32 @@ hedgehog.controllers.BlogController.prototype.index = function(request, response
     var isFirstLoad = request.getRouteData('isFirstLoad');
 
     if(!isFirstLoad) {
-        hedgehog.ghost.loadSettings(goog.bind(function(data) {
-            var postsPerPage = goog.array.find(data['settings'], function(el) { return el.key == 'postsPerPage' });
+        var postsPerPage = hedgehog.core.Application.BlogSettings.postsPerPage;
 
-            hedgehog.ghost.loadPosts(goog.bind(function(data) {
+        hedgehog.ghost.loadPosts(goog.bind(function(data) {
 
-                var converter = new hedgehog.Showdown.converter();
-                goog.array.forEach(data['posts'], function(post) {
-                    post['pretty_date'] = this.prettyDate_(post['created_at']);
-                    post['datetime'] = new Date(post['created_at']).yyyymmdd();
-                    post['html_preview'] = converter.makeHtml(post['markdown'].split(" ").splice(0, 100).join(" ") + "...");
+            var converter = new hedgehog.Showdown.converter();
+            goog.array.forEach(data['posts'], function(post) {
+                post['pretty_date'] = this.prettyDate_(post['created_at']);
+                post['datetime'] = new Date(post['created_at']).yyyymmdd();
+                post['html_preview'] = converter.makeHtml(post['markdown'].split(" ").splice(0, 100).join(" ") + "...");
 
-                    // Get tags information
-                    var tagsIds = post['tags'];
-                    post['tags'] = goog.array.filter(data['tags'], function(tag) {
-                        return goog.array.contains(tagsIds, tag.id);
-                    });
-                }, this);
+                // Get tags information
+                var tagsIds = post['tags'];
+                post['tags'] = goog.array.filter(data['tags'], function(tag) {
+                    return goog.array.contains(tagsIds, tag.id);
+                });
+            }, this);
 
-                response.render(hedgehog.templates.blog, data, goog.dom.getElement('content'));
+            response.render(hedgehog.templates.blog, data, goog.dom.getElement('content'));
 
-                // In case we are navigated back to the page without hash
-                if(window.location.pathname.length > 1) {
-                    this.pushStateForLinks_(response);
-                }
+            // In case we are navigated back to the page without hash
+            if(window.location.pathname.length > 1) {
+                this.pushStateForLinks_(response);
+            }
 
-                resolve();
-            }, this), parseInt(request.getRouteData('page'), 10), postsPerPage['value']);
-        }, this));
+            resolve();
+        }, this), parseInt(request.getRouteData('page'), 10), postsPerPage);
     } else {
 
         this.pushStateForLinks_(response);
@@ -100,7 +98,7 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
 
             // Update meta descritpion
             var description = document.querySelector('meta[name="description"]');
-            description.content = post['meta_description'];
+            description.content = post['meta_description'] || '';
 
             // Initialize DISQUS
             this.initializeDisqusForPost_(post['slug'], post['title']);
@@ -123,6 +121,12 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
 
         this.pushStateForLinks_(response);
 
+        // Update page title
+        var h1 = document.querySelector('header.photo h1.container').textContent
+          , title = document.querySelector('meta[name="title"]');
+        document.title = h1 + ' | ' + document.title;
+        title.content = document.title;
+
         // Add back link handler.
         this.addPostBackLinkHandler_(response);
 
@@ -131,6 +135,13 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
         resolve();
     }
 };
+
+
+/*
+ * - - - - - - - - *
+ * Private methods *
+ * - - - - - - - - *
+ */
 
 /**
  * Add back link handler

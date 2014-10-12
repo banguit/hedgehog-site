@@ -3,6 +3,7 @@ goog.provide('hedgehog.filters.ComponentsInitializationActionFilter');
 goog.require('hedgehog.core.ActionFilter');
 goog.require('hedgehog.Menu');
 goog.require('hedgehog.Loader');
+goog.require('hedgehog.core.Application');
 
 
 /**
@@ -35,12 +36,6 @@ hedgehog.filters.ComponentsInitializationActionFilter = function() {
      */
     this.responsiveHeader_ = hedgehog.ResponsiveHeader.getInstance();
 
-    /**
-     * @type {string}
-     * @private
-     */
-    this.initialTitleText_ = document.querySelector('meta[name="title"]').content;
-
     // Initialize components
     this.loader_.render(this.wrapperElement_);
 };
@@ -51,12 +46,12 @@ hedgehog.filters.ComponentsInitializationActionFilter.prototype.onActionExecutin
     this.menu_.setActive(e.getContext().getRequest().getRouteData()['controller']);
 
     // Set responsive header and page titles
-    document.title = this.menu_.getName() + ' | ' + this.initialTitleText_;
+    document.title = this.menu_.getName() + ' | ' + hedgehog.core.Application.BlogSettings.title;
     this.responsiveHeader_.setTitle(this.menu_.getName());
 
-    // Set metadata descritpion
-    var description = document.querySelector('meta[name="description"]');
-    description.content = document.title;
+    // Set meta title
+    var title = document.querySelector('meta[name="title"]');
+    title.content = document.title;
 };
 
 

@@ -10,6 +10,8 @@ goog.require('goog.string');
 goog.require('goog.events.EventTarget');
 goog.require('hedgehog.core.Request');
 goog.require('hedgehog.core.Response');
+goog.require('hedgehog.ghost');
+goog.require('hedgehog.core.types.BlogSettings');
 goog.require('hedgehog.core.types.ActionFilterItem');
 goog.require('hedgehog.core.events.ActionEvent');
 goog.require('hedgehog.core.events.ActionExceptionEvent');
@@ -113,8 +115,24 @@ hedgehog.core.Application.prototype.processRoute_ = function(route, controller) 
 
         try {
             new goog.Promise(function(resolve, reject) {
-                this.dispatchEvent(new hedgehog.core.events.ActionEvent(filterContext, hedgehog.core.Application.EventType.ACTIONEXECUTING, resolve, this));
+                if(!goog.isDefAndNotNull(hedgehog.core.Application.BlogSettings)) {
+                    hedgehog.ghost.loadSettings(goog.bind(function(data) {
+                        var settings = data['settings'];
+                        hedgehog.core.Application.BlogSettings = new hedgehog.core.types.BlogSettings();
+                        hedgehog.core.Application.BlogSettings.title = goog.array.find(data['settings'], function(el) { return el.key == 'title' })['value'];
+                        hedgehog.core.Application.BlogSettings.description = goog.array.find(data['settings'], function(el) { return el.key == 'description' })['value'];
+                        hedgehog.core.Application.BlogSettings.postsPerPage = goog.array.find(data['settings'], function(el) { return el.key == 'postsPerPage' })['value'];
+                        resolve();
+                    }, this));
+                } else {
+                    resolve();
+                }
             }, this)
+            .then(function() {
+                new goog.Promise(function(resolve, reject) {
+                    this.dispatchEvent(new hedgehog.core.events.ActionEvent(filterContext, hedgehog.core.Application.EventType.ACTIONEXECUTING, resolve, this));
+                }, this)
+            }, undefined, this)
             .then(function() {
                 return new goog.Promise(function(resolve, reject) {
                     instance[routeData['action']](request, response, resolve, reject);
@@ -328,3 +346,10 @@ hedgehog.core.Application.EventType = {
     ACTIONEXECUTING: goog.events.getUniqueId('action_executing'),
     ACTIONEXECUTED: goog.events.getUniqueId('action_executed')
 };
+
+
+/**
+ * This public object contains Ghost blog settings.
+ * @type {hedgehog.core.types.BlogSettings}
+ */
+hedgehog.core.Application.BlogSettings;

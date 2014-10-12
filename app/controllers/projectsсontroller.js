@@ -19,6 +19,10 @@ goog.inherits(hedgehog.controllers.ProjectsController, hedgehog.core.Controller)
  * @param {Function} reject
  */
 hedgehog.controllers.ProjectsController.prototype.index = function(request, response, resolve, reject) {
+    // Set meta description
+    var description = document.querySelector('meta[name="description"]');
+    description.content = 'Dmitry\'s Antonenko projects.';
+
     response.render(hedgehog.templates.projects, {}, goog.dom.getElement('content'));
     resolve();
 };

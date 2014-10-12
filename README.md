@@ -33,13 +33,13 @@ When completed, you'll be able to run the various Grunt commands provided from t
 ### How to use with Ghost in development mode
 1. Fist of all you should build third-party libraries/tools.
 2. Run `grunt` command.
-3. Launch Ghost
+3. Launch Ghost.
 4. Go to **Setting** section of Ghost Admin panel and select `Hedgehog-x.x.x` from **Theme** dropdown.
 5. Save
 
 ### How to use with Ghost in development mode
 1. Fist of all you should build third-party libraries/tools.
 2. Run `grunt` command.
-3. Copy all files from `~/dist` to the `[ghost-folder]/content/themes/hedgehog` folder.
+3. Copy all files from `~/dist` to the `[ghost-folder]/content/themes/hedgehog` folder on your host.
 4. Go to **Setting** section of Ghost Admin panel and select `Hedgehog-x.x.x` from **Theme** dropdown.
 5. Save

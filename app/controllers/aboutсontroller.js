@@ -21,6 +21,10 @@ goog.inherits(hedgehog.controllers.AboutController, hedgehog.core.Controller);
  * @param {Function} reject
  */
 hedgehog.controllers.AboutController.prototype.index = function(request, response, resolve, reject) {
+    // Set meta description
+    var description = document.querySelector('meta[name="description"]');
+    description.content = 'About Dmitry Antonenko and contacts.';
+
     response.render(hedgehog.templates.about, {}, goog.dom.getElement('content'));
     resolve();
 };

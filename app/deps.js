@@ -39,7 +39,7 @@ goog.addDependency("../../../../app/controllers/aboutсontroller.js", ['hedgehog
 goog.addDependency("../../../../app/controllers/blogсontroller.js", ['hedgehog.controllers.BlogController'], ['hedgehog.core.Controller', 'hedgehog.ghost', 'hedgehog.Showdown']);
 goog.addDependency("../../../../app/controllers/projectsсontroller.js", ['hedgehog.controllers.ProjectsController'], ['hedgehog.core.Controller']);
 goog.addDependency("../../../../app/core/actionfilter.js", ['hedgehog.core.ActionFilter'], []);
-goog.addDependency("../../../../app/core/application.js", ['hedgehog.core.Application'], ['hedgehog.core.Router', 'goog.string', 'goog.events.EventTarget', 'hedgehog.core.Request', 'hedgehog.core.Response', 'hedgehog.core.types.ActionFilterItem', 'hedgehog.core.events.ActionEvent', 'hedgehog.core.events.ActionExceptionEvent', 'goog.Promise']);
+goog.addDependency("../../../../app/core/application.js", ['hedgehog.core.Application'], ['hedgehog.core.Router', 'goog.string', 'goog.events.EventTarget', 'hedgehog.core.Request', 'hedgehog.core.Response', 'hedgehog.ghost', 'hedgehog.core.types.BlogSettings', 'hedgehog.core.types.ActionFilterItem', 'hedgehog.core.events.ActionEvent', 'hedgehog.core.events.ActionExceptionEvent', 'goog.Promise']);
 goog.addDependency("../../../../app/core/applicationfilter.js", ['hedgehog.core.ApplicationFilter'], []);
 goog.addDependency("../../../../app/core/controller.js", ['hedgehog.core.Controller'], []);
 goog.addDependency("../../../../app/core/request.js", ['hedgehog.core.Request'], ['goog.Uri']);
@@ -50,6 +50,7 @@ goog.addDependency("../../../../app/core/events/actionexceptionevent.js", ['hedg
 goog.addDependency("../../../../app/core/types/actionfiltercontext.js", ['hedgehog.core.types.ActionFilterContext'], []);
 goog.addDependency("../../../../app/core/types/actionfilteritem.js", ['hedgehog.core.types.ActionFilterItem'], ['hedgehog.core.types.ApplicationFilterItem']);
 goog.addDependency("../../../../app/core/types/applicationfilteritem.js", ['hedgehog.core.types.ApplicationFilterItem'], []);
-goog.addDependency("../../../../app/filters/componentsinitializationactionfilter.js", ['hedgehog.filters.ComponentsInitializationActionFilter'], ['hedgehog.core.ActionFilter', 'hedgehog.Menu', 'hedgehog.Loader']);
+goog.addDependency("../../../../app/core/types/blogsettings.js", ['hedgehog.core.types.BlogSettings'], []);
+goog.addDependency("../../../../app/filters/componentsinitializationactionfilter.js", ['hedgehog.filters.ComponentsInitializationActionFilter'], ['hedgehog.core.ActionFilter', 'hedgehog.Menu', 'hedgehog.Loader', 'hedgehog.core.Application']);
 goog.addDependency("../../../../app/filters/componentsinitializationapplicationfilter.js", ['hedgehog.filters.ComponentsInitializationApplicationFilter'], ['hedgehog.core.ApplicationFilter', 'hedgehog.SplashScreen', 'hedgehog.Header', 'hedgehog.Menu', 'hedgehog.ResponsiveHeader']);
 goog.addDependency("../../../../app/views/templates.soy.js", ['hedgehog.templates'], ['soy', 'soydata']);
