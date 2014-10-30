@@ -59,6 +59,7 @@ python ${CLOSURE_DIR}/closure/bin/calcdeps.py -i app/requirements.js \
     -f "--jscomp_warning=strictModuleDepCheck" \
     -f "--jscomp_warning=visibility" \
     -f "--externs=${APP_DIR}externs.js" \
+    -f "--externs=tools/closure-compiler/contrib/externs/api/gadgets/plusone.js" \
     -o compiled
 
 echo "\nDone [ ✔ ] (See log above)"

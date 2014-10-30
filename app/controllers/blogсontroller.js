@@ -75,7 +75,8 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
 
     if(!goog.string.isEmpty(fragment) || (goog.string.isEmpty(fragment) && !isFirstLoad)) {
         hedgehog.ghost.loadPostBySlug(goog.bind(function(data) {
-            var post = data['posts'][0];
+            var post = data['posts'][0]
+              , contentEl = goog.dom.getElement('content');
 
             post['pretty_date'] = this.prettyDate_(post['created_at']);
             post['datetime'] = new Date(post['created_at']).yyyymmdd();
@@ -86,7 +87,9 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
                 return goog.array.contains(tagsIds, tag.id);
             });
 
+            post['url'] = window.location.href.replace('/#!','');
             response.render(hedgehog.templates.post, post, goog.dom.getElement('content'));
+            gapi.plusone.go();
 
             // Update title
             var meta_title = post['meta_title'];
@@ -134,6 +137,17 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
         this.initializeDisqusForPost_(slug, document.title);
         resolve();
     }
+
+    // Share buttons required scripts
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    (function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs'));
 };
 
 

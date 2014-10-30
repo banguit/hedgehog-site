@@ -6,6 +6,7 @@
 {{! Everything inside the #post tags pulls data from the post }}
 {{#post}}
 
+<div id="fb-root"></div>
 <article id="post">
     <header class="photo {{#if image}}" style="background-image: url({{image}}){{else}}no-cover{{/if}}">
         <h1 class="container">{{title}}</h1>
@@ -21,6 +22,13 @@
             </header>
             <section class="post-content">
                 {{content}}
+            </section>
+            <section class="share">
+                <div class="fb-like" data-href="{{url absolute="true"}}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+                <div class="g-plusone" data-size="medium"></div>
+                <div class="twitter-share">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-via="banguit">Tweet</a>
+                </div>
             </section>
             <div id="disqus_thread"></div>
         </article>

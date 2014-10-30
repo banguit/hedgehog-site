@@ -82,14 +82,14 @@ hedgehog.templates.post = function(opt_data, opt_ignored) {
   var output = '';
   var data__soy52 = {'data': opt_data};
   var post__soy53 = data__soy52['data'];
-  output += '<article id="post"><header class="photo" style="' + ((post__soy53['image'] != null) ? 'background-image: url(\'' + soy.$$escapeHtml(post__soy53['image']) + '\')' : '') + '"><h1 class="container">' + soy.$$escapeHtml(post__soy53['title']) + '</h1></header><main class="container content" role="main"><article class="post"><header class="post-header container"><a class="back-link pull-left fa fa-angle-left" href="javascript:void(0)"><span> Back</span></a><section class="post-meta pull-right"><i class="fa fa-clock-o"></i><time class="post-date" datetime="' + soy.$$escapeHtml(post__soy53['datetime']) + '">' + soy.$$escapeHtml(post__soy53['pretty_date']) + '</time>on<span class="tags">';
+  output += '<div id="fb-root"></div><article id="post"><header class="photo" style="' + ((post__soy53['image'] != null) ? 'background-image: url(\'' + soy.$$escapeHtml(post__soy53['image']) + '\')' : '') + '"><h1 class="container">' + soy.$$escapeHtml(post__soy53['title']) + '</h1></header><main class="container content" role="main"><article class="post"><header class="post-header container"><a class="back-link pull-left fa fa-angle-left" href="javascript:void(0)"><span> Back</span></a><section class="post-meta pull-right"><i class="fa fa-clock-o"></i><time class="post-date" datetime="' + soy.$$escapeHtml(post__soy53['datetime']) + '">' + soy.$$escapeHtml(post__soy53['pretty_date']) + '</time>on<span class="tags">';
   var tagList67 = post__soy53['tags'];
   var tagListLen67 = tagList67.length;
   for (var tagIndex67 = 0; tagIndex67 < tagListLen67; tagIndex67++) {
     var tagData67 = tagList67[tagIndex67];
     output += soy.$$escapeHtml(tagData67['name']) + ((! (tagIndex67 == tagListLen67 - 1)) ? ', ' : '');
   }
-  output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(post__soy53['html']) + '</section><div id="disqus_thread"></div></article></main></article>';
+  output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(post__soy53['html']) + '</section><section class="share"><div class="fb-like" data-href="' + soy.$$escapeHtml(post__soy53['url']) + '" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div><div class="g-plusone" data-size="medium"></div><div class="twitter-share"><a href="https://twitter.com/share" class="twitter-share-button" data-via="banguit">Tweet</a></div></section><div id="disqus_thread"></div></article></main></article>';
   return output;
 };
 if (goog.DEBUG) {
