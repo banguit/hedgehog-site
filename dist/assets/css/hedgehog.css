@@ -7823,6 +7823,10 @@ h6 {
   border-top: 1px solid #ddd;
   padding: 15px 0;
 }
+#blog .content .post .share td,
+#post .content .post .share td {
+  vertical-align: baseline !important;
+}
 #blog .content .post .share .fb-like,
 #post .content .post .share .fb-like {
   opacity: 0;
@@ -7830,6 +7834,7 @@ h6 {
   overflow: hidden;
   margin-right: 15px;
   float: left;
+  display: inline-block;
 }
 #blog .content .post .share .fb-like[fb-xfbml-state="rendered"],
 #post .content .post .share .fb-like[fb-xfbml-state="rendered"] {
@@ -7840,11 +7845,11 @@ h6 {
 #blog .content .post .share #___plusone_0,
 #post .content .post .share #___plusone_0 {
   width: 75px !important;
-  float: left !important;
+  display: inline-block;
 }
 #blog .content .post .share .twitter-share,
 #post .content .post .share .twitter-share {
-  float: left;
+  display: inline-block;
 }
 @media (max-width: 767px) {
   #post h1,

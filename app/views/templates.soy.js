@@ -89,7 +89,7 @@ hedgehog.templates.post = function(opt_data, opt_ignored) {
     var tagData67 = tagList67[tagIndex67];
     output += soy.$$escapeHtml(tagData67['name']) + ((! (tagIndex67 == tagListLen67 - 1)) ? ', ' : '');
   }
-  output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(post__soy53['html']) + '</section><section class="share"><div class="fb-like" data-href="' + soy.$$escapeHtml(post__soy53['url']) + '" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div><div class="g-plusone" data-size="medium"></div><div class="twitter-share"><a href="https://twitter.com/share" class="twitter-share-button" data-via="banguit">Tweet</a></div></section><div id="disqus_thread"></div></article></main></article>';
+  output += '</span></section></header><section class="post-content">' + soy.$$filterNoAutoescape(post__soy53['html']) + '</section><section class="share"><table><tr><td><div class="fb-like" data-href="' + soy.$$escapeHtml(post__soy53['url']) + '" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></td><td><div class="g-plusone" data-size="medium" data-href="' + soy.$$escapeHtml(post__soy53['url']) + '"></div></td><td><div class="twitter-share"><a href="https://twitter.com/share" class="twitter-share-button" data-via="banguit" data-url="' + soy.$$escapeHtml(post__soy53['url']) + '">Tweet</a></div></td></tr></table></section><div id="disqus_thread"></div></article></main></article>';
   return output;
 };
 if (goog.DEBUG) {

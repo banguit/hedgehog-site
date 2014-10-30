@@ -88,8 +88,7 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
             });
 
             post['url'] = window.location.href.replace('/#!','');
-            response.render(hedgehog.templates.post, post, goog.dom.getElement('content'));
-            gapi.plusone.go();
+            response.render(hedgehog.templates.post, post, contentEl);
 
             // Update title
             var meta_title = post['meta_title'];
@@ -114,6 +113,9 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
             // Add back link handler.
             this.addPostBackLinkHandler_(response);
 
+            // Render share buttons
+            this.renderShareButtons_();
+
             resolve();
         }, this), /** @type {string} */(request.getRouteData('slug')));
 
@@ -135,19 +137,10 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
 
         // Initialize DISQUS
         this.initializeDisqusForPost_(slug, document.title);
+        // Render share buttons
+        this.renderShareButtons_(true);
         resolve();
     }
-
-    // Share buttons required scripts
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-    (function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs'));
 };
 
 
@@ -158,6 +151,21 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
  */
 
 /**
+ * @param {boolean=} opt_skipGPLus
+ * @private
+ */
+hedgehog.controllers.BlogController.prototype.renderShareButtons_ = function(opt_skipGPLus) {
+    var contentEl = goog.dom.getElement('content');
+
+    window['FB']['XFBML']['parse'](contentEl);
+    window['twttr']['widgets']['load']();
+    if(!opt_skipGPLus) {
+        gapi.plusone.go(contentEl);
+    }
+};
+
+
+/**
  * Add back link handler
  * @param {hedgehog.core.Response} response
  * @private
@@ -166,6 +174,7 @@ hedgehog.controllers.BlogController.prototype.addPostBackLinkHandler_ = function
     var backLink = document.querySelector('.post-header .back-link');
     goog.events.listen(backLink, goog.events.EventType.CLICK, goog.partial(this.goBackLinkHandler_, response));
 };
+
 
 /**
  * Initialize DISQUS for post.
