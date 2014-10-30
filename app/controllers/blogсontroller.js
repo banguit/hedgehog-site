@@ -157,8 +157,12 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
 hedgehog.controllers.BlogController.prototype.renderShareButtons_ = function(opt_skipGPLus) {
     var contentEl = goog.dom.getElement('content');
 
+    var tweetButton = goog.dom.getElementByClass('twitter-share-button');
+    tweetButton.setAttribute('data-text', document.title);
+
     window['FB']['XFBML']['parse'](contentEl);
     window['twttr']['widgets']['load']();
+
     if(!opt_skipGPLus) {
         gapi.plusone.go(contentEl);
     }
