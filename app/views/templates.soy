@@ -83,7 +83,6 @@
 {template .post}
 {let $data: quoteKeysIfJs(['data' : opt_data]) /}
 {let $post: $data['data'] /}
-<div id="fb-root"></div>
 <article id="post">
     <header class="photo" style="{if isNonnull($post['image'])}background-image: url('{$post['image']}'){/if}">
         <h1 class="container">{$post['title']}</h1>
@@ -110,7 +109,7 @@
                 <table>
                     <tr>
                         <td>
-                            <div class="fb-like" data-href="{$post['url']}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+                            <iframe class="fb-like" src="//www.facebook.com/plugins/like.php?href={$post['url']}&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=21" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
                         </td>
                         <td>
                             <div class="g-plusone" data-size="medium" data-href="{$post['url']}"></div>

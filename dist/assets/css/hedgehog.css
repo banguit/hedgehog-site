@@ -7827,20 +7827,12 @@ h6 {
 #post .content .post .share td {
   vertical-align: baseline !important;
 }
-#blog .content .post .share .fb-like,
-#post .content .post .share .fb-like {
-  opacity: 0;
-  height: 0px;
+#blog .content .post .share iframe.fb-like,
+#post .content .post .share iframe.fb-like {
+  border: none;
   overflow: hidden;
-  margin-right: 15px;
-  float: left;
-  display: inline-block;
-}
-#blog .content .post .share .fb-like[fb-xfbml-state="rendered"],
-#post .content .post .share .fb-like[fb-xfbml-state="rendered"] {
-  opacity: 1.0;
   height: 21px;
-  overflow: visible;
+  width: 140px;
 }
 #blog .content .post .share #___plusone_0,
 #post .content .post .share #___plusone_0 {

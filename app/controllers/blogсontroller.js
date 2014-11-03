@@ -160,7 +160,6 @@ hedgehog.controllers.BlogController.prototype.renderShareButtons_ = function(opt
     var tweetButton = goog.dom.getElementByClass('twitter-share-button');
     tweetButton.setAttribute('data-text', document.title);
 
-    window['FB']['XFBML']['parse'](contentEl);
     window['twttr']['widgets']['load']();
 
     if(!opt_skipGPLus) {

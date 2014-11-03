@@ -6,7 +6,6 @@
 {{! Everything inside the #post tags pulls data from the post }}
 {{#post}}
 
-<div id="fb-root"></div>
 <article id="post">
     <header class="photo {{#if image}}" style="background-image: url({{image}}){{else}}no-cover{{/if}}">
         <h1 class="container">{{title}}</h1>
@@ -27,7 +26,7 @@
                 <table>
                     <tr>
                         <td>
-                            <div class="fb-like" data-href="{{url absolute="true"}}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+                            <iframe class="fb-like" src="//www.facebook.com/plugins/like.php?href={{url absolute="true"}}&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=21" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
                         </td>
                         <td>
                             <div class="g-plusone" data-size="medium" data-href="{{url absolute="true"}}"></div>
