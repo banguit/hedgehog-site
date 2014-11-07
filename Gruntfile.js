@@ -38,6 +38,12 @@ module.exports = function(grunt) {
                 src: '*.hbs',
                 dest: 'dist'
             },
+            html: {
+                expand: true,
+                cwd: 'app',
+                src: '*.html',
+                dest: 'dist'
+            },
             hbs_partials: {
                 expand: true,
                 cwd: 'app/partials',
@@ -93,6 +99,7 @@ module.exports = function(grunt) {
             'copy:hedgehog_bootstrap_dist',
             'copy:hbs',
             'copy:hbs_partials',
+            'copy:html',
             'copy:package_json',
             'copy:theme'
         ]

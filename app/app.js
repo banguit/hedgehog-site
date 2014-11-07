@@ -18,7 +18,7 @@ goog.require('hedgehog.filters.ComponentsInitializationApplicationFilter');
  */
 hedgehog.start = function() {
 
-    hedgehog.bindReady_(function() {
+    hedgehog.contentLoaded(window, function() {
         // -- Application initialization -- //
         var app = new hedgehog.core.Application();
 
@@ -41,56 +41,32 @@ hedgehog.start = function() {
     });
 };
 
-/**
- * @param {Function} handler
- * @private
- */
-hedgehog.bindReady_ = function(handler) {
-
-    var called = false;
-
-    function ready() {
-        if (called) { return; }
-        called = true;
-        handler();
-    };
-
-    function tryScroll(){
-        if (called) { return; }
-        try {
-            document.documentElement.doScroll("left");
-            ready();
-        } catch(e) {
-            setTimeout(tryScroll, 10);
+hedgehog.contentLoaded = function (win, fn) {
+    var done = false, top = true,
+        doc = win.document,
+        root = doc.documentElement,
+        modern = doc.addEventListener,
+        add = modern ? 'addEventListener' : 'attachEvent',
+        rem = modern ? 'removeEventListener' : 'detachEvent',
+        pre = modern ? '' : 'on',
+        init = function(e) {
+            if (e.type == 'readystatechange' && doc.readyState != 'complete') return;
+            (e.type == 'load' ? win : doc)[rem](pre + e.type, init, false);
+            if (!done && (done = true)) fn.call(win, e.type || e);
+        },
+        poll = function() {
+            try { root.doScroll('left'); } catch(e) { setTimeout(poll, 50); return; }
+            init('poll');
+        };
+    if (doc.readyState == 'complete') fn.call(win, 'lazy');
+    else {
+        if (!modern && root.doScroll) {
+            try { top = !win.frameElement; } catch(e) { }
+            if (top) poll();
         }
-    };
-
-    if ( document.addEventListener ) { // native event
-        document.addEventListener( "DOMContentLoaded", ready, false);
-    } else if ( document.attachEvent ) {  // IE
-
-        try {
-            var isFrame = window.frameElement != null;
-        } catch(e) {}
-
-        // IE, the document is not inside a frame
-        if ( document.documentElement.doScroll && !isFrame ) {
-            tryScroll();
-        }
-
-        // IE, the document is inside a frame
-        document.attachEvent("onreadystatechange", function(){
-            if ( document.readyState === "complete" ) {
-                ready();
-            }
-        })
-    }
-
-    // Old browsers
-    if (window.addEventListener)
-        window.addEventListener('load', ready, false);
-    else if (window.attachEvent) {
-        window.attachEvent('onload', ready);
+        doc[add](pre + 'DOMContentLoaded', init, false);
+        doc[add](pre + 'readystatechange', init, false);
+        win[add](pre + 'load', init, false);
     }
 };
 
