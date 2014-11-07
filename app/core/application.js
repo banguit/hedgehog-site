@@ -29,7 +29,7 @@ hedgehog.core.Application = function() {
      * @type {hedgehog.core.Router}
      * @private
      */
-    this.router_ = new hedgehog.core.Router(false, '//' + location.host + '/blank.html', goog.dom.getElement('history_state'));
+    this.router_ = new hedgehog.core.Router(false, '//' + location.host + '/blank.html',(/** @type {HTMLInputElement} */(goog.dom.getElement('history_state'))));
 
     /**
      * @type {Array.<hedgehog.core.types.ActionFilterItem>}
