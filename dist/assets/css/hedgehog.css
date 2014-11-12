@@ -7823,6 +7823,7 @@ html.ie9 #post .photo h1 {
 #post .content .post .post-header .post-meta {
   color: #a2a2a2;
   font-size: 14px;
+  white-space: nowrap;
 }
 #blog .content .post .post-header .post-meta .post-date:before,
 #post .content .post .post-header .post-meta .post-date:before,
@@ -7852,25 +7853,27 @@ html.ie9 #post .photo h1 {
   border-top: 1px solid #ddd;
   padding: 15px 0;
 }
-#blog .content .post .share td,
-#post .content .post .share td {
-  vertical-align: baseline !important;
-}
-#blog .content .post .share iframe.fb-like,
-#post .content .post .share iframe.fb-like {
-  border: none;
-  overflow: hidden;
-  height: 21px;
-  width: 140px;
-}
-#blog .content .post .share #___plusone_0,
-#post .content .post .share #___plusone_0 {
-  width: 75px !important;
+#blog .content .post .share a,
+#post .content .post .share a {
   display: inline-block;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  color: #fff;
+  text-align: center;
+  margin-right: 10px;
 }
-#blog .content .post .share .twitter-share,
-#post .content .post .share .twitter-share {
-  display: inline-block;
+#blog .content .post .share a.facebook,
+#post .content .post .share a.facebook {
+  background-color: #3c5a99;
+}
+#blog .content .post .share a.googleplus,
+#post .content .post .share a.googleplus {
+  background-color: #d34935;
+}
+#blog .content .post .share a.twitter,
+#post .content .post .share a.twitter {
+  background-color: #00b0ed;
 }
 @media (max-width: 767px) {
   #post h1,

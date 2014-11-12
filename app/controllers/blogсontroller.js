@@ -3,6 +3,7 @@ goog.provide('hedgehog.controllers.BlogController');
 goog.require('hedgehog.core.Controller');
 goog.require('hedgehog.ghost');
 goog.require('hedgehog.Showdown');
+goog.require('hedgehog.Share');
 
 
 /**
@@ -87,7 +88,6 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
                 return goog.array.contains(tagsIds, tag.id);
             });
 
-            post['url'] = window.location.href.replace('/#!','');
             response.render(hedgehog.templates.post, post, contentEl);
 
             // Update title
@@ -137,8 +137,10 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
 
         // Initialize DISQUS
         this.initializeDisqusForPost_(slug, document.title);
+
         // Render share buttons
         this.renderShareButtons_(true);
+
         resolve();
     }
 };
@@ -155,16 +157,10 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
  * @private
  */
 hedgehog.controllers.BlogController.prototype.renderShareButtons_ = function(opt_skipGPLus) {
-    var contentEl = goog.dom.getElement('content');
+    var shareContainer = goog.dom.getElementByClass('share')
+      , shareComponent = new hedgehog.Share();
 
-    var tweetButton = goog.dom.getElementByClass('twitter-share-button');
-    tweetButton.setAttribute('data-text', document.title);
-
-    window['twttr']['widgets']['load']();
-
-    if(!opt_skipGPLus) {
-        gapi.plusone.go(contentEl);
-    }
+    shareComponent.render(shareContainer);
 };
 
 
