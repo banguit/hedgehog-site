@@ -36,7 +36,6 @@ goog.addDependency("../../../../app/components/responsiveheader.js", ['hedgehog.
 goog.addDependency("../../../../app/components/share.js", ['hedgehog.Share'], ['goog.ui.Component', 'goog.dom']);
 goog.addDependency("../../../../app/components/showdown.js", ['hedgehog.Showdown'], []);
 goog.addDependency("../../../../app/components/splashscreen.js", ['hedgehog.SplashScreen'], ['goog.ui.Component', 'goog.dom', 'goog.style', 'hedgehog.templates', 'goog.soy', 'goog.fx', 'goog.fx.dom', 'goog.fx.AnimationQueue', 'goog.fx.AnimationSerialQueue', 'goog.fx.AnimationParallelQueue', 'goog.labs.userAgent.device']);
-goog.addDependency("../../../../app/controllers/123.js", [], []);
 goog.addDependency("../../../../app/controllers/aboutсontroller.js", ['hedgehog.controllers.AboutController'], ['hedgehog.core.Controller', 'hedgehog.templates']);
 goog.addDependency("../../../../app/controllers/blogсontroller.js", ['hedgehog.controllers.BlogController'], ['hedgehog.core.Controller', 'hedgehog.ghost', 'hedgehog.Showdown', 'hedgehog.Share']);
 goog.addDependency("../../../../app/controllers/projectsсontroller.js", ['hedgehog.controllers.ProjectsController'], ['hedgehog.core.Controller']);
