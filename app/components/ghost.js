@@ -57,7 +57,7 @@ hedgehog.ghost.loadPosts = function(callback, opt_page, opt_limit, opt_status, o
             goog.dispose(xhrio);
         }, this));
 
-        xhrio.send(hedgehog.ghost.API_URI_BASE + 'posts/?' + goog.uri.utils.buildQueryDataFromMap(getData), 'GET');
+        xhrio.send(hedgehog.ghost.API_URI_BASE + 'posts/?include=tags&' + goog.uri.utils.buildQueryDataFromMap(getData), 'GET');
     });
 };
 
@@ -93,7 +93,7 @@ hedgehog.ghost.loadPostBySlug = function(callback, postSlug) {
             }
         }, this));
 
-        xhrio.send(hedgehog.ghost.API_URI_BASE + 'posts/' + postSlug + '/', 'GET');
+        xhrio.send(hedgehog.ghost.API_URI_BASE + 'posts/' + postSlug + '/?include=tags', 'GET');
     });
 };
 
