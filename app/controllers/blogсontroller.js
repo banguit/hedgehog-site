@@ -36,12 +36,6 @@ hedgehog.controllers.BlogController.prototype.index = function(request, response
                 post['pretty_date'] = this.prettyDate_(post['created_at']);
                 post['datetime'] = new Date(post['created_at']).yyyymmdd();
                 post['html_preview'] = converter.makeHtml(post['markdown'].split(" ").splice(0, 100).join(" ") + "...");
-
-                // Get tags information
-                var tagsIds = post['tags'];
-                post['tags'] = goog.array.filter(data['tags'], function(tag) {
-                    return goog.array.contains(tagsIds, tag.id);
-                });
             }, this);
 
             response.render(hedgehog.templates.blog, data, goog.dom.getElement('content'));
@@ -81,12 +75,6 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
 
             post['pretty_date'] = this.prettyDate_(post['created_at']);
             post['datetime'] = new Date(post['created_at']).yyyymmdd();
-
-            // Get tags information
-            var tagsIds = post['tags'];
-            post['tags'] = goog.array.filter(data['tags'], function(tag) {
-                return goog.array.contains(tagsIds, tag.id);
-            });
 
             response.render(hedgehog.templates.post, post, contentEl);
 
