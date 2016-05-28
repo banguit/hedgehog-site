@@ -16,3 +16,6 @@ url=https://github.com/rhysbrettbowen/PlastronJS.git
 [submodule "ghost"]
 	path = ghost
 	url = https://banguit@github.com/TryGhost/Ghost.git
+[submodule "libs/highlight.js"]
+	path = libs/highlight.js
+	url = https://github.com/isagalaev/highlight.js

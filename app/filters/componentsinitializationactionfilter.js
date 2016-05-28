@@ -60,6 +60,10 @@ hedgehog.filters.ComponentsInitializationActionFilter.prototype.onActionExecuted
     // Hide loader
     setTimeout(goog.bind(function() {
         this.loader_.show(false);
+
+        window['$']('pre code')['each'](function(i, block) {
+            window['hljs']['highlightBlock'](block);
+        });
     }, this), 300);
 };
 

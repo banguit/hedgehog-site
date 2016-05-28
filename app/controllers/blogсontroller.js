@@ -80,7 +80,9 @@ hedgehog.controllers.BlogController.prototype.post = function(request, response,
 
             // Update title
             var meta_title = post['meta_title'];
-            document.title = (!goog.string.isEmptyOrWhitespace(meta_title) ? meta_title : post['title']) + ' | ' + document.title;
+            document.title = (!goog.string.isEmptyOrWhitespace(meta_title) && goog.isDefAndNotNull(meta_title)
+                    ? meta_title
+                    : post['title']) + ' | ' + document.title;
 
             // Update meta title
             var title = document.querySelector('meta[name="title"]');
