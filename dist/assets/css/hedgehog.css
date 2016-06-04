@@ -8094,7 +8094,8 @@ h6 {
 }
 .wrapper header .navbar-nav li a {
   display: block;
-  line-height: 110px;
+  height: 140px;
+  padding-top: 60px;
   text-align: center;
   text-transform: uppercase;
   font-weight: bold;
@@ -8102,6 +8103,9 @@ h6 {
   color: #8a8a8a;
   letter-spacing: 0.75px;
   transition: all 0.2s ease 0s;
+}
+.wrapper header .navbar-nav li a span {
+  line-height: 20px;
 }
 .wrapper header .navbar-nav li a:hover,
 .wrapper header .navbar-nav li a:active,
